@@ -1,0 +1,22 @@
+{
+  "name": "cliqz-logo-database",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "raureif build",
+    "start": "raureif serve",
+    "test": "raureif test --ci",
+    "prepublish": "npm run build",
+    "prebuild": "npm run test"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist/*",
+    "!dist/node",
+    "!dist/polyfill.js"
+  ],
+  "devDependencies": {
+    "raureif": "^1.6.0",
+    "yarn": "^0.27.5"
+  },
+  "license": "MIT"
+}
