@@ -419,10 +419,6 @@ babel-messages@^6.23.0:
   dependencies:
     babel-runtime "^6.22.0"
 
-babel-plugin-add-module-exports@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-add-module-exports/-/babel-plugin-add-module-exports-0.2.1.tgz#9ae9a1f4a8dc67f0cdec4f4aeda1e43a5ff65e25"
-
 babel-plugin-check-es2015-constants@^6.22.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-check-es2015-constants/-/babel-plugin-check-es2015-constants-6.22.0.tgz#35157b101426fd2ffd3da3f75c7d1e91835bbf8a"
@@ -788,7 +784,7 @@ braces@^1.8.2:
     preserve "^0.2.0"
     repeat-element "^1.1.2"
 
-"broccoli-babel-transpiler@github:chrmod/broccoli-babel-transpiler#polyfill-fix":
+broccoli-babel-transpiler@chrmod/broccoli-babel-transpiler#polyfill-fix:
   version "6.0.0"
   resolved "https://codeload.github.com/chrmod/broccoli-babel-transpiler/tar.gz/a01ec98277c95045bbd27ef38ce2543f8fc440a7"
   dependencies:
@@ -1175,7 +1171,7 @@ center-align@^0.1.1:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
 
-chai@^4.0.2:
+chai@^4.0.2, chai@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/chai/-/chai-4.1.1.tgz#66e21279e6f3c6415ff8231878227900e2171b39"
   dependencies:
@@ -3380,7 +3376,7 @@ mktemp@~0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/mktemp/-/mktemp-0.4.0.tgz#6d0515611c8a8c84e484aa2000129b98e981ff0b"
 
-"mocha@github:chrmod/mocha#tab-error-messages":
+mocha@chrmod/mocha#tab-error-messages:
   version "3.4.2"
   resolved "https://codeload.github.com/chrmod/mocha/tar.gz/0c4df109b60bdd596b11660c240fc1e8e22c2a4d"
   dependencies:
@@ -3855,6 +3851,10 @@ punycode@^1.3.2, punycode@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
 
+punycode@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.0.tgz#5f863edc89b96db09074bad7947bf09056ca4e7d"
+
 qs@6.5.0:
   version "6.5.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.0.tgz#8d04954d364def3efc55b5a0793e1e2c8b1e6e49"
@@ -3896,11 +3896,10 @@ range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
 
-raureif@^1.6.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/raureif/-/raureif-1.8.0.tgz#d84f28d61a8bc941689106d7d74341158c919654"
+raureif@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/raureif/-/raureif-2.0.2.tgz#3728914456bd50670afc4e8bd9b0f287836c3f06"
   dependencies:
-    babel-plugin-add-module-exports "^0.2.1"
     babel-preset-es2015 "^6.24.0"
     broccoli "1.1.2"
     broccoli-babel-transpiler chrmod/broccoli-babel-transpiler#polyfill-fix
@@ -4664,6 +4663,12 @@ timers-browserify@^1.0.1:
   dependencies:
     process "~0.11.0"
 
+tldjs@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/tldjs/-/tldjs-2.0.0.tgz#81da3fd3f1db4676ca928206a7c5c55f413690a5"
+  dependencies:
+    punycode "^1.4.1"
+
 tmp@0.0.28:
   version "0.0.28"
   resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.28.tgz#172735b7f614ea7af39664fa84cf0de4e515d120"
@@ -4796,6 +4801,12 @@ uppercamelcase@^1.1.0:
   resolved "https://registry.yarnpkg.com/uppercamelcase/-/uppercamelcase-1.1.0.tgz#324d98a6b3afc7e8a8953e10641509b0e4e23f97"
   dependencies:
     camelcase "^1.2.1"
+
+uri-js@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/uri-js/-/uri-js-3.0.2.tgz#f90b858507f81dea4dcfbb3c4c3dbfa2b557faaa"
+  dependencies:
+    punycode "^2.1.0"
 
 url@~0.11.0:
   version "0.11.0"
