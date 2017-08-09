@@ -65,7 +65,7 @@ describe('getLogo', function () {
     });
   });
 
-  context('with non matching pattern', function () {
+  context('with rules but not matching pattern', function () {
     beforeEach(function () {
       subject = getLogo('https://mozilla.com', {
         database: fakeDatabase,
@@ -76,6 +76,18 @@ describe('getLogo', function () {
       expect(subject)
         .to.have.property('color')
         .that.equal(fakeDatabase.domains.mozilla[1].b);
+    });
+  });
+
+  context('with no rules', function () {
+    beforeEach(function () {
+      subject = getLogo('https://xyz.com', {
+        database: fakeDatabase,
+      });
+    });
+
+    it('returns null', function () {
+      expect(subject).to.be.null;
     });
   });
 });
