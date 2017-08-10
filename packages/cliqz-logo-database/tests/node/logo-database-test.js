@@ -2,10 +2,6 @@ import { expect } from 'chai';
 import database from '../logo-database';
 
 describe('database', function () {
-  it('has version', function () {
-    expect(database).to.have.property('__version');
-  });
-
   it('has domains', function () {
     expect(database).to.have.property('domains');
     expect(database.domains).to.be.instanceOf(Object);
