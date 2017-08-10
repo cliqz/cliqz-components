@@ -32,11 +32,10 @@ const findRule = (database, base, pattern) => {
   return rule;
 };
 
-export default function (url, { database = defaultDatabase } = {}) {
-  /* eslint-disable */
-  const version = database.__version;
-  /* eslint-enable */
-
+export default function (url, {
+  database = defaultDatabase,
+  version = 1502005705085,
+} = {}) {
   const { base, pattern } = parseUrl(url);
   const rule = findRule(database, base, pattern);
 

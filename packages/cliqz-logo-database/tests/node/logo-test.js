@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import getLogo from '../logo';
 
+const fakeDatabaseVersion = 1345;
 const fakeDatabase = {
-  __version: '124',
   domains: {
     'cliqz': [{
       r: '$',
@@ -35,6 +35,7 @@ describe('getLogo', function () {
     beforeEach(function () {
       subject = getLogo('https://cliqz.com', {
         database: fakeDatabase,
+        version: fakeDatabaseVersion,
       });
     });
 
@@ -47,7 +48,7 @@ describe('getLogo', function () {
     it('return logoUrl', function () {
       expect(subject)
         .to.have.property('logoUrl')
-        .that.equal(`https://cdn.cliqz.com/brands-database/database/${fakeDatabase.__version}/logos/cliqz/$.svg`);
+        .that.equal(`https://cdn.cliqz.com/brands-database/database/${fakeDatabaseVersion}/logos/cliqz/$.svg`);
     });
   });
 
