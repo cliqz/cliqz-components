@@ -21,10 +21,12 @@ const findRule = (database, base, pattern) => {
   const rules = database.domains[base] || [];
   let rule = rules.find(({ r }) => r === pattern);
 
-  if (rules.length === 1) {
-    rule = rules[0];
-  } else if (!rule) {
-    rule = rules[rules.length - 1];
+  if (!rule && (rules.length >= 0)) {
+    if (rules.length === 1) {
+      rule = rules[0];
+    } else {
+      rule = rules[rules.length - 1];
+    }
   }
 
   return rule;
