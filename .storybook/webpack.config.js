@@ -12,12 +12,9 @@ const packages = readdirSync(basePath).filter((name) =>
 );
 
 const newConfig = ({ config }) => {
-  const resolve = config.resolve || {};
-  config.resolve = Object.assign(resolve, {
-    alias: Object.assign(resolve.alias || {}, {
-      'react-native/Libraries/Renderer/shims/ReactNativePropRegistry': 'react-native-web/dist/modules/ReactNativePropRegistry',
-      'react-native': 'react-native-web',
-    })
+  Object.assign(config.resolve.alias, {
+    'react-native/Libraries/Renderer/shims/ReactNativePropRegistry': 'react-native-web/dist/modules/ReactNativePropRegistry',
+    'react-native': 'react-native-web',
   });
   config.module.rules.push({
     test: /\.(ts|tsx)$/,

@@ -17,5 +17,8 @@
     ],
     "no-implicit-dependencies": false,
     "interface-name": false
+  },
+  "linterOptions": {
+    "exclude": ["**/node_modules/**/*"]
   }
 }
