@@ -35,7 +35,6 @@ module.exports = (api) => {
     },
     ignore: ['node_modules'],
     plugins: [
-      ['react-native-web', { commonjs: true }]
     ]
   };
 };
