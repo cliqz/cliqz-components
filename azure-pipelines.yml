@@ -2,7 +2,7 @@ trigger:
   - master
 
 pool:
-  vmImage: 'macOS 10.13'
+  vmImage: 'ubuntu-16.04'
 
 steps:
 #Node Install
@@ -11,14 +11,26 @@ steps:
   inputs:
     versionSpec: '11.x'
 
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.6'
+    architecture: 'x64'
+    
 - script: |
     pip install awscli
   displayName: 'Install AWS CLI'
 
 - bash: |
-    npm i -g npm@6.5
-    /usr/local/bin/npm ci
-    /usr/local/bin/npm run build-storybook
+    npm ci
+    npm run build-storybook
   displayName: 'Building Storybook' 
 
-- script: cp -r storybook-static pangolins
+# - bash: |
+#       DATE=`date '+%Y-%m-%d_%H-%M-%S'`
+#       aws s3 cp storybook-static s3:
+#     env:
+#       AWS_ACCESS_KEY_ID: $(aws.keyid)
+#       AWS_SECRET_ACCESS_KEY: $(aws.secret)
+#       AWS_DEFAULT_REGION: $(aws.region)
+#       AWS_DEFAULT_OUTPUT: text
+#     displayName: 'Copy to AWS S3'
