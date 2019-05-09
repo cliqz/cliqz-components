@@ -10,7 +10,6 @@ import {
 const styles = StyleSheet.create({
   container: {
     marginLeft: 12,
-    marginRight: 12,
   },
   image: {
     borderRadius: 4,
@@ -41,11 +40,25 @@ const styles = StyleSheet.create({
   },
 });
 
-interface NewsProps {
-  data: any;
+interface NewsItem {
+  extra: {
+    creation_timestamp: number;
+    domain: string;
+    thumbnail: string;
+  };
+  title: string;
+  url: string;
 }
 
-function renderItem({ item }: any) {
+interface NewsList {
+  links: NewsItem[];
+  type: string;
+}
+interface NewsProps {
+  data: NewsList;
+}
+
+function renderItem({ item }: { item: NewsItem }) {
   return (
     <View style={styles.itemContainer}>
       <ImageBackground
@@ -61,8 +74,12 @@ function renderItem({ item }: any) {
   );
 }
 
-function renderSeparator() {
+function _renderSeparator() {
   return <View style={{ padding: 2 }} />;
+}
+
+function _keyExtractor({ url }: NewsItem) {
+  return url;
 }
 
 export const NewsSnippet = ({ data }: NewsProps) => (
@@ -71,7 +88,8 @@ export const NewsSnippet = ({ data }: NewsProps) => (
       data={data.links}
       renderItem={renderItem}
       horizontal={true}
-      ItemSeparatorComponent={renderSeparator}
+      ItemSeparatorComponent={_renderSeparator}
+      keyExtractor={_keyExtractor}
       showsHorizontalScrollIndicator={false}
     />
   </View>
