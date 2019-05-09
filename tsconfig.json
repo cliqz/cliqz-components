@@ -14,7 +14,11 @@
     "paths": {
       "@cliqz/*": ["packages/*/src"],
       "*": ["node_modules", "packages"]
-    }
+    },
+    "types": [
+      "jest",
+      "node"
+    ]
   },
   "awesomeTypescriptLoaderOptions": {
     "useBabel": true,

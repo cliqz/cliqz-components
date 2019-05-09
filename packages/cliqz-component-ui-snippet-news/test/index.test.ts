@@ -1,9 +1,5 @@
-/* tslint:disable */
-
-const expect = require('chai').expect;
-
-describe('Snipper News', function() {
-  it('renders', function () {
-    expect(true).to.eq(true);
+describe('Snipper News', () => {
+  it('renders', () => {
+    expect(true).toBe(true);
   });
 });
