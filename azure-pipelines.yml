@@ -15,7 +15,7 @@ steps:
   inputs:
     versionSpec: '3.6'
     architecture: 'x64'
-    
+
 - script: |
     pip install awscli
   displayName: 'Install AWS CLI'
@@ -25,12 +25,11 @@ steps:
     npm run build-storybook
   displayName: 'Building Storybook' 
 
-# - bash: |
-#       DATE=`date '+%Y-%m-%d_%H-%M-%S'`
-#       aws s3 cp storybook-static s3:
-#     env:
-#       AWS_ACCESS_KEY_ID: $(aws.keyid)
-#       AWS_SECRET_ACCESS_KEY: $(aws.secret)
-#       AWS_DEFAULT_REGION: $(aws.region)
-#       AWS_DEFAULT_OUTPUT: text
-#     displayName: 'Copy to AWS S3'
+- bash: |
+    aws s3 sync storybook-static s3://cliqz-test-artifact-upload/public/cliqz-components
+  env:
+    AWS_ACCESS_KEY_ID: $(aws.keyid)
+    AWS_SECRET_ACCESS_KEY: $(aws.secret)
+    AWS_DEFAULT_REGION: $(aws.region)
+    AWS_DEFAULT_OUTPUT: text
+  displayName: 'Copy to AWS S3'
