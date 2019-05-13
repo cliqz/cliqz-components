@@ -10,6 +10,7 @@ import {
 const styles = StyleSheet.create({
   container: {
     marginLeft: 12,
+    marginRight: 12,
   },
   image: {
     borderRadius: 4,
