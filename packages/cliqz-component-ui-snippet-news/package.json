@@ -19,5 +19,8 @@
   },
   "keywords": [],
   "author": "",
-  "description": ""
+  "description": "",
+  "publishConfig": {
+    "access": "public"
+  }
 }
