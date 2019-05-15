@@ -1,0 +1,35 @@
+trigger:
+  - master
+
+pool:
+  vmImage: 'ubuntu-16.04'
+
+steps:
+#Node Install
+- task: NodeTool@0
+  displayName: Node install
+  inputs:
+    versionSpec: '11.x'
+
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.6'
+    architecture: 'x64'
+
+- script: |
+    pip install awscli
+  displayName: 'Install AWS CLI'
+
+- bash: |
+    npm ci
+    npm run build-storybook
+  displayName: 'Building Storybook' 
+
+- bash: |
+    aws s3 sync storybook-static s3://cliqz-test-artifact-upload/public/cliqz-components
+  env:
+    AWS_ACCESS_KEY_ID: $(aws.keyid)
+    AWS_SECRET_ACCESS_KEY: $(aws.secret)
+    AWS_DEFAULT_REGION: $(aws.region)
+    AWS_DEFAULT_OUTPUT: text
+  displayName: 'Copy to AWS S3'
