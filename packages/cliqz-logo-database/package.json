@@ -1,26 +1,16 @@
 {
   "name": "cliqz-logo-database",
   "version": "0.1.2",
-  "scripts": {
-    "build": "raureif build",
-    "start": "raureif serve",
-    "test": "raureif test --ci",
-    "prepublish": "npm run build",
-    "prebuild": "npm run test"
-  },
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "dist/*",
-    "!dist/node",
-    "!dist/polyfill.js"
+    "dist"
   ],
-  "devDependencies": {
-    "chai": "^4.1.1",
-    "raureif": "2.0.2",
-    "yarn": "^0.27.5"
-  },
   "license": "MPL-2.0",
   "dependencies": {
-    "tldjs": "^2.0.0"
+    "tldts": "^5.0.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

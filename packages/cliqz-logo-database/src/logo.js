@@ -1,50 +1,35 @@
-import { getDomain, getPublicSuffix } from 'tldjs';
-import defaultDatabase from './logo-database.json';
-
-const parseUrl = (url) => {
-  const publicSuffix = getPublicSuffix(url);
-  const hostname = getDomain(url);
-
-  const base = hostname.substring(0, hostname.length - publicSuffix.length - 1);
-  const baseIndex = hostname.lastIndexOf(base);
-  const prefix = hostname.substr(0, baseIndex);
-  const postfix = hostname.substr(baseIndex + base.length);
-  const pattern = `${prefix}$${postfix}`;
-
-  return {
-    base,
-    pattern,
-  };
-};
-
-const findRule = (database, base, pattern) => {
-  const rules = database.domains[base] || [];
-  let rule = rules.find(({ r }) => r === pattern);
-
-  if (!rule && (rules.length >= 0)) {
-    if (rules.length === 1) {
-      rule = rules[0];
-    } else {
-      rule = rules[rules.length - 1];
+import { parse } from 'tldts';
+import defaultDatabase from './logo-database';
+export default function (url, { database = defaultDatabase, version = 1502005705085 } = {}) {
+    const { hostname, domain, publicSuffix, isIp } = parse(url);
+    if (!domain || !publicSuffix || !hostname) {
+        return null;
     }
-  }
-
-  return rule;
-};
-
-export default function (url, {
-  database = defaultDatabase,
-  version = 1502005705085,
-} = {}) {
-  const { base, pattern } = parseUrl(url);
-  const rule = findRule(database, base, pattern);
-
-  if (!rule) {
+    const generalDomainMinusTLD = domain.slice(0, -publicSuffix.length - 1);
+    const base = generalDomainMinusTLD || hostname;
+    const baseCore = base.replace(/[-]/g, '');
+    const check = (host, rule) => {
+        const address = host.lastIndexOf(base);
+        const parseddomain = `${host.substr(0, address)}$${host.substr(address + base.length)}`;
+        return parseddomain.indexOf(rule) !== -1;
+    };
+    if (isIp) {
+        return {
+            color: '9077e3',
+            text: 'IP',
+        };
+    }
+    else if (database.domains[base]) {
+        for (let i = 0, imax = database.domains[base].length; i < imax; i += 1) {
+            const rule = database.domains[base][i];
+            if (check(hostname, rule.r)) {
+                return {
+                    color: rule.b,
+                    logoUrl: `https://cdn.cliqz.com/brands-database/database/${version}/logos/${base}/${rule.r}.svg`,
+                    text: `${baseCore[0] || ''}${baseCore[1] || ''}`.toLowerCase(),
+                };
+            }
+        }
+    }
     return null;
-  }
-
-  return {
-    logoUrl: `https://cdn.cliqz.com/brands-database/database/${version}/logos/${base}/${rule.r}.svg`,
-    color: rule.b,
-  };
 }
