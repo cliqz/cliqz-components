@@ -11,6 +11,7 @@
     "rootDir": "./",
     "baseUrl": "./",
     "skipLibCheck": true,
+    "resolveJsonModule": true,
     "paths": {
       "@cliqz/*": ["packages/*/src"],
       "*": ["node_modules", "packages"]
