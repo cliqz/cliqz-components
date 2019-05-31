@@ -33,3 +33,4 @@ steps:
     AWS_DEFAULT_REGION: $(aws.region)
     AWS_DEFAULT_OUTPUT: text
   displayName: 'Copy to AWS S3'
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
