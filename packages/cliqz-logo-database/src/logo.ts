@@ -4,7 +4,7 @@ import defaultDatabase, { Color } from './logo-database';
 interface LogoDetails {
   text?: string;
   color?: Color;
-  logoUrl?: string;
+  url?: string;
 }
 
 export default function(
@@ -41,7 +41,7 @@ export default function(
       if (check(hostname, rule.r)) {
         return {
           color: rule.b,
-          logoUrl: `https://cdn.cliqz.com/brands-database/database/${version}/logos/${base}/${
+          url: `https://cdn.cliqz.com/brands-database/database/${version}/logos/${base}/${
             rule.r
           }.svg`,
           text: `${baseCore[0] || ''}${baseCore[1] || ''}`.toLowerCase(),
