@@ -2,14 +2,13 @@ import React from 'react';
 import { Image, Text, View } from 'react-native';
 
 interface LogoDetails {
-  backgroundColor: string;
-  backgroundImage?: string;
-  text: string;
+  color?: string;
+  text?: string;
+  url?: string;
 }
 
-interface UrlDetails {
-  domain: string;
-}
+type LogoProp = LogoDetails | null;
+
 
 interface LogoStyle {
   height: number;
@@ -18,15 +17,15 @@ interface LogoStyle {
 }
 
 interface LogoProps {
-  url: string;
+  logo: LogoProp;
   style?: LogoStyle;
-  getUrlDetails(url: string): UrlDetails;
-  getLogoDetails(domain: string): LogoDetails;
 }
 
 interface LogoState {
   img: any;
 }
+
+type LogoColor = string;
 
 const DEFAULT_STYLE: LogoStyle = {
   borderRadius: 5,
@@ -35,11 +34,34 @@ const DEFAULT_STYLE: LogoStyle = {
 };
 
 export class Logo extends React.PureComponent<LogoProps, LogoState> {
+  constructor(props: LogoProps) {
+    super(props);
+    this.state = {
+      img: this.getDefaultLogo(props.logo),
+    };
+  }
+
   public componentWillMount() {
     this.getLogo();
   }
 
-  public getDefaultLogo({ backgroundColor, text }: LogoDetails) {
+  public hexToRgb(color:LogoColor) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color);
+    return result ? `rgb(${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(result[3], 16)})` : color;
+  }
+
+  public getDefaultLogo(logo: LogoProp) {
+    let backgroundColor = 'black';
+    let text = '';
+    if (logo && logo.color) {
+      backgroundColor = logo.color;
+    }
+    if (logo && logo.text) {
+      text = logo.text;
+    }
+    // View do not accepts hexcodes
+    backgroundColor = this.hexToRgb(backgroundColor)
+
     return (
       <View
         style={[
@@ -53,23 +75,21 @@ export class Logo extends React.PureComponent<LogoProps, LogoState> {
     );
   }
 
-  public getImage(backgroundImage: string) {
+  public async getImage(url: string) {
+    await Image.prefetch(url);
     return (
       <Image
-        source={{ uri: backgroundImage }}
+        source={{ uri: url }}
         style={[DEFAULT_STYLE, this.props.style]}
       />
     );
   }
 
   public async getLogo() {
-    const { url, getUrlDetails, getLogoDetails } = this.props;
-    const { domain } = getUrlDetails(url);
-    const logo = getLogoDetails(domain);
-    this.setState({ img: this.getDefaultLogo(logo) });
-    if (logo.backgroundImage) {
-      await Image.prefetch(logo.backgroundImage);
-      this.setState({ img: this.getImage(logo.backgroundImage) });
+    const { logo } = this.props;
+    if (!logo) return;
+    if (logo.url) {
+      this.setState({ img: await this.getImage(logo.url) });
     }
   }
 

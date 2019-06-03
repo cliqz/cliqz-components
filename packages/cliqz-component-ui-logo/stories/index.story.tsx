@@ -1,34 +1,16 @@
 import { storiesOf } from '@storybook/react';
 import React from 'react';
 import { Logo } from '../src/index';
+import getLogo from '../../cliqz-logo-database/src/index';
 
-const getLogoDetails = (domain: string): any => ({
-  backgroundColor: 'red',
-  backgroundImage: `https://static.cliqz.com/wp-content/uploads/2016/08/${domain}.jpg`,
-  text: domain.substr(0, 2),
-});
-const getUrlDetails = (url: string): any => ({ domain: url });
-
-storiesOf('Logo', module).add('Khaled', () => (
+storiesOf('Logo', module).add('Cliqz', () => (
   <Logo
-    url="khaled"
-    getLogoDetails={getLogoDetails}
-    getUrlDetails={getUrlDetails}
+    logo={getLogo('https://cliqz.com')}
   />
 ));
 
-storiesOf('Logo', module).add('Ravjit', () => (
+storiesOf('Logo', module).add('Google', () => (
   <Logo
-    url="ravjit"
-    getLogoDetails={getLogoDetails}
-    getUrlDetails={getUrlDetails}
-  />
-));
-
-storiesOf('Logo', module).add('Roberto', () => (
-  <Logo
-    url="roberto"
-    getLogoDetails={getLogoDetails}
-    getUrlDetails={getUrlDetails}
+    logo={getLogo('https://google.com')}
   />
 ));

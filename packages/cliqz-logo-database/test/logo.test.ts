@@ -60,9 +60,9 @@ describe('getLogo', () => {
       expect(subject).toHaveProperty('color', fakeDatabase.domains.cliqz[0].b);
     });
 
-    it('return logoUrl', () => {
+    it('return logo url', () => {
       expect(subject).toHaveProperty(
-        'logoUrl',
+        'url',
         `https://cdn.cliqz.com/brands-database/database/${fakeDatabaseVersion}/logos/cliqz/$.svg`,
       );
     });
