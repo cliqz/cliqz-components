@@ -22,10 +22,12 @@ interface LogoProps {
 }
 
 interface LogoState {
+  color: string;
   img: any;
+  text: string;
 }
 
-type LogoColor = string;
+type LogoColor = string | undefined;
 
 const DEFAULT_STYLE: LogoStyle = {
   borderRadius: 5,
@@ -37,7 +39,9 @@ export class Logo extends React.PureComponent<LogoProps, LogoState> {
   constructor(props: LogoProps) {
     super(props);
     this.state = {
-      img: this.getDefaultLogo(props.logo),
+      color: props.logo && this.hexToRgb(props.logo.color) || 'black',
+      img: null,
+      text: props.logo && props.logo.text || ''
     };
   }
 
@@ -45,34 +49,9 @@ export class Logo extends React.PureComponent<LogoProps, LogoState> {
     this.getLogo();
   }
 
-  public hexToRgb(color:LogoColor) {
+  public hexToRgb(color:LogoColor = "") {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color);
     return result ? `rgb(${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(result[3], 16)})` : color;
-  }
-
-  public getDefaultLogo(logo: LogoProp) {
-    let backgroundColor = 'black';
-    let text = '';
-    if (logo && logo.color) {
-      backgroundColor = logo.color;
-    }
-    if (logo && logo.text) {
-      text = logo.text;
-    }
-    // View do not accepts hexcodes
-    backgroundColor = this.hexToRgb(backgroundColor)
-
-    return (
-      <View
-        style={[
-          DEFAULT_STYLE,
-          this.props.style,
-          { backgroundColor, justifyContent: 'center', alignItems: 'center' },
-        ]}
-      >
-        <Text style={{ color: 'white' }}>{text}</Text>
-      </View>
-    );
   }
 
   public async getImage(url: string) {
@@ -87,13 +66,23 @@ export class Logo extends React.PureComponent<LogoProps, LogoState> {
 
   public async getLogo() {
     const { logo } = this.props;
-    if (!logo) return;
-    if (logo.url) {
-      this.setState({ img: await this.getImage(logo.url) });
+    if (logo && logo.url) {
+      const image = await this.getImage(logo.url);
+      if (image) this.setState({ img: image });
     }
   }
 
   public render() {
-    return this.state.img;
+    const { color, img, text } = this.state;
+    let logoElement = img ? img : <Text style={{ color: 'white' }}>{text}</Text>;
+    return <View
+        style={[
+          DEFAULT_STYLE,
+          this.props.style,
+          { backgroundColor: color, justifyContent: 'center', alignItems: 'center' },
+        ]}
+      >
+        {logoElement}
+    </View>;
   }
 }
