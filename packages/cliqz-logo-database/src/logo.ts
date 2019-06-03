@@ -41,10 +41,10 @@ export default function(
       if (check(hostname, rule.r)) {
         return {
           color: rule.b,
+          text: `${baseCore[0] || ''}${baseCore[1] || ''}`.toLowerCase(),
           url: `https://cdn.cliqz.com/brands-database/database/${version}/logos/${base}/${
             rule.r
           }.svg`,
-          text: `${baseCore[0] || ''}${baseCore[1] || ''}`.toLowerCase(),
         };
       }
     }
