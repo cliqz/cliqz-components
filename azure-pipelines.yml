@@ -22,6 +22,7 @@ steps:
 
 - bash: |
     npm ci
+    npm run build
     npm run build-storybook
   displayName: 'Building Storybook' 
 
