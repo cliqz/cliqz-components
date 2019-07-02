@@ -42,7 +42,7 @@ const fakeDatabase: LogoDatabase = {
       },
     ],
   },
-  palette: [],
+  palette: ['000000', '110000', '001100', '000011', '111111'],
 };
 
 let subject: any;
@@ -102,8 +102,8 @@ describe('getLogo', () => {
       });
     });
 
-    it('returns null', () => {
-      expect(subject).toBeNull();
+    it('returns only text', () => {
+      expect(subject).toEqual({ color: '000011', text: 'xy' });
     });
   });
 });

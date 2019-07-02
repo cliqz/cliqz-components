@@ -27,6 +27,7 @@ export default function(
     )}`;
     return parseddomain.indexOf(rule) !== -1;
   };
+  const text = `${baseCore[0] || ''}${baseCore[1] || ''}`.toLowerCase();
 
   if (isIp) {
     return {
@@ -41,7 +42,7 @@ export default function(
       if (check(hostname, rule.r)) {
         return {
           color: rule.b,
-          text: `${baseCore[0] || ''}${baseCore[1] || ''}`.toLowerCase(),
+          text,
           url: `https://cdn.cliqz.com/brands-database/database/${version}/logos/${base}/${
             rule.r
           }.svg`,
@@ -49,6 +50,13 @@ export default function(
       }
     }
   }
-
-  return null;
+  // default icon with text
+  return {
+    color:
+      database.palette[
+        base.split('').reduce((a, b) => a + b.charCodeAt(0), 0) %
+          database.palette.length
+      ],
+    text,
+  };
 }

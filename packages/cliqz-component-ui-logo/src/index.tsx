@@ -9,15 +9,12 @@ interface LogoDetails {
 
 type LogoProp = LogoDetails | null;
 
-interface LogoStyle {
-  height: number;
-  width: number;
-  borderRadius?: number;
-}
-
 interface LogoProps {
   logo: LogoProp;
-  style?: LogoStyle;
+  size: number;
+  logoSize?: number;
+  fontSize?: number;
+  borderRadius?: number;
 }
 
 interface LogoState {
@@ -28,11 +25,7 @@ interface LogoState {
 
 type LogoColor = string | undefined;
 
-const DEFAULT_STYLE: LogoStyle = {
-  borderRadius: 5,
-  height: 50,
-  width: 50,
-};
+const DEFAULT_FONT_SIZE = 12;
 
 export class Logo extends React.PureComponent<LogoProps, LogoState> {
   constructor(props: LogoProps) {
@@ -60,8 +53,9 @@ export class Logo extends React.PureComponent<LogoProps, LogoState> {
 
   public async getImage(url: string) {
     await Image.prefetch(url);
+    const size = this.props.logoSize || this.props.size;
     return (
-      <Image source={{ uri: url }} style={[DEFAULT_STYLE, this.props.style]} />
+      <Image source={{ uri: url }} style={{ height: size, width: size }} />
     );
   }
 
@@ -77,20 +71,27 @@ export class Logo extends React.PureComponent<LogoProps, LogoState> {
 
   public render() {
     const { color, img, text } = this.state;
+    const fontSize = this.props.fontSize || DEFAULT_FONT_SIZE;
+    const style = {
+      borderRadius: this.props.borderRadius || 0,
+      height: this.props.size,
+      width: this.props.size,
+    };
+
     const logoElement = img ? (
       img
     ) : (
-      <Text style={{ color: 'white' }}>{text}</Text>
+      <Text style={{ color: 'white', fontSize }}>{text}</Text>
     );
     return (
       <View
         style={[
-          DEFAULT_STYLE,
-          this.props.style,
+          style,
           {
             alignItems: 'center',
             backgroundColor: color,
             justifyContent: 'center',
+            overflow: 'hidden',
           },
         ]}
       >
