@@ -1,6 +1,6 @@
 import { storiesOf } from '@storybook/react';
+import getLogo from 'cliqz-logo-database';
 import React from 'react';
-import getLogo from '../../cliqz-logo-database/src/index';
 import { Logo } from '../src/index';
 
 storiesOf('Logo', module).add('Cliqz', () => (

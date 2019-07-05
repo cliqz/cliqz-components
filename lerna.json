@@ -2,5 +2,7 @@
   "packages": [
     "packages/*"
   ],
+  "npmCient": "yarn",
+  "useWorspaces": true,
   "version": "0.2.1"
 }

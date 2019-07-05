@@ -22,5 +22,8 @@
   "description": "",
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "cliqz-logo-database": "^0.2.1"
   }
 }

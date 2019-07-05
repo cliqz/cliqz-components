@@ -43,9 +43,7 @@ export default function(
         return {
           color: rule.b,
           text,
-          url: `https://cdn.cliqz.com/brands-database/database/${version}/logos/${base}/${
-            rule.r
-          }.svg`,
+          url: `https://cdn.cliqz.com/brands-database/database/${version}/logos/${base}/${rule.r}.svg`,
         };
       }
     }
