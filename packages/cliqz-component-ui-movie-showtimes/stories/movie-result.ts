@@ -116,6 +116,14 @@ export const notLocalResult = {
             cinema_list: [],
             date: 'Mi., 25. Okt.',
           },
+          {
+            cinema_list: [],
+            date: 'Do., 26. Okt.',
+          },
+          {
+            cinema_list: [],
+            date: 'Fr., 27. Okt.',
+          },
         ],
         title: 'Tomb Raider',
       },
@@ -146,6 +154,38 @@ export const localResult = {
                     is_3d: true,
                     language: 'de',
                     start_at: '2017-10-23T14:30:00+02:00',
+                    subtitle_language: null,
+                  },
+                  {
+                    booking_link:
+                      'https://webticketing2.cinestar.de/visinternetticketing/visSelectTickets.aspx?cinemacode=46776\u0026txtSessionId=116316\u0026iframe\u0026height=600\u0026width=870',
+                    is_3d: false,
+                    language: 'de',
+                    start_at: '2017-10-23T19:40:00+02:00',
+                    subtitle_language: null,
+                  },
+                  {
+                    booking_link:
+                      'https://webticketing2.cinestar.de/visinternetticketing/visSelectTickets.aspx?cinemacode=46776\u0026txtSessionId=116316\u0026iframe\u0026height=600\u0026width=870',
+                    is_3d: false,
+                    language: 'de',
+                    start_at: '2017-10-23T19:40:00+02:00',
+                    subtitle_language: null,
+                  },
+                  {
+                    booking_link:
+                      'https://webticketing2.cinestar.de/visinternetticketing/visSelectTickets.aspx?cinemacode=46776\u0026txtSessionId=116316\u0026iframe\u0026height=600\u0026width=870',
+                    is_3d: false,
+                    language: 'de',
+                    start_at: '2017-10-23T19:40:00+02:00',
+                    subtitle_language: null,
+                  },
+                  {
+                    booking_link:
+                      'https://webticketing2.cinestar.de/visinternetticketing/visSelectTickets.aspx?cinemacode=46776\u0026txtSessionId=116316\u0026iframe\u0026height=600\u0026width=870',
+                    is_3d: false,
+                    language: 'de',
+                    start_at: '2017-10-23T19:40:00+02:00',
                     subtitle_language: null,
                   },
                   {
