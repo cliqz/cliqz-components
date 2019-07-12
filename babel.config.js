@@ -35,6 +35,7 @@ module.exports = (api) => {
     },
     ignore: ['node_modules'],
     plugins: [
+      ['@babel/plugin-proposal-class-properties']
     ]
   };
 };
