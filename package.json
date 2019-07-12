@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Cliqz Components library",
   "license": "MPL-2.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/cliqz/cliqz-components.git"
@@ -28,6 +29,7 @@
     "@types/storybook__addon-links": "^3.3.4",
     "@types/storybook__react": "^4.0.1",
     "awesome-typescript-loader": "^5.2.1",
+    "babel-loader": "^8.0.6",
     "commitizen": "^3.1.1",
     "customize-cra": "^0.2.12",
     "cz-lerna-changelog": "^2.0.2",
@@ -56,9 +58,10 @@
     "webpack": "^4.30.0"
   },
   "scripts": {
+    "bootstrap": "lerna bootstrap && lerna link",
     "build-storybook": "build-storybook",
-    "prebuild": "run-p tsc lint",
-    "build": "lerna exec --parallel 'BABEL_ENV=build babel src --root-mode upward --out-dir dist --source-maps --extensions .ts,.tsx --delete-dir-on-start --no-comments --copy-files'",
+    "prebuild": "lerna run 'tsc lint'",
+    "build": "lerna exec 'BABEL_ENV=build babel src --root-mode upward --out-dir dist --source-maps --extensions .ts,.tsx --delete-dir-on-start --no-comments --copy-files'",
     "postbuild": "npm run build:declarations",
     "commit": "git-cz",
     "fix": "run-p -c 'lint:ts-* --fix'",
@@ -79,5 +82,8 @@
       "path": "./node_modules/cz-lerna-changelog"
     }
   },
+  "workspaces": [
+    "./packages/*"
+  ],
   "dependencies": {}
 }

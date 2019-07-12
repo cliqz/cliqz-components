@@ -20,9 +20,19 @@ steps:
     pip install awscli
   displayName: 'Install AWS CLI'
 
-- bash: |
-    npm ci
-    npm run build-storybook
+- script: curl -o- -L https://yarnpkg.com/install.sh | bash
+  displayName: 'Install Yarn'
+
+- script: yarn install --frozen-lockfile
+  displayName: 'Installing deps'
+
+- script: yarn bootstrap
+  displayName: 'Boostraping the project'
+  
+- script: yarn run build
+  displayName: 'Building packages'
+
+- script: yarn run build-storybook
   displayName: 'Building Storybook' 
 
 - bash: |
