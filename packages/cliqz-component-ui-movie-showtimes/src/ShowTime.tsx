@@ -11,7 +11,7 @@ const showTimesStyles = (active: boolean) => StyleSheet.create({
   showContainer: {
     backgroundColor: active ? '#311B92' : 'rgba(49, 27, 146, 0.05)',
     borderRadius: 4,
-    color: 'red',
+    cursor: 'pointer',
     height: 26,
     marginBottom: 7,
     marginRight: 15,
