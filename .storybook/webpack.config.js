@@ -25,7 +25,10 @@ const newConfig = ({ config }) => {
     ...packages.reduce(
       (acc, name) => ({
         ...acc,
-        [`@taxi/${name}`]: path.join(basePath, name, 'src'),
+        // get package name from package.json and divert all imports
+        // for packages to use src files in order to live reload
+        // packages without running build
+        [require(path.resolve(__dirname, "..", "packages", name, "package.json")).name]: path.join(basePath, name, 'src'),
       }),
       {},
     ),

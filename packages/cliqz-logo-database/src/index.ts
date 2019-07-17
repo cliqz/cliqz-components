@@ -1,2 +1,5 @@
-export { default as defaultDatabase } from './logo-database';
-export { default } from './logo';
+import getLogo from './logo';
+import defaultDatabase from './logo-database';
+
+export default getLogo;
+export { defaultDatabase };
