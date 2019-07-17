@@ -53,120 +53,129 @@ interface MovieState {
   day: number;
   limit: boolean;
   locationContainerHovered: boolean;
-  width: number;
 }
 
 const CINEMA_LIMIT = 2;
 
-const styles = (width: number = 0, active: boolean = false) => {
-  const isSmallScreen = width < 480;
-  return StyleSheet.create({
-    cinemaAddressContainer: {
-      flexDirection: 'row',
-    },
-    cinemaAddressText: {
-      color: '#757575',
-      fontSize: 13.5,
-    },
-    cinemaContainer: {
-      alignItems: 'center',
-      borderBottomWidth: 0.5,
-      borderColor: 'rgba(0, 0, 0, 0.04)',
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      maxWidth: 584,
-      overflow: 'hidden',
-      paddingBottom: 16,
-      paddingTop: 16,
-    },
-    cinemaDistanceText: {
-      color: 'rgba(21, 125, 54, 1)',
-      fontSize: 13.5,
-      paddingRight: 5,
-    },
-    cinemaHeaderContainer: {
-      flex: 2,
-      minWidth: 320,
-    },
-    cinemaNameText: {
-      color: '#212121',
-      fontSize: 16,
-    },
-    cityContainer: {
-      alignItems: 'center',
-      backgroundColor: '#EEEEEE', // TODO: ask alexei
-      flexDirection: 'row',
-    },
-    cityIcon: {
-      height: 15,
-      marginRight: 5,
-      width: 11,
-    },
-    cityLocationContainer: {
-      height: 32,
-      marginTop: 11,
-      paddingLeft: 5,
-      paddingRight: 5,
-      width: isSmallScreen ? (width - 5) / 2 : 147.5,
-    },
-    cityText: {
-      color: '#616161',
-      fontSize: 13.5,
-    },
-    container: {
-      width,
-    },
-    locationContainer: {
-      alignItems: 'center',
-      borderColor: active ? 'rgba(21, 125, 54, 1)' : 'rgba(21, 125, 54, 0.2)',
-      borderWidth: 1,
-      justifyContent: 'center',
-      marginLeft: 5,
-    },
-    locationText: {
-      color: 'rgba(21, 125, 54, 1)',
-      fontSize: 13.5,
-    },
-    moreLessButton: {
-      alignItems: isSmallScreen ? 'center' : 'flex-start',
-      height: 51,
-      paddingBottom: 16,
-      paddingTop: 16,
-    },
-    moreLessButtonText: {
-      color: '#757575',
-      fontSize: 14,
-      fontWeight: '500',
-      textTransform: 'uppercase',
-    },
-    movieTitle: {
-      color: '#212121',
-      fontSize: 19.5,
-      marginTop: 11,
-    },
-    movieTitleContainer: {
-      height: 46,
-      justifyContent: 'center',
-    },
-    showTimesContainer: {
-      alignItems: 'center',
-      flex: 1,
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      minWidth: 160,
-    },
-    tableHeadersContainer: {
-      flexDirection: 'row',
-      height: 40, // TODO: fix scrollview in react-native web library
-      overflow: 'hidden',
-    },
-    title: {
-      color: '#757575',
-      fontSize: 19.5,
-      fontWeight: '400',
-    },
-  });
-};
+const styles = StyleSheet.create({
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  cinemaAddressContainer: {
+    flexDirection: 'row',
+  },
+  cinemaAddressText: {
+    color: '#757575',
+    fontSize: 13.5,
+  },
+  cinemaContainer: {
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: 'rgba(0, 0, 0, 0.04)',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    maxWidth: 584,
+    overflow: 'hidden',
+    paddingBottom: 16,
+    paddingTop: 16,
+  },
+  cinemaDistanceText: {
+    color: 'rgba(21, 125, 54, 1)',
+    fontSize: 13.5,
+    paddingRight: 5,
+  },
+  cinemaHeaderContainer: {
+    flexBasis: 320,
+    flexGrow: 2,
+    flexShrink: 1,
+  },
+  cinemaNameText: {
+    color: '#212121',
+    fontSize: 16,
+  },
+  cityContainer: {
+    alignItems: 'center',
+    backgroundColor: '#EEEEEE', // TODO: ask alexei
+    flexDirection: 'row',
+  },
+  cityIcon: {
+    height: 15,
+    marginLeft: 5,
+    marginRight: 5,
+    width: 11,
+  },
+  cityLocationContainer: {
+    flexBasis: 0,
+    flexGrow: 1,
+    height: 32,
+    marginTop: 11,
+  },
+  cityText: {
+    color: '#616161',
+    fontSize: 13.5,
+  },
+  container: {
+    maxWidth: 584,
+  },
+  divider: {
+    borderBottomColor: 'rgba(0, 0, 0, 0.04)',
+    borderBottomWidth: 1,
+    bottom: 0,
+    left: 0,
+    position: 'absolute',
+    right: 0,
+  },
+  locationContainer: {
+    alignItems: 'center',
+    borderWidth: 1,
+    cursor: 'pointer',
+    justifyContent: 'center',
+    marginLeft: 5,
+  },
+  locationText: {
+    color: 'rgba(21, 125, 54, 1)',
+    fontSize: 13.5,
+  },
+  moreLessButton: {
+    alignItems: 'center',
+    height: 42,
+    paddingBottom: 12,
+    paddingTop: 12,
+  },
+  moreLessButtonText: {
+    color: '#757575',
+    fontSize: 14,
+    fontWeight: '500',
+    textTransform: 'uppercase',
+  },
+  movieTitle: {
+    color: '#212121',
+    fontSize: 19.5,
+    marginTop: 11,
+  },
+  movieTitleContainer: {
+    height: 46,
+    justifyContent: 'center',
+  },
+  showTimesContainer: {
+    alignItems: 'center',
+    flexBasis: 160,
+    flexGrow: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  tableHeadersContainer: {
+    flexDirection: 'row',
+    height: 40, // TODO: fix scrollview in react-native web library
+    overflow: 'hidden',
+  },
+  title: {
+    color: '#757575',
+    fontSize: 19.5,
+    fontWeight: '400',
+  },
+});
 
 export class MovieShowtimes extends React.PureComponent<
   MovieProps,
@@ -176,16 +185,7 @@ export class MovieShowtimes extends React.PureComponent<
     day: 0,
     limit: true,
     locationContainerHovered: false,
-    width: Dimensions.get('window').width,
   };
-
-  public componentDidMount() {
-    Dimensions.addEventListener('change', this.onDimensionsChanged);
-  }
-
-  public componentWillUnmount() {
-    Dimensions.removeEventListener('change', this.onDimensionsChanged);
-  }
 
   private onLocationFocus = () => {
     this.setState({ locationContainerHovered: true });
@@ -200,44 +200,49 @@ export class MovieShowtimes extends React.PureComponent<
     const { data } = this.props.data.snippet.extra;
     const { city, showdates, title } = data;
     const cinemaCount = showdates[this.state.day].cinema_list.length;
-    const width = this.state.width;
     return (
-      <View style={styles(width).container}>
-        <Text style={styles().title}>Vorstellungen</Text>
-        <View style={{ flexDirection: 'row' }}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Vorstellungen</Text>
+        <View style={styles.buttonsContainer}>
           <View
-            style={[styles(width).cityLocationContainer, styles().cityContainer]}
+            style={[styles.cityLocationContainer, styles.cityContainer]}
           >
             <Image
               source={local ? require('./geo-icon-green.png') : require('./geo-icon.png')}
-              style={styles().cityIcon}
+              style={styles.cityIcon}
             />
-            <Text style={styles().cityText}>{city}</Text>
+            <Text style={styles.cityText}>{city}</Text>
           </View>
           {!local && (
-            <HoverComponent onMouseEnter={this.onLocationFocus} onMouseLeave={this.onLocationBlur}>
+            <HoverComponent
+              styles={{ flexGrow: 1, flexBasis: 0 }}
+              onMouseEnter={this.onLocationFocus}
+              onMouseLeave={this.onLocationBlur}>
               <View
                 style={[
-                  styles(width).cityLocationContainer,
-                  styles(0, this.state.locationContainerHovered).locationContainer
+                  styles.cityLocationContainer,
+                  styles.locationContainer,
+                  { borderColor: this.state.locationContainerHovered ? 'rgba(21, 125, 54, 1)' : 'rgba(21, 125, 54, 0.2)' }
                 ]}
               >
-                <Text style={styles().locationText}>In meiner Nähe</Text>
+                <Text style={styles.locationText} numberOfLines={1}>In meiner Nähe</Text>                
               </View>
             </HoverComponent>
           )}
         </View>
 
-        <View style={styles().movieTitleContainer}>
-          <Text style={styles().movieTitle}>{title}</Text>
+        <View style={styles.movieTitleContainer}>
+          <Text style={styles.movieTitle}>{title}</Text>
         </View>
 
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          style={styles().tableHeadersContainer}
+          style={styles.tableHeadersContainer}
+          contentContainerStyle={{ flexGrow: 1 }}
         >
           {showdates.map(({ date }, idx) => this.displayDate(date, idx))}
+          <View style={styles.divider}></View>
         </ScrollView>
 
         <View>
@@ -248,8 +253,8 @@ export class MovieShowtimes extends React.PureComponent<
 
         {cinemaCount > CINEMA_LIMIT && (
           <TouchableWithoutFeedback onPress={this.onMoreLessButtonPressed}>
-            <View style={styles(width).moreLessButton}>
-              <Text style={styles().moreLessButtonText}>
+            <View style={styles.moreLessButton}>
+              <Text style={styles.moreLessButtonText}>
                 {this.state.limit ? 'More' : 'Less'}
               </Text>
             </View>
@@ -258,10 +263,6 @@ export class MovieShowtimes extends React.PureComponent<
       </View>
     );
   }
-
-  private onDimensionsChanged = ({ window }: any) => {
-    this.setState({ width: window.width });
-  };
 
   private onMoreLessButtonPressed = () => {
     this.setState(({ limit }) => ({
@@ -275,26 +276,25 @@ export class MovieShowtimes extends React.PureComponent<
   }
 
   private displayCinema(cinema: Cinema) {
-    const width = this.state.width;
     return (
-      <View key={cinema.address} style={styles().cinemaContainer}>
+      <View key={cinema.address} style={styles.cinemaContainer}>
         {/* link to cinema.website */}
-        <View style={styles(width).cinemaHeaderContainer}>
-          <Text style={styles().cinemaNameText} numberOfLines={1}>
+        <View style={styles.cinemaHeaderContainer}>
+          <Text style={styles.cinemaNameText} numberOfLines={2}>
             {cinema.name}
           </Text>
-          <View style={styles().cinemaAddressContainer}>
+          <View style={styles.cinemaAddressContainer}>
             {this.props.local && cinema.distance && (
-              <Text style={styles().cinemaDistanceText} numberOfLines={1}>
+              <Text style={styles.cinemaDistanceText} numberOfLines={1}>
                 {this.formatDistance(cinema.distance)}
               </Text>
             )}
-            <Text style={styles().cinemaAddressText} numberOfLines={1}>
+            <Text style={styles.cinemaAddressText} numberOfLines={2}>
               {cinema.address}
             </Text>
           </View>
         </View>
-        <View style={styles(width).showTimesContainer}>
+        <View style={styles.showTimesContainer}>
           {cinema.showtimes.map((showtime: ShowTime) => (
             <ShowTimeComponent key={showtime.booking_link} data={showtime} />
           ))}
@@ -307,8 +307,8 @@ export class MovieShowtimes extends React.PureComponent<
     const isActive = idx === this.state.day;
     const boxStyle: StyleProp<ViewStyle> = {
       alignItems: 'center',
-      borderBottomWidth: isActive ? 2.5 : 0.5,
-      borderColor: isActive ? '#2979FF' : 'rgba(0, 0, 0, 0.04)',
+      borderBottomWidth: isActive ? 2 : 0,
+      borderColor: isActive ? '#2979FF' : 'transparent',
       justifyContent: 'flex-end',
       marginBottom: isActive ? 0 : 1,
       padding: 5,
