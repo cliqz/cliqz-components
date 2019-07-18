@@ -24,15 +24,29 @@ interface Cinema {
   website: string;
 }
 
+interface CinemaInfo {
+  name: string;
+  address: string;
+  phonenumber: string;
+}
+
+interface Movie {
+  showtimes: ShowTime[];
+  title: string;
+  website: string;
+}
+
 interface ShowDate {
-  cinema_list: Cinema[];
+  cinema_list?: Cinema[];
+  movie_list?: Movie[];
   date: string;
 }
 
 interface MovieData {
   city: string;
   showdates: ShowDate[];
-  title: string;
+  title?: string;
+  cinema?: CinemaInfo;
 }
 
 interface MovieSnippet {
@@ -55,7 +69,7 @@ interface MovieState {
   locationContainerHovered: boolean;
 }
 
-const CINEMA_LIMIT = 2;
+const ROW_LIMIT = 2;
 
 const styles = StyleSheet.create({
   buttonsContainer: {
@@ -72,13 +86,13 @@ const styles = StyleSheet.create({
   cinemaContainer: {
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderColor: 'rgba(0, 0, 0, 0.04)',
+    borderColor: 'rgba(0, 0, 0, 0.08)',
     flexDirection: 'row',
     flexWrap: 'wrap',
     maxWidth: 584,
     overflow: 'hidden',
-    paddingBottom: 16,
-    paddingTop: 16,
+    paddingBottom: 10,
+    paddingTop: 10,
   },
   cinemaDistanceText: {
     color: 'rgba(21, 125, 54, 1)',
@@ -86,7 +100,7 @@ const styles = StyleSheet.create({
     paddingRight: 5,
   },
   cinemaHeaderContainer: {
-    flexBasis: 320,
+    flexBasis: 240,
     flexGrow: 2,
     flexShrink: 1,
   },
@@ -119,7 +133,7 @@ const styles = StyleSheet.create({
     maxWidth: 584,
   },
   divider: {
-    borderBottomColor: 'rgba(0, 0, 0, 0.04)',
+    borderBottomColor: 'rgba(0, 0, 0, 0.08)',
     borderBottomWidth: 1,
     bottom: 0,
     left: 0,
@@ -155,12 +169,11 @@ const styles = StyleSheet.create({
     marginTop: 11,
   },
   movieTitleContainer: {
-    height: 46,
     justifyContent: 'center',
   },
   showTimesContainer: {
     alignItems: 'center',
-    flexBasis: 160,
+    flexBasis: 240,
     flexGrow: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -198,8 +211,12 @@ export class MovieShowtimes extends React.PureComponent<
   public render() {
     const local = this.props.local;
     const { data } = this.props.data.snippet.extra;
-    const { city, showdates, title } = data;
-    const cinemaCount = showdates[this.state.day].cinema_list.length;
+    const { city, showdates } = data;
+    const title = data.cinema ? data.cinema.name : data.title;
+    const address = data.cinema ? data.cinema.address : '';
+    const movieList = showdates[this.state.day].movie_list;
+    const cinemaList = showdates[this.state.day].cinema_list;
+    const rowCount = (movieList || cinemaList || []).length;
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Vorstellungen</Text>
@@ -233,6 +250,9 @@ export class MovieShowtimes extends React.PureComponent<
 
         <View style={styles.movieTitleContainer}>
           <Text style={styles.movieTitle}>{title}</Text>
+          <Text style={styles.cinemaAddressText} numberOfLines={2}>
+            {address}
+          </Text>
         </View>
 
         <ScrollView
@@ -245,13 +265,22 @@ export class MovieShowtimes extends React.PureComponent<
           <View style={styles.divider}></View>
         </ScrollView>
 
-        <View>
-          {showdates[this.state.day].cinema_list
-            .slice(0, this.state.limit ? CINEMA_LIMIT : 100)
-            .map((cinema) => this.displayCinema(cinema))}
-        </View>
+        {data.cinema &&
+          <View>
+            {(movieList || [])
+              .slice(0, this.state.limit ? ROW_LIMIT : 100)
+              .map((movie) => this.displayMovie(movie))}
+          </View>
+        }
+        {!data.cinema &&
+          <View>
+            {(cinemaList || [])
+              .slice(0, this.state.limit ? ROW_LIMIT : 100)
+              .map((cinema) => this.displayCinema(cinema))}
+          </View>
+        }
 
-        {cinemaCount > CINEMA_LIMIT && (
+        {rowCount > ROW_LIMIT && (
           <TouchableWithoutFeedback onPress={this.onMoreLessButtonPressed}>
             <View style={styles.moreLessButton}>
               <Text style={styles.moreLessButtonText}>
@@ -273,6 +302,23 @@ export class MovieShowtimes extends React.PureComponent<
   private formatDistance = (meters: number) => {
     if (meters < 1000) { return `${Math.floor(meters)} m`; };
     return `${Math.floor(meters / 100) / 10} km`;
+  }
+
+  private displayMovie(movie: Movie) {
+    return (
+      <View key={movie.title} style={styles.cinemaContainer}>
+        <View style={styles.cinemaHeaderContainer}>
+          <Text style={styles.cinemaNameText} numberOfLines={2}>
+            {movie.title}
+          </Text>
+        </View>
+        <View style={styles.showTimesContainer}>
+          {movie.showtimes.map((showtime: ShowTime) => (
+            <ShowTimeComponent key={showtime.booking_link} data={showtime} />
+          ))}
+        </View>
+      </View>
+    );
   }
 
   private displayCinema(cinema: Cinema) {
