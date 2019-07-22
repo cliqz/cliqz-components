@@ -40,7 +40,7 @@ interface TimeProps {
 
 const styles = StyleSheet.create({
   cityText: {
-    color: '#424242',
+    color: '#616161',
     fontSize: 13.5,
     fontWeight: '400',
   },
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     width: 120,
   },
   timeZoneCity: {
-    color: '#424242',
+    color: '#616161',
     fontSize: 14,
     fontWeight: '400',
   },
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   timeZonesContainer: {
-    borderColor: 'rgba(0, 0, 0, 0.04)',
+    borderColor: 'rgba(0, 0, 0, 0.08)',
     borderTopWidth: 1,
     height: 90,
   },
@@ -144,4 +144,3 @@ export class Time extends React.PureComponent <
       </View>
   )}
 }
-       
