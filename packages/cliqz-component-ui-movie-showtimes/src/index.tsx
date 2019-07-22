@@ -10,6 +10,7 @@ import {
   TouchableWithoutFeedback,
   View,
   ViewStyle,
+  ImageStyle,
 } from 'react-native';
 
 import ShowTimeComponent, { ShowTime } from './ShowTime';
@@ -61,6 +62,7 @@ interface MovieProps {
     snippet: MovieSnippet;
   };
   local: boolean;
+  styles?: Partial<MovieStyle>;
 }
 
 interface MovieState {
@@ -70,8 +72,41 @@ interface MovieState {
 }
 
 const ROW_LIMIT = 2;
+type WebStyles = {
+  cursor?: "pointer" | "default";
+};
+type CliqzViewStyle = ViewStyle & WebStyles;
 
-const styles = StyleSheet.create({
+
+type MovieStyle = {
+  // Image styles
+  cityIcon: ImageStyle;
+  // View styles
+  buttonsContainer: CliqzViewStyle;
+  cinemaAddressContainer: CliqzViewStyle;
+  cinemaContainer: CliqzViewStyle;
+  cinemaHeaderContainer: CliqzViewStyle;
+  cityContainer: CliqzViewStyle;
+  cityLocationContainer: CliqzViewStyle;
+  container: CliqzViewStyle;
+  divider: CliqzViewStyle;
+  locationContainer: CliqzViewStyle;
+  moreLessButton: CliqzViewStyle;
+  movieTitleContainer: CliqzViewStyle;
+  showTimesContainer: CliqzViewStyle;
+  tableHeadersContainer: CliqzViewStyle;
+  // Text styles
+  cinemaAddressText: TextStyle;
+  cinemaDistanceText: TextStyle;
+  cinemaNameText: TextStyle;
+  cityText: TextStyle;
+  locationText: TextStyle;
+  moreLessButtonText: TextStyle;
+  movieTitle: TextStyle;
+  title: TextStyle;
+};
+
+const _baseStyle: MovieStyle = {
   buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -188,7 +223,9 @@ const styles = StyleSheet.create({
     fontSize: 19.5,
     fontWeight: '400',
   },
-});
+};
+
+const baseStyles: MovieStyle = StyleSheet.create<MovieStyle>(_baseStyle);
 
 export class MovieShowtimes extends React.PureComponent<
   MovieProps,
@@ -208,6 +245,23 @@ export class MovieShowtimes extends React.PureComponent<
     this.setState({ locationContainerHovered: false });
   }
 
+  private getStyle(): MovieStyle {
+    const styleOverwrites: Partial<MovieStyle> | undefined = this.props.styles;
+
+    if (styleOverwrites === undefined) {
+      return _baseStyle;
+    }
+
+    const allStyles: MovieStyle = _baseStyle;
+
+    for (const key of Object.keys(styleOverwrites)) {
+      // @ts-ignore
+      allStyles[key] = { ...allStyles[key], ...styleOverwrites[key] };
+    }
+
+    return allStyles;
+  }
+
   public render() {
     const local = this.props.local;
     const { data } = this.props.data.snippet.extra;
@@ -217,6 +271,7 @@ export class MovieShowtimes extends React.PureComponent<
     const movieList = showdates[this.state.day].movie_list;
     const cinemaList = showdates[this.state.day].cinema_list;
     const rowCount = (movieList || cinemaList || []).length;
+    const styles = this.getStyle();
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Vorstellungen</Text>
@@ -269,14 +324,14 @@ export class MovieShowtimes extends React.PureComponent<
           <View>
             {(movieList || [])
               .slice(0, this.state.limit ? ROW_LIMIT : 100)
-              .map((movie) => this.displayMovie(movie))}
+              .map((movie) => this.displayMovie(movie, styles))}
           </View>
         }
         {!data.cinema &&
           <View>
             {(cinemaList || [])
               .slice(0, this.state.limit ? ROW_LIMIT : 100)
-              .map((cinema) => this.displayCinema(cinema))}
+              .map((cinema) => this.displayCinema(cinema, styles))}
           </View>
         }
 
@@ -304,7 +359,7 @@ export class MovieShowtimes extends React.PureComponent<
     return `${Math.floor(meters / 100) / 10} km`;
   }
 
-  private displayMovie(movie: Movie) {
+  private displayMovie(movie: Movie, styles: MovieStyle) {
     return (
       <View key={movie.title} style={styles.cinemaContainer}>
         <View style={styles.cinemaHeaderContainer}>
@@ -321,7 +376,7 @@ export class MovieShowtimes extends React.PureComponent<
     );
   }
 
-  private displayCinema(cinema: Cinema) {
+  private displayCinema(cinema: Cinema, styles: MovieStyle) {
     return (
       <View key={cinema.address} style={styles.cinemaContainer}>
         {/* link to cinema.website */}
