@@ -2,19 +2,18 @@ import React from 'react';
 import {
   Dimensions,
   Image,
+  ImageStyle,
   ScrollView,
   StyleProp,
-  StyleSheet,
   Text,
   TextStyle,
   TouchableWithoutFeedback,
   View,
-  ViewStyle,
-  ImageStyle,
 } from 'react-native';
 
 import ShowTimeComponent, { ShowTime } from './ShowTime';
 import HoverComponent from './Hover';
+import { getStyle, CliqzViewStyle } from './styles';
 
 interface Cinema {
   address: string;
@@ -72,11 +71,6 @@ interface MovieState {
 }
 
 const ROW_LIMIT = 2;
-type WebStyles = {
-  cursor?: "pointer" | "default";
-};
-type CliqzViewStyle = ViewStyle & WebStyles;
-
 
 type MovieStyle = {
   // Image styles
@@ -106,7 +100,7 @@ type MovieStyle = {
   title: TextStyle;
 };
 
-const _baseStyle: MovieStyle = {
+const _baseStyles: MovieStyle = {
   buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -225,8 +219,6 @@ const _baseStyle: MovieStyle = {
   },
 };
 
-const baseStyles: MovieStyle = StyleSheet.create<MovieStyle>(_baseStyle);
-
 export class MovieShowtimes extends React.PureComponent<
   MovieProps,
   MovieState
@@ -245,23 +237,6 @@ export class MovieShowtimes extends React.PureComponent<
     this.setState({ locationContainerHovered: false });
   }
 
-  private getStyle(): MovieStyle {
-    const styleOverwrites: Partial<MovieStyle> | undefined = this.props.styles;
-
-    if (styleOverwrites === undefined) {
-      return _baseStyle;
-    }
-
-    const allStyles: MovieStyle = _baseStyle;
-
-    for (const key of Object.keys(styleOverwrites)) {
-      // @ts-ignore
-      allStyles[key] = { ...allStyles[key], ...styleOverwrites[key] };
-    }
-
-    return allStyles;
-  }
-
   public render() {
     const local = this.props.local;
     const { data } = this.props.data.snippet.extra;
@@ -271,7 +246,7 @@ export class MovieShowtimes extends React.PureComponent<
     const movieList = showdates[this.state.day].movie_list;
     const cinemaList = showdates[this.state.day].cinema_list;
     const rowCount = (movieList || cinemaList || []).length;
-    const styles = this.getStyle();
+    const styles = getStyle(_baseStyles, this.props.styles);
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Vorstellungen</Text>
@@ -406,7 +381,7 @@ export class MovieShowtimes extends React.PureComponent<
 
   private displayDate(date: string, idx: number) {
     const isActive = idx === this.state.day;
-    const boxStyle: StyleProp<ViewStyle> = {
+    const boxStyle: StyleProp<CliqzViewStyle> = {
       alignItems: 'center',
       borderBottomWidth: isActive ? 2 : 0,
       borderColor: isActive ? '#2979FF' : 'transparent',

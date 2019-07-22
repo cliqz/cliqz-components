@@ -7,6 +7,7 @@ storiesOf('Movie Showtimes', module).add('not local result', () => (
   <MovieShowtimes
     data={notLocalResult}
     local={false}
+    styles={{ cinemaNameText: {color: 'blue'} }}
   />
 ));
 
