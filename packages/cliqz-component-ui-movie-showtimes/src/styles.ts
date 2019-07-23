@@ -6,15 +6,19 @@ type WebStyles = {
 
 export type CliqzViewStyle = ViewStyle & WebStyles;
 
-export function getStyle<T>(baseStyles: T, styleOverwrites: Partial<T> | undefined): T {
-  if (styleOverwrites) {
-    for (const key of Object.keys(styleOverwrites)) {
-      // @ts-ignore
-      baseStyles[key] = { ...baseStyles[key], ...styleOverwrites[key] };
+type UpdateSpec<T> = {[P in keyof T]?: T[P] & UpdateSpec<T[P]>};
+
+export function getStyle<T>(base: T, partial: Partial<UpdateSpec<T>> = {}): T {
+  const result: T = {...base};
+
+  for (const key of (Object.keys(partial) as (Array<keyof T>))) {
+    const value: T[keyof T] | undefined = partial[key];
+    if (value !== undefined) {
+      result[key] = { ...result[key], ...value };
     }
   }
 
-  return baseStyles;
+  return result;
 }
 
 export function pickStyle<T, K extends keyof T>(fullStyles: Partial<T>, properties: K[]): Partial<T> {
