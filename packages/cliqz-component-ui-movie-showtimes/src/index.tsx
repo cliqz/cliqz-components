@@ -11,9 +11,9 @@ import {
   View,
 } from 'react-native';
 
-import ShowTimeComponent, { ShowTime } from './ShowTime';
+import ShowTimeComponent, { ShowTime, ShowTimeStyle } from './ShowTime';
 import HoverComponent from './Hover';
-import { getStyle, CliqzViewStyle } from './styles';
+import { CliqzViewStyle, getStyle, pickStyle } from './styles';
 
 interface Cinema {
   address: string;
@@ -61,7 +61,7 @@ interface MovieProps {
     snippet: MovieSnippet;
   };
   local: boolean;
-  styles?: Partial<MovieStyle>;
+  styles?: Partial<MovieStyle> & Partial<ShowTimeStyle>;
 }
 
 interface MovieState {
@@ -219,6 +219,13 @@ const _baseStyles: MovieStyle = {
   },
 };
 
+const showTimeStyleProperties: (keyof ShowTimeStyle)[] = [
+ 'showContainer',
+ 'showTimesTime',
+ 'showTimesSeparator',
+ 'showTimesTime',
+];
+
 export class MovieShowtimes extends React.PureComponent<
   MovieProps,
   MovieState
@@ -246,7 +253,13 @@ export class MovieShowtimes extends React.PureComponent<
     const movieList = showdates[this.state.day].movie_list;
     const cinemaList = showdates[this.state.day].cinema_list;
     const rowCount = (movieList || cinemaList || []).length;
+
     const styles = getStyle(_baseStyles, this.props.styles);
+
+    // Styles for ShowTimeComponent
+    const showTimeStyles =
+      pickStyle<MovieStyle & ShowTimeStyle, keyof ShowTimeStyle>(styles, showTimeStyleProperties);
+
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Vorstellungen</Text>
@@ -299,14 +312,14 @@ export class MovieShowtimes extends React.PureComponent<
           <View>
             {(movieList || [])
               .slice(0, this.state.limit ? ROW_LIMIT : 100)
-              .map((movie) => this.displayMovie(movie, styles))}
+              .map((movie) => this.displayMovie(movie, styles, showTimeStyles))}
           </View>
         }
         {!data.cinema &&
           <View>
             {(cinemaList || [])
               .slice(0, this.state.limit ? ROW_LIMIT : 100)
-              .map((cinema) => this.displayCinema(cinema, styles))}
+              .map((cinema) => this.displayCinema(cinema, styles, showTimeStyles))}
           </View>
         }
 
@@ -334,7 +347,7 @@ export class MovieShowtimes extends React.PureComponent<
     return `${Math.floor(meters / 100) / 10} km`;
   }
 
-  private displayMovie(movie: Movie, styles: MovieStyle) {
+  private displayMovie(movie: Movie, styles: MovieStyle, showTimeStyles: Partial<ShowTimeStyle>) {
     return (
       <View key={movie.title} style={styles.cinemaContainer}>
         <View style={styles.cinemaHeaderContainer}>
@@ -344,14 +357,14 @@ export class MovieShowtimes extends React.PureComponent<
         </View>
         <View style={styles.showTimesContainer}>
           {movie.showtimes.map((showtime: ShowTime) => (
-            <ShowTimeComponent key={showtime.booking_link} data={showtime} />
+            <ShowTimeComponent key={showtime.booking_link} data={showtime} styles={showTimeStyles} />
           ))}
         </View>
       </View>
     );
   }
 
-  private displayCinema(cinema: Cinema, styles: MovieStyle) {
+  private displayCinema(cinema: Cinema, styles: MovieStyle, showTimeStyles: Partial<ShowTimeStyle>) {
     return (
       <View key={cinema.address} style={styles.cinemaContainer}>
         {/* link to cinema.website */}
@@ -372,7 +385,7 @@ export class MovieShowtimes extends React.PureComponent<
         </View>
         <View style={styles.showTimesContainer}>
           {cinema.showtimes.map((showtime: ShowTime) => (
-            <ShowTimeComponent key={showtime.booking_link} data={showtime} />
+            <ShowTimeComponent key={showtime.booking_link} data={showtime} styles={showTimeStyles} />
           ))}
         </View>
       </View>

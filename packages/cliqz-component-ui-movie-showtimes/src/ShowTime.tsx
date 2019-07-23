@@ -8,7 +8,7 @@ import {
 import HoverComponent from './Hover';
 import { getStyle, CliqzViewStyle } from './styles';
 
-type ShowTimeStyle = {
+export type ShowTimeStyle = {
   // View styles
   showContainer: CliqzViewStyle;
   showTimesSeparator: CliqzViewStyle;
