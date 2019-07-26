@@ -85,5 +85,7 @@
   "workspaces": [
     "./packages/*"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "react-native-svg": "^9.5.3"
+  }
 }
