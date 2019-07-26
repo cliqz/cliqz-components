@@ -1,6 +1,6 @@
 {
   "name": "@cliqz/component-ui-movie-showtimes",
-  "version": "0.3.1",
+  "version": "0.3.3",
   "license": "MPL-2.0",
   "peerDependencies": {
     "react": "^16.8.6",
