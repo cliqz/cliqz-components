@@ -1,13 +1,23 @@
 import React from 'react';
 import {
-  StyleSheet,
   Text,
+  TextStyle,
   View,
 } from 'react-native';
 
 import HoverComponent from './Hover';
+import { getStyle, CliqzViewStyle } from './styles';
 
-const showTimesStyles = (active: boolean) => StyleSheet.create({
+export type ShowTimeStyle = {
+  // View styles
+  showContainer: CliqzViewStyle;
+  showTimesSeparator: CliqzViewStyle;
+  // Text styles
+  showTimesExtraText: TextStyle;
+  showTimesTime: TextStyle;
+};
+
+const _baseStyles = (active: boolean): ShowTimeStyle => ({
   showContainer: {
     backgroundColor: active ? '#311B92' : 'rgba(49, 27, 146, 0.05)',
     borderRadius: 4,
@@ -41,6 +51,7 @@ const showTimesStyles = (active: boolean) => StyleSheet.create({
 
 interface ShowTimeProps {
   data: ShowTime;
+  styles?: Partial<ShowTimeStyle>;
 }
 
 export interface ShowTime {
@@ -69,21 +80,22 @@ export default class ShowTimeComponent extends React.Component<
 
   render() {
     const data = this.props.data;
+    const styles = getStyle(_baseStyles(this.state.isActive), this.props.styles);
     return (
       <HoverComponent onMouseEnter={this.onShowTimeFocus} onMouseLeave={this.onShowTimeBlur}>
-        <View style={showTimesStyles(this.state.isActive).showContainer}>
-          <Text style={showTimesStyles(this.state.isActive).showTimesTime}>
+        <View style={styles.showContainer}>
+          <Text style={styles.showTimesTime}>
             {data.start_at.substr(11, 5)}
           </Text>
           {(data.is_3d || Boolean(data.subtitle_language)) && (
-            <View style={showTimesStyles(this.state.isActive).showTimesSeparator} />
+            <View style={styles.showTimesSeparator} />
           )}
           <View>
             {data.is_3d && (
-              <Text style={showTimesStyles(this.state.isActive).showTimesExtraText}>3D</Text>
+              <Text style={styles.showTimesExtraText}>3D</Text>
             )}
             {Boolean(data.subtitle_language) && (
-              <Text style={showTimesStyles(this.state.isActive).showTimesExtraText}>
+              <Text style={styles.showTimesExtraText}>
                 {data.subtitle_language}
               </Text>
             )}
