@@ -16,6 +16,7 @@ const newConfig = ({ config }) => {
     'react-native/Libraries/Renderer/shims/ReactNativePropRegistry': 'react-native-web/dist/modules/ReactNativePropRegistry',
     'react-native': 'react-native-web',
     'react-native-svg/index.js': 'react-native-svg/index.web.js',
+    'cliqz-logo-database': path.join(basePath, 'cliqz-logo-database', 'src'),
   });
   config.module.rules.push({
     test: /\.(ts|tsx)$/,
