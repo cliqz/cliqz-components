@@ -58,7 +58,6 @@
     "webpack": "^4.30.0"
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap && lerna link",
     "build-storybook": "build-storybook",
     "prebuild": "lerna run 'tsc lint'",
     "build": "lerna exec 'BABEL_ENV=build babel src --root-mode upward --out-dir dist --source-maps --extensions .ts,.tsx --delete-dir-on-start --no-comments --copy-files'",

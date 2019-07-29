@@ -4,11 +4,9 @@ A cross platform components library for React, targetting react-native and react
 
 ## Start development
 
-Install dependencies with `yarn install --frozen-lockfile`
+Install dependencies and link packages with each other with `npx lerna boostrap`
 
-Link packages with each other with `yarn bootstrap`
-
-Start development server (storybook) `yarn storybook`
+Start development server (storybook) `yarn storybook`.
 
 ## Project structure
 
