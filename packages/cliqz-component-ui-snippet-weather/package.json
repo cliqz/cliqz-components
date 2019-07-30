@@ -18,12 +18,27 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Cliqz GmbH",
   "description": "",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
     "react-native-svg": "^9.5.3"
+  },
+  "contributors": [
+    "Tamara Merkulova <tamara@cliqz.com>",
+    "Krzysztof Jan Modras <krzysztof@cliqz.com>",
+    "Trishul <trishul@cliqz.com>",
+    "Khaled Tantawy <khaled@cliqz.com>",
+    "Mai Vinh Tuong <mai@cliqz.com>"
+  ],
+  "bugs": {
+    "url": "https://github.com/cliqz/cliqz-components/issues"
+  },
+  "homepage": "https://github.com/cliqz/cliqz-components#readme",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:cliqz/cliqz-components.git"
   }
 }

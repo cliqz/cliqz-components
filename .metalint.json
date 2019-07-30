@@ -1,0 +1,34 @@
+{
+  "license": {
+    "name": "MPL-2.0",
+    "date": "2019-present",
+    "owner": "Cliqz GmbH",
+    "include": [
+      "./LICENSE",
+      "./packages/*/LICENSE",
+      "./packages/*/{src,test,example}/**/*.{ts,jsx,js}"
+    ],
+    "exclude": [
+    ]
+  },
+  "workspaces": {
+    "pkg": {
+      "author": "Cliqz GmbH",
+      "contributors": [
+        "Tamara Merkulova <tamara@cliqz.com>",
+        "Krzysztof Jan Modras <krzysztof@cliqz.com>",
+        "Trishul <trishul@cliqz.com>",
+        "Khaled Tantawy <khaled@cliqz.com>",
+        "Mai Vinh Tuong <mai@cliqz.com>"
+      ],
+      "bugs": {
+        "url": "https://github.com/cliqz/cliqz-components/issues"
+      },
+      "homepage": "https://github.com/cliqz/cliqz-components#readme",
+      "repository": {
+        "type": "git",
+        "url": "git@github.com:cliqz/cliqz-components.git"
+      }
+    }
+  }
+}
