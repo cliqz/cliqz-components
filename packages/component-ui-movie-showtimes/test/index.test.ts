@@ -6,8 +6,8 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-import getLogo from './logo';
-import defaultDatabase from './logo-database';
-
-export default getLogo;
-export { defaultDatabase };
+describe('Snippet Movie Showtimes', () => {
+  it('renders', () => {
+    expect(true).toBe(true);
+  });
+});

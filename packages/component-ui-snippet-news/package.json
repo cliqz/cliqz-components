@@ -1,19 +1,29 @@
 {
-  "name": "cliqz-logo-database",
-  "description": "Cliqz logo database",
+  "name": "@cliqz/component-ui-snippet-news",
   "version": "0.4.0",
+  "license": "MPL-2.0",
+  "peerDependencies": {
+    "react": "^16.8.6",
+    "react-native": "0.58.6"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "license": "MPL-2.0",
-  "dependencies": {
-    "tldts": "^5.0.3"
+  "directories": {
+    "test": "test"
   },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Cliqz GmbH",
+  "description": "",
   "publishConfig": {
     "access": "public"
   },
+  "gitHead": "85e421ac516dacb5c7c149a45e8da990049f923b",
   "contributors": [
     "Tamara Merkulova <tamara@cliqz.com>",
     "Krzysztof Jan Modras <krzysztof@cliqz.com>",
@@ -28,6 +38,5 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:cliqz/cliqz-components.git"
-  },
-  "author": "Cliqz GmbH"
+  }
 }
