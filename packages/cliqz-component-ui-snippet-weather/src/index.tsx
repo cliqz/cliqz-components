@@ -1,12 +1,15 @@
 import React from 'react';
 import {
   Image,
+  ImageStyle,
   ScrollView,
-  StyleSheet,
   Text,
+  TextStyle,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+
+import { CliqzViewStyle, getStyle } from './styles';
 
 import Svg, {
   Defs,
@@ -96,6 +99,10 @@ interface WeatherProps {
       }
     }
   };
+
+  styles?: Partial<WeatherStyle>;
+  moreButtonText?: string;
+  lessButtonText?: string;
 }
 
 interface WeatherState {
@@ -132,7 +139,40 @@ const tertiaryGrey = '#9E9E9E';
 const lightGrey = '#eee';
 const white = '#fff';
 
-const styles = StyleSheet.create({
+type WeatherStyle = {
+  activeText: TextStyle,
+  container: CliqzViewStyle,
+  chartWrapper: CliqzViewStyle,
+  dayText: TextStyle,
+  dayWrapper: CliqzViewStyle,
+  dayWrapperActive: CliqzViewStyle,
+  displayInlineWrapper: CliqzViewStyle,
+  divider: CliqzViewStyle,
+  grid: CliqzViewStyle,
+  gridWrapper: CliqzViewStyle,
+  gutterBottom: CliqzViewStyle,
+  h1: TextStyle,
+  h3: TextStyle,
+  h5: TextStyle,
+  overline: TextStyle,
+  headerLeftColumn: CliqzViewStyle,
+  moreLessButton: CliqzViewStyle,
+  moreLessButtonText: TextStyle,
+  moreLessButtonWrapper: CliqzViewStyle,
+  noLeftBorder: CliqzViewStyle,
+  rightSideInfo: CliqzViewStyle,
+  selfCenter: CliqzViewStyle,
+  svgWrapper: CliqzViewStyle,
+  timelineText: TextStyle,
+  timelineWrapper: CliqzViewStyle,
+  unitSelectionButtonText: TextStyle,
+  windColumn: CliqzViewStyle,
+  windColumnContent: TextStyle,
+  windText: TextStyle,
+  windWrapper: CliqzViewStyle,
+};
+
+const _baseStyles: WeatherStyle = {
   activeText: {
     color: primalGrey,
   },
@@ -204,16 +244,21 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   moreLessButton: {
-    alignItems: 'center',
+    alignSelf: 'center',
     height: 65,
     paddingBottom: 24,
     paddingTop: 24,
+    width: 100,
   },
   moreLessButtonText: {
     color: secondaryGrey,
     fontSize: 14,
     fontWeight: '500',
     textTransform: 'uppercase',
+    textAlign: 'center',
+  },
+  moreLessButtonWrapper: {
+
   },
   noLeftBorder: {
     borderLeftWidth: 0,
@@ -268,7 +313,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: '100%',
   },
-});
+};
 
 const getCoordinates = (values: number[], labels: number[], meta: Meta) => {
   const { min, max, width, height } = meta;
@@ -491,6 +536,7 @@ export class Weather extends React.PureComponent <
   public render() {
     const { precipitation, humidity, wind, uv } = this.otherInfo;
     const activeDay = this.days[this.state.currentDay];
+    const styles = getStyle(_baseStyles, this.props.styles);
 
     return (
       <View style={styles.container}>
@@ -528,17 +574,17 @@ export class Weather extends React.PureComponent <
         </View>
         <View style={styles.chartWrapper}>
           {/* TEMPERATURE */}
-          {this.displaySvgChart(this.temperature, 'grad1', 'rgba(255, 204, 0, 0.2)', '#fc0')}
+          {this.displaySvgChart(styles, this.temperature, 'grad1', 'rgba(255, 204, 0, 0.2)', '#fc0')}
           {/* PRECIPITATION */}
           {this.state.showExtraInfo &&
             <View>
               <View style={styles.divider}>
-                <Text style={[styles.gutterBottom, styles.overline]}>Precipitation</Text>
+                <Text style={[styles.gutterBottom, styles.overline]}>{precipitation.label}</Text>
               </View>
-              {this.displaySvgChart(this.precipitation, 'grad2', 'rgba(110, 208, 246, 0.2)', '#61C3EA')}
+              {this.displaySvgChart(styles, this.precipitation, 'grad2', 'rgba(110, 208, 246, 0.2)', '#61C3EA')}
               {/* WIND */}
               <View style={styles.divider}>
-                <Text style={[styles.gutterBottom, styles.overline]}>Wind ({this.windUnit})</Text>
+                <Text style={[styles.gutterBottom, styles.overline]}>{wind.label} ({this.windUnit})</Text>
               </View>
               <View style={[styles.displayInlineWrapper, styles.windWrapper]}>
                 {this.wind.map((item, idx: number) =>
@@ -569,13 +615,15 @@ export class Weather extends React.PureComponent <
           </View>}
         </View>
 
-        <TouchableWithoutFeedback onPress={this.onMoreLessButtonPressed}>
-          <View style={styles.moreLessButton}>
-            <Text style={styles.moreLessButtonText}>
-              {this.state.showExtraInfo ? 'Less' : 'More'}
-            </Text>
-          </View>
-        </TouchableWithoutFeedback>
+        <View style={styles.moreLessButtonWrapper}>
+          <TouchableWithoutFeedback onPress={this.onMoreLessButtonPressed}>
+            <View style={styles.moreLessButton}>
+              <Text style={styles.moreLessButtonText}>
+                {this.state.showExtraInfo ? (this.props.lessButtonText || 'Less') : (this.props.moreButtonText || 'More')}
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
         
         <View style={styles.displayInlineWrapper}>
           {this.days.map((day, idx) =>
@@ -583,7 +631,7 @@ export class Weather extends React.PureComponent <
               <View style={day.isActive ? [styles.dayWrapper, styles.dayWrapperActive] : styles.dayWrapper}>
                 <Text style={[styles.selfCenter, styles.dayText]}>{day.weekday}</Text>
                 <Image
-                  style={[styles.selfCenter, { width: 40, height: 40 }]}
+                  style={{ width: 40, height: 40, alignSelf: 'center', justifyContent: 'center' }}
                   source={{ uri: day.icon }}
                 />
                 <View style={[styles.selfCenter, styles.displayInlineWrapper, { marginTop: 4 }]}>
@@ -598,7 +646,7 @@ export class Weather extends React.PureComponent <
     )
   };
 
-  private displaySvgChart(data: ChartData, gradId: string, stopColor: string, strokeColor: string) {
+  private displaySvgChart(styles: WeatherStyle, data: ChartData, gradId: string, stopColor: string, strokeColor: string) {
     return (
       <View style={styles.svgWrapper}>
         <Svg width="100%" height="100%" viewBox="-12 -33 584 90">

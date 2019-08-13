@@ -4,5 +4,5 @@ import { Weather } from '../src/index';
 import weatherResult from './weather-result';
 
 storiesOf('WeatherSnippet', module).add('default', () => (
-  <Weather data={weatherResult}/>
+  <Weather data={weatherResult} />
 ));
