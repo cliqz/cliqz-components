@@ -1,6 +1,6 @@
 {
   "name": "@cliqz/component-ui-logo",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "license": "MPL-2.0",
   "peerDependencies": {
     "react": "^16.8.6",
@@ -24,6 +24,6 @@
     "access": "public"
   },
   "devDependencies": {
-    "cliqz-logo-database": "^0.4.1"
+    "cliqz-logo-database": "^0.4.2"
   }
 }
