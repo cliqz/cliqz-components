@@ -9,7 +9,7 @@ interface LogoDetails {
 
 export default function(
   url: string,
-  { database = defaultDatabase, version = 1502005705085 } = {},
+  { database = defaultDatabase, version = 1557838978874 } = {},
 ): LogoDetails | null {
   const { hostname, domain, publicSuffix, isIp } = parse(url);
 
