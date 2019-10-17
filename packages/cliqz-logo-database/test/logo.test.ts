@@ -95,7 +95,7 @@ describe('getLogo', () => {
     });
   });
 
-  describe.only('with no rules', () => {
+  describe('with no rules', () => {
     beforeEach(() => {
       subject = getLogo('https://xyz.com', {
         database: fakeDatabase,
