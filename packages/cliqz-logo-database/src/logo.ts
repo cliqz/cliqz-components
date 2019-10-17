@@ -13,6 +13,13 @@ export default function(
 ): LogoDetails | null {
   const { hostname, domain, publicSuffix, isIp } = parse(url);
 
+  if (isIp) {
+    return {
+      color: '9077e3',
+      text: 'IP',
+    };
+  }
+
   if (!domain || !publicSuffix || !hostname) {
     return null;
   }
@@ -29,12 +36,7 @@ export default function(
   };
   const text = `${baseCore[0] || ''}${baseCore[1] || ''}`.toLowerCase();
 
-  if (isIp) {
-    return {
-      color: '9077e3',
-      text: 'IP',
-    };
-  } else if (database.domains[base]) {
+  if (database.domains[base]) {
     for (let i = database.domains[base].length - 1; i >= 0; i -= 1) {
       // r = rule, b = background-color, l = logo, t = text, c = color
       const rule = database.domains[base][i];

@@ -48,6 +48,20 @@ const fakeDatabase: LogoDatabase = {
 let subject: any;
 
 describe('getLogo', () => {
+  describe('handles IPs', () => {
+    beforeEach(() => {
+      subject = getLogo('http://192.168.0.1', {
+        database: fakeDatabase,
+        version: fakeDatabaseVersion,
+      });
+    });
+
+    it('return a valid logo object', () => {
+      expect(subject).toHaveProperty('color');
+      expect(subject).toHaveProperty('text', 'IP');
+    });
+  });
+
   describe('with simple pattern', () => {
     beforeEach(() => {
       subject = getLogo('https://cliqz.com', {
