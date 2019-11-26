@@ -130,7 +130,6 @@ interface ChartData {
 }
 
 const primalGrey = '#212121';
-const descriptionGrey = '#616161';
 const secondaryGrey = '#757575';
 const tertiaryGrey = '#9E9E9E';
 const lightGrey = '#eee';
@@ -159,6 +158,7 @@ interface WeatherStyle {
   noLeftBorder: CliqzViewStyle;
   rightSideInfo: CliqzViewStyle;
   selfCenter: CliqzViewStyle;
+  svgText: TextStyle;
   svgWrapper: CliqzViewStyle;
   timelineText: TextStyle;
   timelineWrapper: CliqzViewStyle;
@@ -188,7 +188,7 @@ const baseStyles: WeatherStyle = {
     paddingLeft: 8,
     paddingRight: 8,
     paddingTop: 16,
-    width: 'calc(100%/5)',
+    width: '20%',
   },
   dayWrapperActive: {
     borderColor: tertiaryGrey,
@@ -207,7 +207,7 @@ const baseStyles: WeatherStyle = {
     borderLeftColor: lightGrey,
     borderLeftWidth: 1,
     height: '100%',
-    width: 'calc(100%/8)',
+    width: '12.5%',
   },
   gridWrapper: {
     height: '100%',
@@ -265,6 +265,7 @@ const baseStyles: WeatherStyle = {
     alignSelf: 'center',
     justifyContent: 'center',
   },
+  svgText: {},
   svgWrapper: {
     height: 100,
   },
@@ -294,7 +295,7 @@ const baseStyles: WeatherStyle = {
     alignItems: 'center',
     flexDirection: 'row',
     position: 'relative',
-    width: 'calc(100%/8)',
+    width: '12.5%',
   },
   windColumnContent: {
     alignItems: 'center',
@@ -801,7 +802,7 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
               y={item.y}
               fill={idx === 0 ? '#000' : tertiaryGrey}
               fontSize={16}
-              fontFamily="system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Helvetica Neue, sans-serif"
+              fontFamily={styles.svgText.fontFamily}
             >
               {item.text}
             </SvgText>
