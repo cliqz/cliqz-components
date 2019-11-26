@@ -13,13 +13,14 @@ export default {
               humidity: {
                 label: 'Humidity',
                 unit: '%',
-                value: 66
+                value: 66,
               },
-              icon: 'https://cdn.cliqz.com/extension/EZ/weather-new2/34_Fair-:-Mostly-Sunny.svg',
+              icon:
+                'https://cdn.cliqz.com/extension/EZ/weather-new2/34_Fair-:-Mostly-Sunny.svg',
               precipitation: {
                 label: 'Precipitation',
                 unit: '%',
-                value: 0
+                value: 0,
               },
               temperature: {
                 label: 'Temperature',
@@ -27,19 +28,19 @@ export default {
                   max: 18,
                   min: 7,
                   unit: '°C',
-                  value: 11
+                  value: 11,
                 },
                 usc: {
                   max: 64,
                   min: 44,
                   unit: '°F',
-                  value: 51
-                }
+                  value: 51,
+                },
               },
               uv: {
                 label: 'UV-index',
                 unit: '/10',
-                value: 2
+                value: 2,
               },
               weekday: 'Thursday',
               wind: {
@@ -47,14 +48,14 @@ export default {
                 metric: {
                   angle: 230,
                   unit: 'km/h',
-                  value: 11
+                  value: 11,
                 },
                 usc: {
                   angle: 230,
                   unit: 'mph',
-                  value: 6
-                }
-              }
+                  value: 6,
+                },
+              },
             },
             hourly: {
               precipitation: {
@@ -84,8 +85,8 @@ export default {
                   6,
                   5,
                   13,
-                  10
-                ]
+                  10,
+                ],
               },
               temperature: {
                 label: 'Temperature',
@@ -115,8 +116,8 @@ export default {
                     9,
                     10,
                     11,
-                    12
-                  ]
+                    12,
+                  ],
                 },
                 usc: {
                   unit: '°F',
@@ -144,9 +145,9 @@ export default {
                     48,
                     50,
                     51,
-                    53
-                  ]
-                }
+                    53,
+                  ],
+                },
               },
               times: [
                 '10:00 am',
@@ -172,7 +173,7 @@ export default {
                 '6:00 am',
                 '7:00 am',
                 '8:00 am',
-                '9:00 am'
+                '9:00 am',
               ],
               wind: {
                 angles: [
@@ -199,7 +200,7 @@ export default {
                   250,
                   250,
                   254,
-                  260
+                  260,
                 ],
                 label: 'Wind',
                 metric: {
@@ -228,8 +229,8 @@ export default {
                     15,
                     15,
                     16,
-                    17
-                  ]
+                    17,
+                  ],
                 },
                 usc: {
                   unit: 'mph',
@@ -257,11 +258,11 @@ export default {
                     9,
                     9,
                     9,
-                    10
-                  ]
-                }
-              }
-            }
+                    10,
+                  ],
+                },
+              },
+            },
           },
           {
             day: {
@@ -270,13 +271,14 @@ export default {
               humidity: {
                 label: 'Humidity',
                 unit: '%',
-                value: 54
+                value: 54,
               },
-              icon: 'https://cdn.cliqz.com/extension/EZ/weather-new2/11_light-rain.svg',
+              icon:
+                'https://cdn.cliqz.com/extension/EZ/weather-new2/11_light-rain.svg',
               precipitation: {
                 label: 'Precipitation',
                 unit: '%',
-                value: 30
+                value: 30,
               },
               temperature: {
                 label: 'Temperature',
@@ -284,19 +286,19 @@ export default {
                   max: 17,
                   min: 8,
                   unit: '°C',
-                  value: 17
+                  value: 17,
                 },
                 usc: {
                   max: 62,
                   min: 46,
                   unit: '°F',
-                  value: 62
-                }
+                  value: 62,
+                },
               },
               uv: {
                 label: 'UV-index',
                 unit: '/10',
-                value: 6
+                value: 6,
               },
               weekday: 'Friday',
               wind: {
@@ -304,14 +306,14 @@ export default {
                 metric: {
                   angle: 270,
                   unit: 'km/h',
-                  value: 18
+                  value: 18,
                 },
                 usc: {
                   angle: 270,
                   unit: 'mph',
-                  value: 11
-                }
-              }
+                  value: 11,
+                },
+              },
             },
             hourly: {
               precipitation: {
@@ -341,8 +343,8 @@ export default {
                   14,
                   8,
                   5,
-                  11
-                ]
+                  11,
+                ],
               },
               temperature: {
                 label: 'Temperature',
@@ -372,8 +374,8 @@ export default {
                     14,
                     13,
                     12,
-                    11
-                  ]
+                    11,
+                  ],
                 },
                 usc: {
                   unit: '°F',
@@ -401,9 +403,9 @@ export default {
                     57,
                     55,
                     53,
-                    51
-                  ]
-                }
+                    51,
+                  ],
+                },
               },
               times: [
                 '0:00 am',
@@ -429,7 +431,7 @@ export default {
                 '8:00 pm',
                 '9:00 pm',
                 '10:00 pm',
-                '11:00 pm'
+                '11:00 pm',
               ],
               wind: {
                 angles: [
@@ -456,7 +458,7 @@ export default {
                   298,
                   297,
                   202,
-                  197
+                  197,
                 ],
                 label: 'Wind',
                 metric: {
@@ -485,8 +487,8 @@ export default {
                     7,
                     4,
                     4,
-                    5
-                  ]
+                    5,
+                  ],
                 },
                 usc: {
                   unit: 'mph',
@@ -514,11 +516,11 @@ export default {
                     4,
                     2,
                     2,
-                    3
-                  ]
-                }
-              }
-            }
+                    3,
+                  ],
+                },
+              },
+            },
           },
           {
             day: {
@@ -527,13 +529,14 @@ export default {
               humidity: {
                 label: 'Humidity',
                 unit: '%',
-                value: 65
+                value: 65,
               },
-              icon: 'https://cdn.cliqz.com/extension/EZ/weather-new2/11_light-rain.svg',
+              icon:
+                'https://cdn.cliqz.com/extension/EZ/weather-new2/11_light-rain.svg',
               precipitation: {
                 label: 'Precipitation',
                 unit: '%',
-                value: 90
+                value: 90,
               },
               temperature: {
                 label: 'Temperature',
@@ -541,19 +544,19 @@ export default {
                   max: 16,
                   min: 6,
                   unit: '°C',
-                  value: 16
+                  value: 16,
                 },
                 usc: {
                   max: 60,
                   min: 42,
                   unit: '°F',
-                  value: 60
-                }
+                  value: 60,
+                },
               },
               uv: {
                 label: 'UV-index',
                 unit: '/10',
-                value: 3
+                value: 3,
               },
               weekday: 'Saturday',
               wind: {
@@ -561,14 +564,14 @@ export default {
                 metric: {
                   angle: 244,
                   unit: 'km/h',
-                  value: 21
+                  value: 21,
                 },
                 usc: {
                   angle: 244,
                   unit: 'mph',
-                  value: 13
-                }
-              }
+                  value: 13,
+                },
+              },
             },
             hourly: {
               precipitation: {
@@ -598,8 +601,8 @@ export default {
                   65,
                   53,
                   35,
-                  33
-                ]
+                  33,
+                ],
               },
               temperature: {
                 label: 'Temperature',
@@ -629,8 +632,8 @@ export default {
                     12,
                     11,
                     11,
-                    10
-                  ]
+                    10,
+                  ],
                 },
                 usc: {
                   unit: '°F',
@@ -658,9 +661,9 @@ export default {
                     53,
                     51,
                     51,
-                    50
-                  ]
-                }
+                    50,
+                  ],
+                },
               },
               times: [
                 '0:00 am',
@@ -686,7 +689,7 @@ export default {
                 '8:00 pm',
                 '9:00 pm',
                 '10:00 pm',
-                '11:00 pm'
+                '11:00 pm',
               ],
               wind: {
                 angles: [
@@ -713,7 +716,7 @@ export default {
                   246,
                   252,
                   258,
-                  259
+                  259,
                 ],
                 label: 'Wind',
                 metric: {
@@ -742,8 +745,8 @@ export default {
                     15,
                     15,
                     16,
-                    17
-                  ]
+                    17,
+                  ],
                 },
                 usc: {
                   unit: 'mph',
@@ -771,11 +774,11 @@ export default {
                     9,
                     9,
                     9,
-                    10
-                  ]
-                }
-              }
-            }
+                    10,
+                  ],
+                },
+              },
+            },
           },
           {
             day: {
@@ -784,13 +787,14 @@ export default {
               humidity: {
                 label: 'Humidity',
                 unit: '%',
-                value: 64
+                value: 64,
               },
-              icon: 'https://cdn.cliqz.com/extension/EZ/weather-new2/11_light-rain.svg',
+              icon:
+                'https://cdn.cliqz.com/extension/EZ/weather-new2/11_light-rain.svg',
               precipitation: {
                 label: 'Precipitation',
                 unit: '%',
-                value: 50
+                value: 50,
               },
               temperature: {
                 label: 'Temperature',
@@ -798,19 +802,19 @@ export default {
                   max: 10,
                   min: 4,
                   unit: '°C',
-                  value: 10
+                  value: 10,
                 },
                 usc: {
                   max: 50,
                   min: 39,
                   unit: '°F',
-                  value: 50
-                }
+                  value: 50,
+                },
               },
               uv: {
                 label: 'UV-index',
                 unit: '/10',
-                value: 3
+                value: 3,
               },
               weekday: 'Sunday',
               wind: {
@@ -818,14 +822,14 @@ export default {
                 metric: {
                   angle: 329,
                   unit: 'km/h',
-                  value: 19
+                  value: 19,
                 },
                 usc: {
                   angle: 329,
                   unit: 'mph',
-                  value: 11
-                }
-              }
+                  value: 11,
+                },
+              },
             },
             hourly: {
               precipitation: {
@@ -855,8 +859,8 @@ export default {
                   19,
                   8,
                   9,
-                  7
-                ]
+                  7,
+                ],
               },
               temperature: {
                 label: 'Temperature',
@@ -886,8 +890,8 @@ export default {
                     10,
                     9,
                     8,
-                    8
-                  ]
+                    8,
+                  ],
                 },
                 usc: {
                   unit: '°F',
@@ -915,9 +919,9 @@ export default {
                     50,
                     48,
                     46,
-                    46
-                  ]
-                }
+                    46,
+                  ],
+                },
               },
               times: [
                 '0:00 am',
@@ -943,7 +947,7 @@ export default {
                 '8:00 pm',
                 '9:00 pm',
                 '10:00 pm',
-                '11:00 pm'
+                '11:00 pm',
               ],
               wind: {
                 angles: [
@@ -970,7 +974,7 @@ export default {
                   342,
                   335,
                   331,
-                  328
+                  328,
                 ],
                 label: 'Wind',
                 metric: {
@@ -999,8 +1003,8 @@ export default {
                     9,
                     8,
                     8,
-                    8
-                  ]
+                    8,
+                  ],
                 },
                 usc: {
                   unit: 'mph',
@@ -1028,11 +1032,11 @@ export default {
                     5,
                     4,
                     4,
-                    4
-                  ]
-                }
-              }
-            }
+                    4,
+                  ],
+                },
+              },
+            },
           },
           {
             day: {
@@ -1041,13 +1045,14 @@ export default {
               humidity: {
                 label: 'Humidity',
                 unit: '%',
-                value: 53
+                value: 53,
               },
-              icon: 'https://cdn.cliqz.com/extension/EZ/weather-new2/28_Mostly-Cloudy.svg',
+              icon:
+                'https://cdn.cliqz.com/extension/EZ/weather-new2/28_Mostly-Cloudy.svg',
               precipitation: {
                 label: 'Precipitation',
                 unit: '%',
-                value: 20
+                value: 20,
               },
               temperature: {
                 label: 'Temperature',
@@ -1055,19 +1060,19 @@ export default {
                   max: 11,
                   min: 5,
                   unit: '°C',
-                  value: 11
+                  value: 11,
                 },
                 usc: {
                   max: 51,
                   min: 41,
                   unit: '°F',
-                  value: 51
-                }
+                  value: 51,
+                },
               },
               uv: {
                 label: 'UV-index',
                 unit: '/10',
-                value: 5
+                value: 5,
               },
               weekday: 'Monday',
               wind: {
@@ -1075,14 +1080,14 @@ export default {
                 metric: {
                   angle: 32,
                   unit: 'km/h',
-                  value: 15
+                  value: 15,
                 },
                 usc: {
                   angle: 32,
                   unit: 'mph',
-                  value: 9
-                }
-              }
+                  value: 9,
+                },
+              },
             },
             hourly: {
               precipitation: {
@@ -1112,8 +1117,8 @@ export default {
                   5,
                   6,
                   7,
-                  7
-                ]
+                  7,
+                ],
               },
               temperature: {
                 label: 'Temperature',
@@ -1143,8 +1148,8 @@ export default {
                     10,
                     8,
                     8,
-                    7
-                  ]
+                    7,
+                  ],
                 },
                 usc: {
                   unit: '°F',
@@ -1172,9 +1177,9 @@ export default {
                     50,
                     46,
                     46,
-                    44
-                  ]
-                }
+                    44,
+                  ],
+                },
               },
               times: [
                 '0:00 am',
@@ -1200,7 +1205,7 @@ export default {
                 '8:00 pm',
                 '9:00 pm',
                 '10:00 pm',
-                '11:00 pm'
+                '11:00 pm',
               ],
               wind: {
                 angles: [
@@ -1227,7 +1232,7 @@ export default {
                   53,
                   55,
                   53,
-                  48
+                  48,
                 ],
                 label: 'Wind',
                 metric: {
@@ -1256,8 +1261,8 @@ export default {
                     9,
                     8,
                     8,
-                    8
-                  ]
+                    8,
+                  ],
                 },
                 usc: {
                   unit: 'mph',
@@ -1285,21 +1290,22 @@ export default {
                     5,
                     4,
                     4,
-                    4
-                  ]
-                }
-              }
-            }
-          }
+                    4,
+                  ],
+                },
+              },
+            },
+          },
         ],
         forecast_description: 'Extended forecast',
-        hourly_forecast_url: 'https://weather.com/weather/hourbyhour/l/48.133,11.567?par=cliqz',
+        hourly_forecast_url:
+          'https://weather.com/weather/hourbyhour/l/48.133,11.567?par=cliqz',
         provider: {
           name: 'weather.com',
-          url: 'https://www.weather.com'
+          url: 'https://www.weather.com',
         },
-        units_label: 'Scale'
-      }
-    }
-  }
-}
+        units_label: 'Scale',
+      },
+    },
+  },
+};
