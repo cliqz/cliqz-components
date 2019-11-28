@@ -1,3 +1,4 @@
+import { merge, UniversalViewStyle } from '@cliqz/component-styles';
 import React from 'react';
 import {
   Text,
@@ -6,12 +7,11 @@ import {
 } from 'react-native';
 
 import HoverComponent from './Hover';
-import { getStyle, CliqzViewStyle } from './styles';
 
 export type ShowTimeStyle = {
   // View styles
-  showContainer: CliqzViewStyle;
-  showTimesSeparator: CliqzViewStyle;
+  showContainer: UniversalViewStyle;
+  showTimesSeparator: UniversalViewStyle;
   // Text styles
   showTimesExtraText: TextStyle;
   showTimesTime: TextStyle;
@@ -80,7 +80,7 @@ export default class ShowTimeComponent extends React.Component<
 
   render() {
     const data = this.props.data;
-    const styles = getStyle(_baseStyles(this.state.isActive), this.props.styles);
+    const styles = merge(_baseStyles(this.state.isActive), this.props.styles);
     return (
       <HoverComponent onMouseEnter={this.onShowTimeFocus} onMouseLeave={this.onShowTimeBlur}>
         <View style={styles.showContainer}>

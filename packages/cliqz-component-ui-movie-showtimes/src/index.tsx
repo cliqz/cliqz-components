@@ -1,3 +1,4 @@
+import { merge, UniversalViewStyle } from '@cliqz/component-styles';
 import React from 'react';
 import {
   Dimensions,
@@ -13,7 +14,7 @@ import {
 
 import ShowTimeComponent, { ShowTime, ShowTimeStyle } from './ShowTime';
 import HoverComponent from './Hover';
-import { CliqzViewStyle, getStyle, pickStyle } from './styles';
+import { pickStyle } from './styles';
 
 interface Cinema {
   address: string;
@@ -76,19 +77,19 @@ type MovieStyle = {
   // Image styles
   cityIcon: ImageStyle;
   // View styles
-  buttonsContainer: CliqzViewStyle;
-  cinemaAddressContainer: CliqzViewStyle;
-  cinemaContainer: CliqzViewStyle;
-  cinemaHeaderContainer: CliqzViewStyle;
-  cityContainer: CliqzViewStyle;
-  cityLocationContainer: CliqzViewStyle;
-  container: CliqzViewStyle;
-  divider: CliqzViewStyle;
-  locationContainer: CliqzViewStyle;
-  moreLessButton: CliqzViewStyle;
-  movieTitleContainer: CliqzViewStyle;
-  showTimesContainer: CliqzViewStyle;
-  tableHeadersContainer: CliqzViewStyle;
+  buttonsContainer: UniversalViewStyle;
+  cinemaAddressContainer: UniversalViewStyle;
+  cinemaContainer: UniversalViewStyle;
+  cinemaHeaderContainer: UniversalViewStyle;
+  cityContainer: UniversalViewStyle;
+  cityLocationContainer: UniversalViewStyle;
+  container: UniversalViewStyle;
+  divider: UniversalViewStyle;
+  locationContainer: UniversalViewStyle;
+  moreLessButton: UniversalViewStyle;
+  movieTitleContainer: UniversalViewStyle;
+  showTimesContainer: UniversalViewStyle;
+  tableHeadersContainer: UniversalViewStyle;
   // Text styles
   cinemaAddressText: TextStyle;
   cinemaDistanceText: TextStyle;
@@ -254,7 +255,7 @@ export class MovieShowtimes extends React.PureComponent<
     const cinemaList = showdates[this.state.day].cinema_list;
     const rowCount = (movieList || cinemaList || []).length;
 
-    const styles = getStyle(_baseStyles, this.props.styles);
+    const styles = merge(_baseStyles, this.props.styles);
 
     // Styles for ShowTimeComponent
     const showTimeStyles =
@@ -285,7 +286,7 @@ export class MovieShowtimes extends React.PureComponent<
                   { borderColor: this.state.locationContainerHovered ? 'rgba(21, 125, 54, 1)' : 'rgba(21, 125, 54, 0.2)' }
                 ]}
               >
-                <Text style={styles.locationText} numberOfLines={1}>In meiner Nähe</Text>                
+                <Text style={styles.locationText} numberOfLines={1}>In meiner Nähe</Text>
               </View>
             </HoverComponent>
           )}
@@ -394,7 +395,7 @@ export class MovieShowtimes extends React.PureComponent<
 
   private displayDate(date: string, idx: number) {
     const isActive = idx === this.state.day;
-    const boxStyle: StyleProp<CliqzViewStyle> = {
+    const boxStyle: StyleProp<UniversalViewStyle> = {
       alignItems: 'center',
       borderBottomWidth: isActive ? 2 : 0,
       borderColor: isActive ? '#2979FF' : 'transparent',

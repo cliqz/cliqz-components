@@ -22,5 +22,8 @@
   "description": "",
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@cliqz/component-styles": "^0.4.5"
   }
 }

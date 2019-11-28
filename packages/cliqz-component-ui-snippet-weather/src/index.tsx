@@ -1,3 +1,4 @@
+import { merge, UniversalViewStyle } from '@cliqz/component-styles';
 import React from 'react';
 import {
   Image,
@@ -6,8 +7,6 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-
-import { CliqzViewStyle, getStyle } from './styles';
 
 import Svg, {
   Defs,
@@ -137,36 +136,36 @@ const white = '#fff';
 
 interface WeatherStyle {
   activeText: TextStyle;
-  container: CliqzViewStyle;
-  chartWrapper: CliqzViewStyle;
+  container: UniversalViewStyle;
+  chartWrapper: UniversalViewStyle;
   dayText: TextStyle;
-  dayWrapper: CliqzViewStyle;
-  dayWrapperActive: CliqzViewStyle;
-  displayInlineWrapper: CliqzViewStyle;
-  divider: CliqzViewStyle;
-  grid: CliqzViewStyle;
-  gridWrapper: CliqzViewStyle;
-  gutterBottom: CliqzViewStyle;
+  dayWrapper: UniversalViewStyle;
+  dayWrapperActive: UniversalViewStyle;
+  displayInlineWrapper: UniversalViewStyle;
+  divider: UniversalViewStyle;
+  grid: UniversalViewStyle;
+  gridWrapper: UniversalViewStyle;
+  gutterBottom: UniversalViewStyle;
   h1: TextStyle;
   h3: TextStyle;
   h5: TextStyle;
   overline: TextStyle;
-  headerLeftColumn: CliqzViewStyle;
-  moreLessButton: CliqzViewStyle;
+  headerLeftColumn: UniversalViewStyle;
+  moreLessButton: UniversalViewStyle;
   moreLessButtonText: TextStyle;
-  moreLessButtonWrapper: CliqzViewStyle;
-  noLeftBorder: CliqzViewStyle;
-  rightSideInfo: CliqzViewStyle;
-  selfCenter: CliqzViewStyle;
+  moreLessButtonWrapper: UniversalViewStyle;
+  noLeftBorder: UniversalViewStyle;
+  rightSideInfo: UniversalViewStyle;
+  selfCenter: UniversalViewStyle;
   svgText: TextStyle;
-  svgWrapper: CliqzViewStyle;
+  svgWrapper: UniversalViewStyle;
   timelineText: TextStyle;
-  timelineWrapper: CliqzViewStyle;
+  timelineWrapper: UniversalViewStyle;
   unitSelectionButtonText: TextStyle;
-  windColumn: CliqzViewStyle;
+  windColumn: UniversalViewStyle;
   windColumnContent: TextStyle;
   windText: TextStyle;
-  windWrapper: CliqzViewStyle;
+  windWrapper: UniversalViewStyle;
 }
 
 const baseStyles: WeatherStyle = {
@@ -382,7 +381,7 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
   public render() {
     const { precipitation, humidity, wind, uv } = this.otherInfo;
     const activeDay = this.days[this.state.currentDay];
-    const styles = getStyle(baseStyles, this.props.styles);
+    const styles = merge(baseStyles, this.props.styles);
     const onDayPressed = (idx: number) => () => this.onDayPressed(idx);
 
     return (
