@@ -1,45 +1,21 @@
-import React from 'react';
+import { merge, UniversalViewStyle } from '@cliqz/component-styles';
+import React, { useCallback, useMemo } from 'react';
+import { FlatList, StyleSheet, View } from 'react-native';
 import {
-  FlatList,
-  ImageBackground,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+  Date2Text,
+  NewsItem,
+  NewsItemStyles,
+  styles as newsItemStyles,
+} from './NewsItem';
 
-export const styles = StyleSheet.create({
-  container: {
-    marginLeft: 12,
-    marginRight: 12,
-  },
-  image: {
-    borderRadius: 4,
-    flexDirection: 'column',
-    height: 100,
-    width: 150,
-  },
-  imageCaption: {
-    backgroundColor: 'black',
-    bottom: 0,
-    padding: 3,
-    position: 'absolute',
-  },
-  imageCaptionText: {
-    color: 'rgba(255, 255, 255, 0.8)',
-    fontSize: 10,
-  },
-  itemContainer: {
-    borderColor: 'rgba(0, 0, 0, 0.04)',
-    borderRadius: 6,
-    borderWidth: 0.5,
-    padding: 5,
-    width: 160,
-  },
-  title: {
-    color: '#003172',
-    fontSize: 15.5,
-  },
-});
+interface NewsSnippetStyle extends NewsItemStyles {
+  container: UniversalViewStyle;
+}
+
+export const styles: NewsSnippetStyle = {
+  container: {},
+  ...newsItemStyles,
+};
 
 interface NewsItem {
   extra: {
@@ -62,23 +38,9 @@ export interface NewsDeepResult {
 
 interface NewsProps {
   data: NewsDeepResult;
+  styles?: Partial<NewsSnippetStyle>;
+  date2text: Date2Text;
 }
-
-const NewsItem = ({ item }: { item: NewsItem }) => {
-  return (
-    <View style={styles.itemContainer}>
-      <ImageBackground
-        source={{ uri: item.extra.thumbnail }}
-        style={styles.image}
-      >
-        <View style={styles.imageCaption}>
-          <Text style={styles.imageCaptionText}>Vor 1 Stunde</Text>
-        </View>
-      </ImageBackground>
-      <Text style={styles.title}>{item.title}</Text>
-    </View>
-  );
-};
 
 const Separator = () => {
   return <View style={{ padding: 2 }} />;
@@ -88,15 +50,49 @@ const extractKey = ({ url }: NewsItem) => {
   return url;
 };
 
-export const NewsSnippet = ({ data }: NewsProps) => (
-  <View style={styles.container}>
-    <FlatList
-      data={data.links}
-      renderItem={NewsItem}
-      horizontal={true}
-      ItemSeparatorComponent={Separator}
-      keyExtractor={extractKey}
-      showsHorizontalScrollIndicator={false}
+const renderItem = ({
+  item,
+  styles: itemStyles,
+  date2text,
+}: {
+  item: NewsItem;
+  styles: NewsItemStyles;
+  date2text: Date2Text;
+}) => {
+  return (
+    <NewsItem
+      title={item.title}
+      thumbnail={item.extra.thumbnail}
+      styles={itemStyles}
+      publishedAt={item.extra.creation_timestamp}
+      date2text={date2text}
     />
-  </View>
-);
+  );
+};
+
+export const NewsSnippet = ({
+  data,
+  styles: stylesOverwrite,
+  date2text,
+}: NewsProps) => {
+  const classes: NewsSnippetStyle = useMemo(
+    () => StyleSheet.create(merge(styles, stylesOverwrite)),
+    [merge, stylesOverwrite],
+  );
+  const renderItemCall = useCallback(
+    ({ item }) => renderItem({ item, styles: classes, date2text }),
+    [renderItem, classes],
+  );
+  return (
+    <View style={classes.container}>
+      <FlatList
+        data={data.links}
+        renderItem={renderItemCall}
+        horizontal={true}
+        ItemSeparatorComponent={Separator}
+        keyExtractor={extractKey}
+        showsHorizontalScrollIndicator={false}
+      />
+    </View>
+  );
+};
