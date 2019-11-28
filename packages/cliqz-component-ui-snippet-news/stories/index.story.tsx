@@ -4,6 +4,7 @@ import { NewsSnippet } from '../src/index';
 import { NewsResult } from './news-result';
 
 const date2text = (date: Date) => date.toString();
+const onPress = (url: string) => alert(url);
 
 storiesOf('NewsSnippet', module).add('bild.de', () => (
   <NewsSnippet
@@ -14,5 +15,6 @@ storiesOf('NewsSnippet', module).add('bild.de', () => (
         color: 'black',
       },
     }}
+    onPress={onPress}
   />
 ));

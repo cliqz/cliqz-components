@@ -1,22 +1,24 @@
 import { UniversalViewStyle } from '@cliqz/component-styles';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
-  ImageBackground,
+  GestureResponderEvent,
+  Image,
   ImageStyle,
   Text,
   TextStyle,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 
 export interface NewsItemStyles {
   itemContainer: UniversalViewStyle;
-  itemImageCaption: UniversalViewStyle;
   itemImageCaptionText: TextStyle;
   itemImage: ImageStyle;
   itemTitle: TextStyle;
 }
 
 export type Date2Text = (date: Date) => string;
+export type OnPress = (url: string) => void;
 
 interface NewsItemProps {
   title: string;
@@ -24,35 +26,27 @@ interface NewsItemProps {
   styles: NewsItemStyles;
   publishedAt: number;
   date2text: Date2Text;
+  onPress: OnPress;
+  url: string;
 }
 
 export const styles: NewsItemStyles = {
   itemContainer: {
-    borderColor: 'rgba(0, 0, 0, 0.04)',
-    borderRadius: 6,
-    borderWidth: 0.5,
-    padding: 5,
-    width: 160,
+    marginLeft: 8,
+    width: 192,
   },
   itemImage: {
-    borderRadius: 4,
     flexDirection: 'column',
     height: 100,
-    width: 150,
-  },
-  itemImageCaption: {
-    backgroundColor: 'black',
-    bottom: 0,
-    padding: 3,
-    position: 'absolute',
+    marginBottom: 8,
+    width: 192,
   },
   itemImageCaptionText: {
-    color: 'rgba(255, 255, 255, 0.8)',
+    color: '#9e9e9e',
     fontSize: 10,
   },
   itemTitle: {
-    color: '#003172',
-    fontSize: 15.5,
+    marginBottom: 5,
   },
 };
 
@@ -62,19 +56,21 @@ export const NewsItem = ({
   publishedAt,
   styles: classes,
   date2text,
+  onPress,
+  url,
 }: NewsItemProps) => {
   const date = useMemo(() => date2text(new Date(publishedAt * 1000)), [
     date2text,
     publishedAt,
   ]);
+  const onPressCall = useCallback(() => onPress(url), [onPress]);
   return (
-    <View style={classes.itemContainer}>
-      <ImageBackground source={{ uri: thumbnail }} style={classes.itemImage}>
-        <View style={classes.itemImageCaption}>
-          <Text style={classes.itemImageCaptionText}>{date}</Text>
-        </View>
-      </ImageBackground>
-      <Text style={classes.itemTitle}>{title}</Text>
-    </View>
+    <TouchableWithoutFeedback onPress={onPressCall}>
+      <View style={classes.itemContainer}>
+        <Image source={{ uri: thumbnail }} style={classes.itemImage} />
+        <Text style={classes.itemTitle}>{title}</Text>
+        <Text style={classes.itemImageCaptionText}>{date}</Text>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
