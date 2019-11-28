@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     marginLeft: 12,
     marginRight: 12,
@@ -44,22 +44,27 @@ const styles = StyleSheet.create({
 interface NewsItem {
   extra: {
     creation_timestamp: number;
-    domain: string;
+    domain?: string;
     thumbnail: string;
+    breaking?: boolean;
+    description?: string;
+    media?: string;
+    murl?: string;
   };
   title: string;
   url: string;
 }
 
-interface NewsList {
+export interface NewsDeepResult {
   links: NewsItem[];
-  type: string;
-}
-interface NewsProps {
-  data: NewsList;
+  type: 'news' | 'top-news';
 }
 
-function renderItem({ item }: { item: NewsItem }) {
+interface NewsProps {
+  data: NewsDeepResult;
+}
+
+const NewsItem = ({ item }: { item: NewsItem }) => {
   return (
     <View style={styles.itemContainer}>
       <ImageBackground
@@ -73,24 +78,24 @@ function renderItem({ item }: { item: NewsItem }) {
       <Text style={styles.title}>{item.title}</Text>
     </View>
   );
-}
+};
 
-function _renderSeparator() {
+const Separator = () => {
   return <View style={{ padding: 2 }} />;
-}
+};
 
-function _keyExtractor({ url }: NewsItem) {
+const extractKey = ({ url }: NewsItem) => {
   return url;
-}
+};
 
 export const NewsSnippet = ({ data }: NewsProps) => (
   <View style={styles.container}>
     <FlatList
       data={data.links}
-      renderItem={renderItem}
+      renderItem={NewsItem}
       horizontal={true}
-      ItemSeparatorComponent={_renderSeparator}
-      keyExtractor={_keyExtractor}
+      ItemSeparatorComponent={Separator}
+      keyExtractor={extractKey}
       showsHorizontalScrollIndicator={false}
     />
   </View>
