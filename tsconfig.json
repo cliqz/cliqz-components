@@ -13,7 +13,7 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "paths": {
-      "@cliqz/*": ["packages/*/src"],
+      "@cliqz/*": ["packages/cliqz-*/src"],
       "cliqz-logo-database": ["packages/cliqz-logo-database/src"],
       "*": ["node_modules", "packages"]
     },

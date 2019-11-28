@@ -24,6 +24,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@cliqz/component-styles": "^0.4.5",
     "react-native-svg": "^9.5.3"
   }
 }
