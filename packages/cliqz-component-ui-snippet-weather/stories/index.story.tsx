@@ -8,6 +8,8 @@ storiesOf('WeatherSnippet', module).add('default', () => (
     data={weatherResult}
     styles={{
       svgText: {
+        activeColor: 'black',
+        color: 'gray',
         fontFamily:
           'system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Helvetica Neue, sans-serif',
       },

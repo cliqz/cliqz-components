@@ -2,25 +2,19 @@ import { merge, UniversalViewStyle } from '@cliqz/component-styles';
 import React from 'react';
 import {
   Image,
+  ImageStyle,
   Text,
   TextStyle,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-
-import Svg, {
-  Defs,
-  LinearGradient,
-  Path,
-  Stop,
-  Text as SvgText,
-} from 'react-native-svg';
-
-interface Coordinate {
-  x: number;
-  y: number;
-  text: string;
-}
+import SVGChart, {
+  Coordinate,
+  GradientStyle,
+  StrokeStyle,
+  styles as svgChartStyles,
+  SVGTextStyle,
+} from './SVGChart';
 
 interface Unit {
   angle?: number;
@@ -30,11 +24,6 @@ interface Unit {
   unit: string;
   value?: number;
   values?: number[];
-}
-
-interface Column {
-  height: number;
-  text?: string;
 }
 
 interface Hourly {
@@ -95,7 +84,6 @@ interface WeatherProps {
       };
     };
   };
-
   styles?: Partial<WeatherStyle>;
   moreButtonText?: string;
   lessButtonText?: string;
@@ -122,22 +110,12 @@ interface Meta {
   width: number;
 }
 
-interface ChartData {
-  svgTexts: Coordinate[];
-  svgLine: string;
-  svgArea: string;
-}
-
-const primalGrey = '#212121';
-const secondaryGrey = '#757575';
-const tertiaryGrey = '#9E9E9E';
-const lightGrey = '#eee';
-const white = '#fff';
-
 interface WeatherStyle {
+  activeDayIcon: ImageStyle,
   activeText: TextStyle;
   container: UniversalViewStyle;
   chartWrapper: UniversalViewStyle;
+  dayImage: ImageStyle;
   dayText: TextStyle;
   dayWrapper: UniversalViewStyle;
   dayWrapperActive: UniversalViewStyle;
@@ -155,20 +133,36 @@ interface WeatherStyle {
   moreLessButtonText: TextStyle;
   moreLessButtonWrapper: UniversalViewStyle;
   noLeftBorder: UniversalViewStyle;
+  precipitationGraphStroke: StrokeStyle;
+  precipitationGraphGradient: GradientStyle;
   rightSideInfo: UniversalViewStyle;
   selfCenter: UniversalViewStyle;
-  svgText: TextStyle;
+  svgText: SVGTextStyle;
   svgWrapper: UniversalViewStyle;
   timelineText: TextStyle;
   timelineWrapper: UniversalViewStyle;
+  temperatureGraphStroke: StrokeStyle;
+  temperatureGraphGradient: GradientStyle;
   unitSelectionButtonText: TextStyle;
   windColumn: UniversalViewStyle;
   windColumnContent: TextStyle;
+  windImage: ImageStyle;
   windText: TextStyle;
   windWrapper: UniversalViewStyle;
 }
 
+const primalGrey = '#212121';
+const secondaryGrey = '#757575';
+const tertiaryGrey = '#9E9E9E';
+const lightGrey = '#eee';
+const white = '#fff';
+
 const baseStyles: WeatherStyle = {
+  activeDayIcon: {
+    backgroundColor: 'transparent',
+    height: 50,
+    width: 50,
+  },
   activeText: {
     color: primalGrey,
   },
@@ -177,6 +171,13 @@ const baseStyles: WeatherStyle = {
   },
   container: {
     maxWidth: 584,
+  },
+  dayImage: {
+    alignSelf: 'center',
+    backgroundColor: 'transparent',
+    height: 40,
+    justifyContent: 'center',
+    width: 40,
   },
   dayText: {
     fontSize: 16,
@@ -257,6 +258,15 @@ const baseStyles: WeatherStyle = {
     fontSize: 11,
     textTransform: 'uppercase',
   },
+  precipitationGraphGradient: {
+    ...svgChartStyles.svgGradient,
+    startColor: white,
+    stopColor: 'rgba(110, 208, 246, 0.2)',
+  },
+  precipitationGraphStroke: {
+    ...svgChartStyles.svgStroke,
+    color: '#61C3EA',
+  },
   rightSideInfo: {
     paddingTop: 9,
   },
@@ -264,9 +274,20 @@ const baseStyles: WeatherStyle = {
     alignSelf: 'center',
     justifyContent: 'center',
   },
-  svgText: {},
+  svgText: {
+    ...svgChartStyles.svgText,
+  },
   svgWrapper: {
-    height: 100,
+    ...svgChartStyles.svgWrapper,
+  },
+  temperatureGraphGradient: {
+    ...svgChartStyles.svgGradient,
+    startColor: white,
+    stopColor: 'rgba(255, 204, 0, 0.2)',
+  },
+  temperatureGraphStroke: {
+    ...svgChartStyles.svgStroke,
+    color: '#fc0',
   },
   timelineText: {
     color: tertiaryGrey,
@@ -300,6 +321,7 @@ const baseStyles: WeatherStyle = {
     alignItems: 'center',
     flexGrow: 1,
   },
+  windImage: {},
   windText: {
     color: tertiaryGrey,
   },
@@ -390,7 +412,7 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
           <View style={styles.headerLeftColumn}>
             <View style={styles.displayInlineWrapper}>
               <Image
-                style={{ width: 50, height: 50 }}
+                style={styles.activeDayIcon}
                 source={{ uri: activeDay.icon }}
               />
               <Text style={styles.h1}>
@@ -438,13 +460,15 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
         </View>
         <View style={styles.chartWrapper}>
           {/* TEMPERATURE */}
-          {this.displaySvgChart(
-            styles,
-            this.temperature,
-            'grad1',
-            'rgba(255, 204, 0, 0.2)',
-            '#fc0',
-          )}
+          <SVGChart
+            styles={{
+              svgGradient: styles.temperatureGraphGradient,
+              svgStroke: styles.temperatureGraphStroke,
+              svgText: styles.svgText,
+              svgWrapper: styles.svgWrapper,
+            }}
+            data={this.temperature}
+          />
           {/* PRECIPITATION */}
           {this.state.showExtraInfo && (
             <View>
@@ -453,13 +477,15 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
                   {precipitation.label}
                 </Text>
               </View>
-              {this.displaySvgChart(
-                styles,
-                this.precipitation,
-                'grad2',
-                'rgba(110, 208, 246, 0.2)',
-                '#61C3EA',
-              )}
+              <SVGChart
+                styles={{
+                  svgGradient: styles.precipitationGraphGradient,
+                  svgStroke: styles.precipitationGraphStroke,
+                  svgText: styles.svgText,
+                  svgWrapper: styles.svgWrapper,
+                }}
+                data={this.precipitation}
+              />
               {/* WIND */}
               <View style={styles.divider}>
                 <Text style={[styles.gutterBottom, styles.overline]}>
@@ -485,11 +511,14 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
                       </Text>
                       <Image
                         source={require('./wind-arrow.png')}
-                        style={{
-                          height: item.size,
-                          transform: [{ rotate: `${item.angle}deg` }],
-                          width: item.size,
-                        }}
+                        style={[
+                          {
+                            height: item.size,
+                            transform: [{ rotate: `${item.angle}deg` }],
+                            width: item.size,
+                          },
+                          styles.windImage,
+                        ]}
                       />
                     </View>
                   </View>
@@ -553,15 +582,7 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
                 <Text style={[styles.selfCenter, styles.dayText]}>
                   {day.weekday}
                 </Text>
-                <Image
-                  style={{
-                    alignSelf: 'center',
-                    height: 40,
-                    justifyContent: 'center',
-                    width: 40,
-                  }}
-                  source={{ uri: day.icon }}
-                />
+                <Image style={styles.dayImage} source={{ uri: day.icon }} />
                 <View
                   style={[
                     styles.selfCenter,
@@ -770,44 +791,4 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
       )[0] as keyof Selection,
     }));
   };
-
-  private displaySvgChart(
-    styles: WeatherStyle,
-    data: ChartData,
-    gradId: string,
-    stopColor: string,
-    strokeColor: string,
-  ) {
-    return (
-      <View style={styles.svgWrapper}>
-        <Svg width="100%" height="100%" viewBox="-12 -33 584 90">
-          <Defs>
-            <LinearGradient id={gradId} x1="0%" y1="0%" x2="0%" y2="100%">
-              <Stop offset="0" stopColor={stopColor} />
-              <Stop offset="1" stopColor="rgb(255,255,255)" />
-            </LinearGradient>
-          </Defs>
-          <Path d={data.svgArea || ''} fill={`url(#${gradId})`} />
-          <Path
-            d={data.svgLine || ''}
-            fill="none"
-            stroke={strokeColor}
-            strokeWidth="3"
-          />
-          {(data.svgTexts || []).map((item: Coordinate, idx: number) => (
-            <SvgText
-              key={`${item.text}-${idx}`}
-              x={item.x}
-              y={item.y}
-              fill={idx === 0 ? '#000' : tertiaryGrey}
-              fontSize={16}
-              fontFamily={styles.svgText.fontFamily}
-            >
-              {item.text}
-            </SvgText>
-          ))}
-        </Svg>
-      </View>
-    );
-  }
 }
