@@ -1,5 +1,5 @@
 import { merge, UniversalViewStyle } from '@cliqz/component-styles';
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import {
   Image,
   ImageStyle,
@@ -69,7 +69,14 @@ interface Forecast {
   hourly: Hourly;
 }
 
+export type ImageRenderer = FunctionComponent<{
+  uri: string;
+  height: string | number | undefined;
+  width: string | number | undefined;
+}>;
+
 interface WeatherProps {
+  ImageRenderer: ImageRenderer;
   data: {
     snippet: {
       extra: {
@@ -110,12 +117,18 @@ interface Meta {
   width: number;
 }
 
+interface SvgImageStyle {
+  height: number;
+  width: number;
+}
+
 interface WeatherStyle {
-  activeDayIcon: ImageStyle,
+  activeDayIcon: SvgImageStyle;
   activeText: TextStyle;
   container: UniversalViewStyle;
   chartWrapper: UniversalViewStyle;
-  dayImage: ImageStyle;
+  dayImage: SvgImageStyle;
+  dayImageWrapper: UniversalViewStyle;
   dayText: TextStyle;
   dayWrapper: UniversalViewStyle;
   dayWrapperActive: UniversalViewStyle;
@@ -159,7 +172,6 @@ const white = '#fff';
 
 const baseStyles: WeatherStyle = {
   activeDayIcon: {
-    backgroundColor: 'transparent',
     height: 50,
     width: 50,
   },
@@ -172,11 +184,13 @@ const baseStyles: WeatherStyle = {
   container: {
     maxWidth: 584,
   },
-  dayImage: {
+  dayImageWrapper: {
     alignSelf: 'center',
     backgroundColor: 'transparent',
-    height: 40,
     justifyContent: 'center',
+  },
+  dayImage: {
+    height: 40,
     width: 40,
   },
   dayText: {
@@ -401,6 +415,7 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
   };
 
   public render() {
+    const { ImageRenderer: ImageRendererComponent } = this.props;
     const { precipitation, humidity, wind, uv } = this.otherInfo;
     const activeDay = this.days[this.state.currentDay];
     const styles = merge(baseStyles, this.props.styles);
@@ -411,9 +426,10 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
         <View style={styles.displayInlineWrapper}>
           <View style={styles.headerLeftColumn}>
             <View style={styles.displayInlineWrapper}>
-              <Image
-                style={styles.activeDayIcon}
-                source={{ uri: activeDay.icon }}
+              <ImageRendererComponent
+                uri={activeDay.icon}
+                height={styles.dayImage.height}
+                width={styles.dayImage.width}
               />
               <Text style={styles.h1}>
                 {(activeDay.temperature as Unit).value}
@@ -582,7 +598,13 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
                 <Text style={[styles.selfCenter, styles.dayText]}>
                   {day.weekday}
                 </Text>
-                <Image style={styles.dayImage} source={{ uri: day.icon }} />
+                <View style={styles.dayImageWrapper}>
+                  <ImageRendererComponent
+                    height={styles.dayImage.height}
+                    width={styles.dayImage.width}
+                    uri={day.icon}
+                  />
+                </View>
                 <View
                   style={[
                     styles.selfCenter,
