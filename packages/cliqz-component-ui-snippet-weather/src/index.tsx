@@ -184,14 +184,14 @@ const baseStyles: WeatherStyle = {
   container: {
     maxWidth: 584,
   },
+  dayImage: {
+    height: 40,
+    width: 40,
+  },
   dayImageWrapper: {
     alignSelf: 'center',
     backgroundColor: 'transparent',
     justifyContent: 'center',
-  },
-  dayImage: {
-    height: 40,
-    width: 40,
   },
   dayText: {
     fontSize: 16,
@@ -345,6 +345,8 @@ const baseStyles: WeatherStyle = {
     width: '100%',
   },
 };
+
+export { baseStyles as styles };
 
 const getCoordinates = (values: number[], labels: number[], meta: Meta) => {
   const { min, max, width, height } = meta;
