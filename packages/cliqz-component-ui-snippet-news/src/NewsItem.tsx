@@ -1,7 +1,6 @@
 import { UniversalViewStyle } from '@cliqz/component-styles';
 import React, { useCallback, useMemo } from 'react';
 import {
-  GestureResponderEvent,
   Image,
   ImageStyle,
   Text,
@@ -32,7 +31,6 @@ interface NewsItemProps {
 
 export const styles: NewsItemStyles = {
   itemContainer: {
-    marginLeft: 8,
     width: 192,
   },
   itemImage: {

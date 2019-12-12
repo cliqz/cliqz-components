@@ -1,5 +1,5 @@
 import { merge, UniversalViewStyle } from '@cliqz/component-styles';
-import React, { useCallback, useMemo } from 'react';
+import React, { FunctionComponent, useCallback, useMemo } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import {
   Date2Text,
@@ -11,11 +11,17 @@ import {
 
 interface NewsSnippetStyle extends NewsItemStyles {
   container: UniversalViewStyle;
+  list: UniversalViewStyle;
+  separator: UniversalViewStyle;
 }
 
 export const styles: NewsSnippetStyle = {
-  container: {},
   ...newsItemStyles,
+  container: {},
+  list: {},
+  separator: {
+    padding: 6,
+  },
 };
 
 interface NewsItem {
@@ -42,10 +48,13 @@ interface NewsProps {
   styles?: Partial<NewsSnippetStyle>;
   date2text: Date2Text;
   onPress: OnPress;
+  ListSeparator?: FunctionComponent;
+  ListHeader?: FunctionComponent;
+  ListFooter?: FunctionComponent;
 }
 
-const Separator = () => {
-  return <View style={{ padding: 2 }} />;
+const Separator = ({ style: style }: { style: UniversalViewStyle }) => {
+  return <View style={style} />;
 };
 
 const extractKey = ({ url }: NewsItem) => {
@@ -81,6 +90,9 @@ export const NewsSnippet = ({
   styles: stylesOverwrite,
   date2text,
   onPress,
+  ListSeparator,
+  ListHeader,
+  ListFooter,
 }: NewsProps) => {
   const classes: NewsSnippetStyle = useMemo(
     () => StyleSheet.create(merge(styles, stylesOverwrite)),
@@ -90,14 +102,20 @@ export const NewsSnippet = ({
     ({ item }) => renderItem({ item, styles: classes, date2text, onPress }),
     [renderItem, classes, onPress],
   );
+  const separator = useCallback(() => Separator({ style: classes.separator }), [
+    classes,
+  ]);
   return (
     <View style={classes.container}>
       <FlatList
         data={data.links}
         renderItem={renderItemCall}
         horizontal={true}
-        ItemSeparatorComponent={Separator}
+        ListHeaderComponent={ListHeader || separator}
+        ListFooterComponent={ListFooter || separator}
+        ItemSeparatorComponent={ListSeparator || separator}
         keyExtractor={extractKey}
+        style={classes.list}
         showsHorizontalScrollIndicator={false}
       />
     </View>
