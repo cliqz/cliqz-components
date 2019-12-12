@@ -130,6 +130,7 @@ interface WeatherStyle {
   dayImage: SvgImageStyle;
   dayImageWrapper: UniversalViewStyle;
   dayText: TextStyle;
+  daysContainer: UniversalViewStyle;
   dayWrapper: UniversalViewStyle;
   dayWrapperActive: UniversalViewStyle;
   displayInlineWrapper: UniversalViewStyle;
@@ -207,6 +208,9 @@ const baseStyles: WeatherStyle = {
   dayWrapperActive: {
     borderColor: tertiaryGrey,
     borderWidth: 1,
+  },
+  daysContainer: {
+    marginHorizontal: 5,
   },
   displayInlineWrapper: {
     flexDirection: 'row',
@@ -584,7 +588,7 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
           </TouchableWithoutFeedback>
         </View>
 
-        <View style={styles.displayInlineWrapper}>
+        <View style={[styles.daysContainer, styles.displayInlineWrapper]}>
           {this.days.map((day, idx) => (
             <TouchableWithoutFeedback
               key={day.weekday}
