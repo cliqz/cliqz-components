@@ -16,6 +16,10 @@ storiesOf('Logo', module).add('Google', () => (
   <Logo logo={getLogo('https://google.com')} size={50} />
 ));
 
+storiesOf('Logo', module).add('ABCNews', () => (
+  <Logo logo={getLogo('https://abcnews.go.com')} size={50} />
+));
+
 storiesOf('Logo', module).add('No Icon round', () => (
   <Logo
     logo={getLogo('https://xyz.com')}

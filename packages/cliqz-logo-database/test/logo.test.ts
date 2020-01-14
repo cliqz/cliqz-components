@@ -14,11 +14,6 @@ const fakeDatabase: LogoDatabase = {
     ],
     eff: [
       {
-        b: '111111',
-        l: 1,
-        r: '$',
-      },
-      {
         b: '222222',
         l: 1,
         r: '$.org',
@@ -28,17 +23,22 @@ const fakeDatabase: LogoDatabase = {
         l: 1,
         r: '$.com',
       },
+      {
+        b: '111111',
+        l: 1,
+        r: '$',
+      },
     ],
     mozilla: [
       {
         b: '111111',
         l: 1,
-        r: '',
+        r: '$.de',
       },
       {
         b: '222222',
         l: 1,
-        r: '',
+        r: '$.org',
       },
     ],
   },
@@ -84,7 +84,7 @@ describe('getLogo', () => {
 
   describe('with multiple patterns', () => {
     beforeEach(() => {
-      subject = getLogo('https://eff.org', {
+      subject = getLogo('https://eff.com', {
         database: fakeDatabase,
       });
     });
