@@ -55,7 +55,11 @@ export class Logo extends React.PureComponent<LogoProps, LogoState> {
     await Image.prefetch(url);
     const size = this.props.logoSize || this.props.size;
     return (
-      <Image source={{ uri: url }} style={{ height: size, width: size }} />
+      <Image source={{ uri: url }} style={{
+        height: size,
+        width: size,
+        resizeMode: 'center',
+      }} />
     );
   }
 
