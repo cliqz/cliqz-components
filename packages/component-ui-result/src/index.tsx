@@ -8,6 +8,8 @@ export interface ResultData {
 
 export interface ResultComponentProps {
   result: ResultData;
+  selectedIndex: number;
+  registerResult(): number;
 }
 
 export interface ResultComponent {
@@ -16,75 +18,49 @@ export interface ResultComponent {
 }
 
 interface ResultProps {
-  results: ResultData[];
-  mapResultToComponent(result: ResultData, ref: React.RefObject<any>): any;
 }
 
 export class Result extends React.Component<ResultProps> {
+  resultCount = -1
 
   state = {
     selectedResultIndex: -1,
   }
 
   resultsRefs: React.RefObject<ResultComponent>[] = []
-
-  onSelected(url: string) {
-
+  registerResult = (): number => {
+    this.resultCount += 1
+    return this.resultCount;
   }
 
-  next(): boolean {
-    const selectedResultIndex = this.state.selectedResultIndex === this.resultsRefs.length ? -1 : this.state.selectedResultIndex;
-    for (let i = selectedResultIndex; i < this.resultsRefs.length; i += 1) {
-      const result = this.resultsRefs[i];
-      if (!result || !result.current) {
-        continue;
-      }
-      if (result.current.next()) {
-        if (i !== selectedResultIndex) {
-          this.setState({
-            selectedResultIndex: i,
-          });
-        }
-        return true;
-      }
+  next() {
+    if (this.state.selectedResultIndex >= this.resultCount) {
+      this.setState({
+        selectedResultIndex: 0,
+      });
+      return;
     }
     this.setState({
-      selectedResultIndex: -1,
-    });
-    return false;
+      selectedResultIndex: this.state.selectedResultIndex + 1,
+    })
   }
 
   previous() {
-    const selectedResultIndex = this.state.selectedResultIndex === -1 ? this.resultsRefs.length - 1: this.state.selectedResultIndex;
-    for (let i = selectedResultIndex; i >= 0; i -= 1) {
-      const result = this.resultsRefs[i];
-      if (!result || !result.current) {
-        continue;
-      }
-      if (result.current.previous()) {
-        if (i !== selectedResultIndex) {
-          this.setState({
-            selectedResultIndex: i,
-          });
-        }
-        return true;
-      }
+    if (this.state.selectedResultIndex === 0) {
+      this.setState({
+        selectedResultIndex: this.resultCount,
+      });
+      return;
     }
     this.setState({
-      selectedResultIndex: this.resultsRefs.length,
-    });
-    return false;
+      selectedResultIndex: this.state.selectedResultIndex - 1,
+    })
   }
 
   render() {
-    this.resultsRefs = this.props.results.map(() => React.createRef());
-    const childComponents = this.props.results.map(
-      (result, index) => this.props.mapResultToComponent(result, this.resultsRefs[index])
-    );
-
     return (
       <div>
-        {childComponents}
+        {typeof this.props.children === "function" ? this.props.children(this) : null}
       </div>
     );
   }
