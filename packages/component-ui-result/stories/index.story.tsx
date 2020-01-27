@@ -1,5 +1,5 @@
 import { storiesOf } from '@storybook/react';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { button } from "@storybook/addon-knobs";
 import { ResultList, SelectableResult } from '../src/index';
@@ -19,9 +19,16 @@ const TitleResult = ({ title, children }: { title: string, children?: any }) => 
   );
 };
 
-storiesOf('Result', module).add('Results', () => {
+let AllResults = [
+  { title: 'hello' },
+  { title: 'world' },
+];
+
+const ResultListStorybook = () => {
   let nextAction: CallableFunction | undefined
   let previousAction: CallableFunction | undefined;
+  let clearAction: CallableFunction | undefined;
+  const [results, setResults] = useState(AllResults);
 
   button('Keyboard: up', () => {
     if (!previousAction) { return }
@@ -33,24 +40,42 @@ storiesOf('Result', module).add('Results', () => {
     nextAction();
   });
 
+  button('clear', () => {
+    if (!clearAction) { return }
+    clearAction();
+  });
+
+  useEffect(() => {
+    button('addResult', () => {
+
+      AllResults = [
+        AllResults[0],
+        { title: `New result ${Math.random()}` },
+        ...AllResults.slice(1)
+      ]
+      setResults(AllResults)
+    })
+  }, []);
+
   return (
     <View>
       <ResultList>
-        {({ next, previous, selectedResultIndex }) => {
+        {({ next, previous, clear, selectedResultIndex }) => {
           nextAction = next;
           previousAction = previous;
+          clearAction = clear;
           return (
             <>
               <Text>Currently selected result index: {selectedResultIndex}</Text>
-              <TitleResult title="Hello">
-                <TitleResult title="sub 1" />
-                <TitleResult title="sub 2" />
-              </TitleResult>
-              <TitleResult title="World" />
+              {results.map(result =>
+                <TitleResult key={result.title} title={result.title} />
+              )}
             </>
           );
         }}
       </ResultList>
     </View>
   );
-});
+}
+
+storiesOf('Result', module).add('Results', () => <ResultListStorybook />);

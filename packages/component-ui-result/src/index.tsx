@@ -11,6 +11,7 @@ enum ActionType {
   next = "next",
   previous = "previous",
   register = "register",
+  clear = "clear",
 }
 
 type Action =
@@ -23,12 +24,17 @@ type Action =
   {
     type: ActionType.register
     result: any
+  } |
+  {
+    type: ActionType.clear,
   };
 
-const SelectableResultStateContext = React.createContext<State>({
+const defaultState = {
   index: -1,
   results: [],
-});
+};
+
+const SelectableResultStateContext = React.createContext<State>(defaultState);
 const SelectableResultDispatchContext = React.createContext<Dispatch | undefined>(undefined);
 
 const exhaustiveCheck = (_: never): void => {};
@@ -66,6 +72,10 @@ function selectableResultReducer(state: State, action: Action): State {
         ...state,
         index: state.index - 1,
       };
+    case ActionType.clear:
+      return {
+        ...defaultState
+      };
     default:
       exhaustiveCheck(action);
       return state;
@@ -76,13 +86,11 @@ type ResultListControls = {
   selectedResultIndex: number
   next(): void
   previous(): void
+  clear(): void
 }
 
 export const ResultList = ({ children }: { children(arg0: ResultListControls): any }) => {
-  const [state, dispatch] = useReducer(selectableResultReducer, {
-    index: -1,
-    results: [],
-  });
+  const [state, dispatch] = useReducer(selectableResultReducer, defaultState);
 
   return (
     <SelectableResultStateContext.Provider value={state}>
@@ -95,6 +103,9 @@ export const ResultList = ({ children }: { children(arg0: ResultListControls): a
           previous() {
             dispatch({ type: ActionType.previous });
           },
+          clear() {
+            dispatch({ type: ActionType.clear });
+          }
         })}
       </SelectableResultDispatchContext.Provider>
     </SelectableResultStateContext.Provider>
@@ -106,7 +117,9 @@ type SelectableResultContext = {
   index: number,
 }
 
-export const SelectableResult = ({ children }: { children(arg0: SelectableResultContext): any }) => {
+export const SelectableResult = (
+  { children }:
+  { children(arg0: SelectableResultContext): any }) => {
   const { index, results } = useContext(SelectableResultStateContext);
   const dispatch = useContext(SelectableResultDispatchContext)
   if (!dispatch) {
