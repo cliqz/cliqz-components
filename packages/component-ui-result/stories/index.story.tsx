@@ -4,10 +4,10 @@ import { View, Text } from 'react-native';
 import { button } from "@storybook/addon-knobs";
 import { ResultList, SelectableResult } from '../src/index';
 
-const TitleResult = ({ title, children }: { title: string, children?: any }) => {
+const TitleResult = ({ result, title, children }: { result: any, title: string, children?: any }) => {
   return (
     <View>
-       <SelectableResult>
+       <SelectableResult result={result}>
         {({ isActive, index }) =>
           <View style={{ backgroundColor: isActive ? 'green' : 'transparent' }}>
             <Text>{index}: {title}</Text>
@@ -59,7 +59,7 @@ const ResultListStorybook = () => {
 
   return (
     <View>
-      <ResultList>
+      <ResultList results={results}>
         {({ next, previous, clear, selectedResultIndex }) => {
           nextAction = next;
           previousAction = previous;
@@ -68,7 +68,7 @@ const ResultListStorybook = () => {
             <>
               <Text>Currently selected result index: {selectedResultIndex}</Text>
               {results.map(result =>
-                <TitleResult key={result.title} title={result.title} />
+                <TitleResult result={result} key={result.title} title={result.title} />
               )}
             </>
           );

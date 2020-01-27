@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useMemo } from 'react';
+import React, { useContext, useReducer, useMemo, useEffect } from 'react';
 
 type Dispatch = (action: Action) => void
 
@@ -12,6 +12,7 @@ enum ActionType {
   previous = "previous",
   register = "register",
   clear = "clear",
+  updateResults = "updateResuls"
 }
 
 type Action =
@@ -27,6 +28,10 @@ type Action =
   } |
   {
     type: ActionType.clear,
+  } |
+  {
+    type: ActionType.updateResults,
+    results: any[],
   };
 
 const defaultState = {
@@ -76,6 +81,11 @@ function selectableResultReducer(state: State, action: Action): State {
       return {
         ...defaultState
       };
+    case ActionType.updateResults:
+      return {
+        ...state,
+        results: action.results,
+      };
     default:
       exhaustiveCheck(action);
       return state;
@@ -89,8 +99,15 @@ type ResultListControls = {
   clear(): void
 }
 
-export const ResultList = ({ children }: { children(arg0: ResultListControls): any }) => {
+export const ResultList = (
+  { children, results }:
+  { children(arg0: ResultListControls): any, results: any }
+) => {
   const [state, dispatch] = useReducer(selectableResultReducer, defaultState);
+
+  useEffect(() => {
+    dispatch({ type: ActionType.updateResults, results })
+  }, results)
 
   return (
     <SelectableResultStateContext.Provider value={state}>
@@ -118,20 +135,15 @@ type SelectableResultContext = {
 }
 
 export const SelectableResult = (
-  { children }:
-  { children(arg0: SelectableResultContext): any }) => {
+  { children, result }:
+  { children(arg0: SelectableResultContext): any, result: any }
+) => {
   const { index, results } = useContext(SelectableResultStateContext);
   const dispatch = useContext(SelectableResultDispatchContext)
   if (!dispatch) {
     throw new Error('SelectableResult has to be nested in ResultList');
   }
-
-  const id = useMemo(() => {
-    const id = {};
-    dispatch && dispatch({ type: ActionType.register, result: id });
-    return id;
-  }, []);
-  const indexOfId = results.indexOf(id);
+  const indexOfId = results.indexOf(result);
 
   return children({
     isActive: index === indexOfId,
