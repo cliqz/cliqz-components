@@ -1,20 +1,19 @@
 {
-  "name": "@cliqz/component-ui-result",
+  "name": "@cliqz/component-ui-selectable-results",
   "version": "0.5.4",
-  "description": "> TODO: description",
+  "description": "A result list that tracks all results that can be selected (with keyboard for example)",
   "author": "Krzysztof Jan Modras <chrmod@chrmod.net>",
   "homepage": "https://github.com/cliqz/cliqz-components#readme",
   "license": "MPL-2.0",
   "main": "dist/index.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
   "files": [
-    "lib"
+    "dist"
   ],
   "publishConfig": {
     "access": "public"
+  },
+  "peerDependencies": {
+    "react": "^16.8.6"
   },
   "repository": {
     "type": "git",
