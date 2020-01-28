@@ -1,9 +1,10 @@
-import React, { useContext, useReducer, useMemo, useEffect } from 'react';
+import React, { useContext, useReducer, useMemo } from 'react';
 
 type Dispatch = (action: Action) => void
 
 type State = {
   results: any[];
+  selectableResults: any[];
   index: number;
 }
 
@@ -37,6 +38,7 @@ type Action =
 const defaultState = {
   index: -1,
   results: [],
+  selectableResults: [],
 };
 
 const SelectableResultStateContext = React.createContext<State>(defaultState);
@@ -49,14 +51,14 @@ function selectableResultReducer(state: State, action: Action): State {
     case ActionType.register: {
       return {
         ...state,
-        results: [
-          ...state.results,
+        selectableResults: [
+          ...state.selectableResults,
           action.result,
         ],
       };
     }
     case ActionType.next:
-      if (state.index >= state.results.length - 1) {
+      if (state.index >= state.selectableResults.length - 1) {
         return {
           ...state,
           index: -1,
@@ -70,7 +72,7 @@ function selectableResultReducer(state: State, action: Action): State {
       if (state.index === - 1) {
         return {
           ...state,
-          index: state.results.length - 1,
+          index: state.selectableResults.length - 1,
         };
       }
       return {
@@ -85,6 +87,7 @@ function selectableResultReducer(state: State, action: Action): State {
       return {
         ...state,
         results: action.results,
+        selectableResults: [],
       };
     default:
       exhaustiveCheck(action);
@@ -143,12 +146,17 @@ export const SelectableResult = (
   { children, result }:
   { children(arg0: SelectableResultContext): any, result: any }
 ) => {
-  const { index, results } = useContext(SelectableResultStateContext);
+  const { index, selectableResults } = useContext(SelectableResultStateContext);
   const dispatch = useContext(SelectableResultDispatchContext)
   if (!dispatch) {
     throw new Error('SelectableResult has to be nested in ResultList');
   }
-  const indexOfId = results.indexOf(result);
+
+  let indexOfId = selectableResults.indexOf(result);
+
+  if (indexOfId === -1) {
+    dispatch({ type: ActionType.register, result });
+  }
 
   return children({
     isActive: index === indexOfId,

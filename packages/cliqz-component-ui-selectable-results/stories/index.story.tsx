@@ -14,14 +14,16 @@ const TitleResult = ({ result, title, children }: { result: any, title: string, 
           </View>
         }
       </SelectableResult>
+      {(result.subResults || []).map((subResult: any) =>
+        <TitleResult result={subResult} title={subResult.title as string} />)}
       {children}
     </View>
   );
 };
 
 let AllResults = [
-  { title: 'hello' },
-  { title: 'world' },
+  { title: '0', subResults: [{ title: '1' }] },
+  { title: '5' },
 ];
 
 const ResultListStorybook = () => {
@@ -48,7 +50,10 @@ const ResultListStorybook = () => {
 
   button('addResult', () => {
     if (!updateResultsAction) { return }
-    const newResult = { title: `New result ${Math.random()}` };
+    const newResult = { title: `2 ${Math.random()}`, subResults: [
+      { title: `3 ${Math.random()}`},
+      { title: `4 ${Math.random()}`},
+    ]};
     if (AllResults.length === 0) {
       AllResults = [newResult]
     } else {
