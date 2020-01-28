@@ -1,5 +1,5 @@
 import { storiesOf } from '@storybook/react';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, Text } from 'react-native';
 import { button } from "@storybook/addon-knobs";
 import { ResultList, SelectableResult } from '../src/index';
@@ -28,7 +28,7 @@ const ResultListStorybook = () => {
   let nextAction: CallableFunction | undefined
   let previousAction: CallableFunction | undefined;
   let clearAction: CallableFunction | undefined;
-  const [results, setResults] = useState(AllResults);
+  let updateResultsAction: CallableFunction | undefined;
 
   button('Keyboard: up', () => {
     if (!previousAction) { return }
@@ -42,33 +42,42 @@ const ResultListStorybook = () => {
 
   button('clear', () => {
     if (!clearAction) { return }
+    AllResults = []
     clearAction();
   });
 
-  useEffect(() => {
-    button('addResult', () => {
-
+  button('addResult', () => {
+    if (!updateResultsAction) { return }
+    const newResult = { title: `New result ${Math.random()}` };
+    if (AllResults.length === 0) {
+      AllResults = [newResult]
+    } else {
       AllResults = [
         AllResults[0],
-        { title: `New result ${Math.random()}` },
+        newResult,
         ...AllResults.slice(1)
-      ]
-      setResults(AllResults)
-    })
-  }, []);
+      ];
+    }
+    updateResultsAction(AllResults);
+  });
 
   return (
     <View>
-      <ResultList results={results}>
-        {({ next, previous, clear, selectedResultIndex }) => {
+      <ResultList results={AllResults}>
+        {({ next, previous, clear, selectedResultIndex, results, updateResults }) => {
           nextAction = next;
           previousAction = previous;
           clearAction = clear;
+          updateResultsAction = updateResults;
           return (
             <>
               <Text>Currently selected result index: {selectedResultIndex}</Text>
-              {results.map(result =>
-                <TitleResult result={result} key={result.title} title={result.title} />
+              {results.map((result: any) =>
+                <TitleResult
+                  result={result}
+                  key={result.title}
+                  title={result.title}
+                />
               )}
             </>
           );

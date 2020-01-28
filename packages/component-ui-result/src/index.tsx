@@ -94,26 +94,28 @@ function selectableResultReducer(state: State, action: Action): State {
 
 type ResultListControls = {
   selectedResultIndex: number
+  results: any
   next(): void
   previous(): void
   clear(): void
+  updateResults(results: any): void
 }
 
 export const ResultList = (
   { children, results }:
-  { children(arg0: ResultListControls): any, results: any }
+  { children(arg0: ResultListControls): any, results: any[] }
 ) => {
-  const [state, dispatch] = useReducer(selectableResultReducer, defaultState);
-
-  useEffect(() => {
-    dispatch({ type: ActionType.updateResults, results })
-  }, results)
+  const [state, dispatch] = useReducer(selectableResultReducer, {
+    ...defaultState,
+    results,
+  });
 
   return (
     <SelectableResultStateContext.Provider value={state}>
       <SelectableResultDispatchContext.Provider value={dispatch}>
         {children({
           selectedResultIndex: state.index,
+          results: state.results,
           next() {
             dispatch({ type: ActionType.next });
           },
@@ -122,7 +124,10 @@ export const ResultList = (
           },
           clear() {
             dispatch({ type: ActionType.clear });
-          }
+          },
+          updateResults(results: any) {
+            dispatch({ type: ActionType.updateResults, results })
+          },
         })}
       </SelectableResultDispatchContext.Provider>
     </SelectableResultStateContext.Provider>
