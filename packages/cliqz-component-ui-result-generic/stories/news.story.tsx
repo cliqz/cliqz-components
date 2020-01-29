@@ -4,7 +4,7 @@ import getLogo from 'cliqz-logo-database';
 import React from 'react';
 import { ResultList } from '@cliqz/component-ui-selectable-results';
 import { NewsSnippet } from '@cliqz/component-ui-snippet-news';
-import { GenericSnippet, GenericSnippetStyle, ImageRendererComponent, t, NewsComponent, LogoComponent, openLink} from '../src/index';
+import { GenericResult, GenericResultStyle, ImageRendererComponent, t, NewsComponent, LogoComponent, openLink} from '../src/index';
 import { GENERIC_RESULT_WITH_NEWS as result } from './fixtures';
 
 const ImageRendererComponent: ImageRendererComponent = ({ }) => {
@@ -47,7 +47,7 @@ const NewsComponent: NewsComponent = ({ news }) => {
   );
 }
 
-const styles: Partial<GenericSnippetStyle> = {
+const styles: Partial<GenericResultStyle> = {
   container: {
     backgroundColor: '#ffdddd',
   },
@@ -66,11 +66,11 @@ const styles: Partial<GenericSnippetStyle> = {
   },
 };
 
-storiesOf('Generic Snippet', module).add('with news', () => {
+storiesOf('Generic Result', module).add('with news', () => {
   return (
     <ResultList results={[]}>
       {({ results }) =>
-        <GenericSnippet
+        <GenericResult
           result={result}
           LogoComponent={LogoComponent}
           ImageRendererComponent={ImageRendererComponent}

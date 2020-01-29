@@ -1,19 +1,19 @@
 import React, { useMemo } from 'react';
 import { View } from 'react-native';
 import { merge, UniversalViewStyle } from '@cliqz/component-styles';
-import { SelecteableSnippet, Snippet, SnippetStyles, styles as baseSnippetStyles } from './snippet';
+import { GenericSnippet, SnippetStyles, styles as baseSnippetStyles } from '@cliqz/component-ui-snippet-generic';
 import { SnippetList } from './snippet-list';
 import { LogoComponent, Result, t, ImageRendererComponent, NewsComponent, openLink } from './types';
 export * from './types';
 
-export interface GenericSnippetStyle {
+export interface GenericResultStyle {
   container: UniversalViewStyle,
   wrapper: UniversalViewStyle,
   mainSnippetStyle: Partial<SnippetStyles>,
   urlsSnippetStyle: Partial<SnippetStyles>,
 }
 
-const baseStyles: GenericSnippetStyle = {
+const baseStyles: GenericResultStyle = {
   container: {
     flexDirection: 'column',
     marginVertical: 10,
@@ -30,7 +30,7 @@ const baseStyles: GenericSnippetStyle = {
 
 export { baseStyles as styles };
 
-export const GenericSnippet = ({
+export const GenericResult = ({
   result,
   LogoComponent,
   ImageRendererComponent,
@@ -45,7 +45,7 @@ export const GenericSnippet = ({
   ImageRendererComponent: ImageRendererComponent,
   t: t,
   openLink: openLink,
-  styles?: Partial<GenericSnippetStyle>;
+  styles?: Partial<GenericResultStyle>;
   NewsComponent?: NewsComponent,
   isUrlsSelecable?: boolean
 }) => {
@@ -62,12 +62,10 @@ export const GenericSnippet = ({
     );
   }, [result.data.deepResults]);
 
-  const SnippetComponent = useMemo(() => isUrlsSelecable ? SelecteableSnippet : Snippet, [isUrlsSelecable])
-
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
-        <SelecteableSnippet
+        <GenericSnippet
           result={result}
           type="main"
           LogoComponent={LogoComponent}
@@ -83,7 +81,7 @@ export const GenericSnippet = ({
             ImageRendererComponent={ImageRendererComponent}
             t={t}
             list={(result.urls || []).map(snippet => (
-              <SnippetComponent
+              <GenericSnippet
                 key={snippet.url}
                 result={snippet}
                 LogoComponent={LogoComponent}

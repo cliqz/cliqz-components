@@ -5,7 +5,7 @@ import { View, Text } from 'react-native';
 import { button } from "@storybook/addon-knobs";
 import { ResultList } from '../src/index';
 import { Logo } from '@cliqz/component-ui-logo';
-import { Result, GenericSnippet, ImageRendererComponent, LogoComponent, openLink, t } from '@cliqz/component-ui-result-generic';
+import { Result, GenericResult, ImageRendererComponent, LogoComponent, openLink, t } from '@cliqz/component-ui-result-generic';
 import { GENERIC_RESULT_WITH_HISTORY } from '../../cliqz-component-ui-result-generic/stories/fixtures';
 
 let AllResults: Result[] = [
@@ -80,7 +80,7 @@ const ResultListStorybook = () => {
             <>
               <Text>Currently selected result index: {selectedResultIndex}</Text>
               {results.map((result: any) =>
-                <GenericSnippet
+                <GenericResult
                   result={result}
                   key={result.title}
                   ImageRendererComponent={ImageRendererComponent}

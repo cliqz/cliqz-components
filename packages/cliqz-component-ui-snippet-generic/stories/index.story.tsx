@@ -3,9 +3,9 @@ import { Logo } from '@cliqz/component-ui-logo';
 import getLogo from 'cliqz-logo-database';
 import React from 'react';
 import { ResultList } from '@cliqz/component-ui-selectable-results';
-import { GenericResult, GenericResultStyle } from '../src/index';
+import { GenericSnippet, SnippetStyles } from '../src/index';
 import { ImageRendererComponent, t, LogoComponent, openLink } from '../src/types';
-import { GENERIC_RESULT_WITH_HISTORY as result } from './fixtures';
+import { GENERIC_RESULT as result } from './fixtures';
 
 const ImageRendererComponent: ImageRendererComponent = ({ }) => {
   return (
@@ -27,36 +27,30 @@ const LogoComponent: LogoComponent = ({ url, size }) => {
 const t: t = (key: string) => key;
 const openLink: openLink = (url) => alert(url);
 
-const styles: Partial<GenericResultStyle> = {
+const styles: Partial<SnippetStyles> = {
   container: {
-    backgroundColor: '#ffdddd',
+    backgroundColor: '#aaaaff',
   },
-  mainSnippetStyle: {
-    url: {
-      color: 'blue',
-    },
-    lockBreakColor: {
-      color: 'red',
-    },
+  url: {
+    color: 'blue',
   },
-  urlsSnippetStyle: {
-    url: {
-      color: 'green'
-    },
+  lockBreakColor: {
+    color: 'red',
   },
 };
 
-storiesOf('Generic Result', module).add('with history', () => {
+storiesOf('Generic Snippet', module).add('default', () => {
   return (
     <ResultList results={[]}>
       {({ results }) =>
-        <GenericResult
+        <GenericSnippet
           result={result}
           LogoComponent={LogoComponent}
           ImageRendererComponent={ImageRendererComponent}
           t={t}
           openLink={openLink}
           styles={styles}
+          type="main"
         />
       }
     </ResultList>
