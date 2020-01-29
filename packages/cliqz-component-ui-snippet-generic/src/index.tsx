@@ -4,7 +4,7 @@ import { merge, UniversalViewStyle } from '@cliqz/component-styles';
 import { Snippet, openLink, SnippetStyles, styles as baseSnippetStyles } from './snippet';
 import { LogoComponent } from './snippet-icon';
 import { SnippetList } from './snippet-list';
-import { Result, t, ImageRendererComponent } from './types';
+import { Result, t, ImageRendererComponent, NewsComponent } from './types';
 export { Result } from './types';
 
 export interface GenericSnippetStyle {
@@ -38,6 +38,7 @@ export const GenericSnippet = ({
   t,
   openLink,
   styles: extendedStyles,
+  NewsComponent,
 }: {
   result: Result,
   LogoComponent: LogoComponent,
@@ -45,12 +46,20 @@ export const GenericSnippet = ({
   t: t,
   openLink: openLink,
   styles?: Partial<GenericSnippetStyle>;
+  NewsComponent?: NewsComponent,
 }) => {
   const styles = useMemo(() => ({
     ...merge(baseStyles, extendedStyles),
     mainSnippetStyle: merge(baseStyles.mainSnippetStyle, extendedStyles ? extendedStyles.mainSnippetStyle : undefined),
     urlsSnippetStyle: merge(baseStyles.urlsSnippetStyle, extendedStyles ? extendedStyles.urlsSnippetStyle : undefined),
   }), [extendedStyles]);
+
+  const news = useMemo(() => {
+    const deepResults = result.data.deepResults || []
+    return deepResults.find(
+      r => r.type === 'news' || r.type === 'top-news',
+    );
+  }, [result.data.deepResults]);
 
   return (
     <View style={styles.container}>
@@ -83,6 +92,9 @@ export const GenericSnippet = ({
               />
             ))}
           />
+        )}
+        {NewsComponent && news && (
+          <NewsComponent news={news} />
         )}
       </View>
     </View>

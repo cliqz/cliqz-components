@@ -117,7 +117,7 @@ export { baseStyles as styles };
 const isHistory = (result: Result) => result.provider === 'history' || result.provider === 'tabs';
 
 export interface openLink {
-  (url: string, type: string): void
+  (url: string, type?: string): void
 }
 
 export const Snippet = (

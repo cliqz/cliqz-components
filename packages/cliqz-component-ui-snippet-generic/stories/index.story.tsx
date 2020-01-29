@@ -2,10 +2,13 @@ import { storiesOf } from '@storybook/react';
 import { Logo } from '@cliqz/component-ui-logo';
 import getLogo from 'cliqz-logo-database';
 import React from 'react';
+import { View, Text } from 'react-native';
+import { NewsSnippet } from '@cliqz/component-ui-snippet-news';
 import { GenericSnippet, Result, GenericSnippetStyle } from '../src/index';
 import { LogoComponent } from '../src/snippet-icon';
-import { ImageRendererComponent, t } from '../src/types';
+import { ImageRendererComponent, t, NewsComponent } from '../src/types';
 import { openLink } from '../src/snippet';
+import { NewsResult } from '../../cliqz-component-ui-snippet-news/stories/news-result';
 
 const ImageRendererComponent: ImageRendererComponent = ({ }) => {
   return (
@@ -24,6 +27,29 @@ const LogoComponent: LogoComponent = ({ url, size }) => {
   );
 };
 
+const t: t = (key: string) => key;
+const date2text = (date: Date) => date.toString();
+const openLink: openLink = (url) => alert(url);
+
+const NewsComponent: NewsComponent = ({ news }) => {
+  return (
+    <NewsSnippet
+      data={news}
+      date2text={date2text}
+      styles={{
+        itemImageCaptionText: {
+          color: '#555',
+        },
+        itemTitle: {
+          color: 'black',
+        },
+      }}
+      ListHeader={() => <div></div>}
+      onPress={openLink}
+    ></NewsSnippet>
+  );
+}
+
 const result: Result = {
   title: "example",
   url: "https://example.com",
@@ -39,13 +65,15 @@ const result: Result = {
       friendlyUrl: "example.com",
       provider: "cliqz",
       type: "main",
+      data: {},
     },
   ],
+  data: {
+    deepResults: [
+      NewsResult,
+    ],
+  },
 };
-
-const t: t = (key: string) => key;
-
-const openLink: openLink = (url) => alert(url);
 
 const styles: Partial<GenericSnippetStyle> = {
   container: {
@@ -72,6 +100,7 @@ storiesOf('Generic Snippet', module).add('default view', () => {
       result={result}
       LogoComponent={LogoComponent}
       ImageRendererComponent={ImageRendererComponent}
+      NewsComponent={NewsComponent}
       t={t}
       openLink={openLink}
       styles={styles}
