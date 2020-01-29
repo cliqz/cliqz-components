@@ -8,8 +8,9 @@
 */
 
 import { UniversalViewStyle } from '@cliqz/component-styles';
-import React, { ComponentType } from 'react';
+import React from 'react';
 import { View } from 'react-native';
+import { LogoComponent } from './types';
 
 interface SnipperIconStyles {
   symbolContainer: UniversalViewStyle,
@@ -33,11 +34,6 @@ export const styles: SnipperIconStyles = {
     borderRadius: 1,
   },
 };
-
-export type LogoComponent = ComponentType<{
-  size: number
-  url: string
-}>
 
 export const SnippetIcon = (
   { type, url, LogoComponent }:

@@ -2,12 +2,10 @@ import { storiesOf } from '@storybook/react';
 import { Logo } from '@cliqz/component-ui-logo';
 import getLogo from 'cliqz-logo-database';
 import React from 'react';
+import { ResultList } from '@cliqz/component-ui-selectable-results';
 import { NewsSnippet } from '@cliqz/component-ui-snippet-news';
-import { GenericSnippet, Result, GenericSnippetStyle } from '../src/index';
-import { LogoComponent } from '../src/snippet-icon';
-import { ImageRendererComponent, t, NewsComponent } from '../src/types';
-import { openLink } from '../src/snippet';
-import { NewsResult } from '../../cliqz-component-ui-snippet-news/stories/news-result';
+import { GenericSnippet, GenericSnippetStyle, ImageRendererComponent, t, NewsComponent, LogoComponent, openLink} from '../src/index';
+import { GENERIC_RESULT_WITH_NEWS as result } from './fixtures';
 
 const ImageRendererComponent: ImageRendererComponent = ({ }) => {
   return (
@@ -68,31 +66,20 @@ const styles: Partial<GenericSnippetStyle> = {
   },
 };
 
-const result: Result = {
-  title: "example",
-  url: "https://example.com",
-  description: "Lorem ipsum",
-  friendlyUrl: "example.com",
-  provider: "cliqz",
-  type: "main",
-  urls: [],
-  data: {
-    deepResults: [
-      NewsResult,
-    ],
-  },
-};
-
 storiesOf('Generic Snippet', module).add('with news', () => {
   return (
-    <GenericSnippet
-      result={result}
-      LogoComponent={LogoComponent}
-      ImageRendererComponent={ImageRendererComponent}
-      NewsComponent={NewsComponent}
-      t={t}
-      openLink={openLink}
-      styles={styles}
-    />
+    <ResultList results={[]}>
+      {({ results }) =>
+        <GenericSnippet
+          result={result}
+          LogoComponent={LogoComponent}
+          ImageRendererComponent={ImageRendererComponent}
+          NewsComponent={NewsComponent}
+          t={t}
+          openLink={openLink}
+          styles={styles}
+        />
+      }
+    </ResultList>
   );
 });

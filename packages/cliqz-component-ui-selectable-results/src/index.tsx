@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useMemo } from 'react';
+import React, { useContext, useReducer, ComponentType, useMemo } from 'react';
 
 type Dispatch = (action: Action) => void
 
@@ -137,14 +137,14 @@ export const ResultList = (
   );
 }
 
-type SelectableResultContext = {
-  isActive: boolean,
-  index: number,
+export type SelectableResultProps = {
+  isActive?: boolean,
+  index?: number,
 }
 
 export const SelectableResult = (
   { children, result }:
-  { children(arg0: SelectableResultContext): any, result: any }
+  { children(arg0: SelectableResultProps): any, result: any }
 ) => {
   const { index, selectableResults } = useContext(SelectableResultStateContext);
   const dispatch = useContext(SelectableResultDispatchContext)
@@ -163,3 +163,21 @@ export const SelectableResult = (
     index: indexOfId,
   });
 }
+
+export const withSelectableResult = <P extends object>(Component: ComponentType<P>) => (props: P) => {
+  const { index, selectableResults } = useContext(SelectableResultStateContext);
+  const dispatch = useContext(SelectableResultDispatchContext)
+  if (!dispatch) {
+    throw new Error('SelectableResult has to be nested in ResultList');
+  }
+  const result = useMemo(() => ({}), []);
+
+  let indexOfId = selectableResults.indexOf(result);
+
+  if (indexOfId === -1) {
+    dispatch({ type: ActionType.register, result });
+  }
+  return (
+    <Component isActive={index === indexOfId} {...props as P} />
+  )
+};

@@ -1,30 +1,36 @@
 import { storiesOf } from '@storybook/react';
 import React from 'react';
+import getLogo from 'cliqz-logo-database';
 import { View, Text } from 'react-native';
 import { button } from "@storybook/addon-knobs";
 import { ResultList, SelectableResult } from '../src/index';
+import { Logo } from '@cliqz/component-ui-logo';
+import { Result, GenericSnippet, ImageRendererComponent, LogoComponent, openLink, t } from '@cliqz/component-ui-snippet-generic';
+import { GENERIC_RESULT_WITH_HISTORY } from '../../cliqz-component-ui-snippet-generic/stories/fixtures';
 
-const TitleResult = ({ result, title, children }: { result: any, title: string, children?: any }) => {
+let AllResults: Result[] = [
+  GENERIC_RESULT_WITH_HISTORY,
+];
+
+const ImageRendererComponent: ImageRendererComponent = ({ }) => {
   return (
-    <View>
-       <SelectableResult result={result}>
-        {({ isActive, index }) =>
-          <View style={{ backgroundColor: isActive ? 'green' : 'transparent' }}>
-            <Text>{index}: {title}</Text>
-          </View>
-        }
-      </SelectableResult>
-      {(result.subResults || []).map((subResult: any) =>
-        <TitleResult result={subResult} title={subResult.title as string} />)}
-      {children}
-    </View>
+    <img src=""/>
+  );
+}
+
+const LogoComponent: LogoComponent = ({ url, size }) => {
+  return (
+    <Logo
+      logo={getLogo(url)}
+      size={size}
+      borderRadius={10}
+      logoSize={size}
+    />
   );
 };
 
-let AllResults = [
-  { title: '0', subResults: [{ title: '1' }] },
-  { title: '5' },
-];
+const t: t = (key: string) => key;
+const openLink: openLink = (url) => alert(url);
 
 const ResultListStorybook = () => {
   let nextAction: CallableFunction | undefined
@@ -50,16 +56,12 @@ const ResultListStorybook = () => {
 
   button('addResult', () => {
     if (!updateResultsAction) { return }
-    const newResult = { title: `2 ${Math.random()}`, subResults: [
-      { title: `3 ${Math.random()}`},
-      { title: `4 ${Math.random()}`},
-    ]};
     if (AllResults.length === 0) {
-      AllResults = [newResult]
+      AllResults = [GENERIC_RESULT_WITH_HISTORY]
     } else {
       AllResults = [
         AllResults[0],
-        newResult,
+        GENERIC_RESULT_WITH_HISTORY,
         ...AllResults.slice(1)
       ];
     }
@@ -78,10 +80,21 @@ const ResultListStorybook = () => {
             <>
               <Text>Currently selected result index: {selectedResultIndex}</Text>
               {results.map((result: any) =>
-                <TitleResult
+                <GenericSnippet
                   result={result}
                   key={result.title}
-                  title={result.title}
+                  ImageRendererComponent={ImageRendererComponent}
+                  LogoComponent={LogoComponent}
+                  openLink={openLink}
+                  isUrlsSelecable={false}
+                  styles={{
+                    mainSnippetStyle: {
+                      containerSelected: {
+                        backgroundColor: 'red'
+                      }
+                    }
+                  }}
+                  t={t}
                 />
               )}
             </>
@@ -92,4 +105,4 @@ const ResultListStorybook = () => {
   );
 }
 
-storiesOf('Result', module).add('Results', () => <ResultListStorybook />);
+storiesOf('Selectable Results', module).add('with Generic Snippet', () => <ResultListStorybook />);

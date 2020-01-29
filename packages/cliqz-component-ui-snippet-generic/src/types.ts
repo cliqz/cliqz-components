@@ -1,6 +1,15 @@
 import { ComponentType } from 'react';
 import { UniversalViewStyle } from '@cliqz/component-styles';
 
+export interface openLink {
+  (url: string, type?: string): void
+}
+
+export type LogoComponent = ComponentType<{
+  size: number
+  url: string
+}>
+
 export interface NewsItem {
   extra: {
     creation_timestamp: number;

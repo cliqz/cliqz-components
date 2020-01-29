@@ -7,10 +7,11 @@
 * file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 
-import React, { ComponentType, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Text, View, TextStyle } from 'react-native';
 import { merge, UniversalViewStyle } from '@cliqz/component-styles';
-import { SnippetIcon, LogoComponent } from './snippet-icon';
+import { withSelectableResult, SelectableResultProps } from '@cliqz/component-ui-selectable-results';
+import { SnippetIcon } from './snippet-icon';
 import { Link } from './link';
 import { isSwitchToTab } from './helpers';
 import {
@@ -22,13 +23,14 @@ import {
   descriptionColor,
   backgroundColor,
 } from './styles';
-import { Result, t, ImageRendererComponent } from './types';
+import { Result, t, ImageRendererComponent, openLink, LogoComponent } from './types';
 
 const httpsLockWidth = 12;
 const httpsLockMarginRight = 2;
 
 export interface SnippetStyles {
   container: UniversalViewStyle
+  containerSelected: UniversalViewStyle
   rightContainer: UniversalViewStyle
   mainTitle: TextStyle
   subTitle: TextStyle
@@ -52,6 +54,9 @@ export const baseStyles: SnippetStyles = {
     paddingTop: 7,
     paddingBottom: 6,
     paddingRight: 2,
+  },
+  containerSelected: {
+    backgroundColor: '#9999ff',
   },
   rightContainer: {
     flex: 1,
@@ -116,10 +121,6 @@ export { baseStyles as styles };
 
 const isHistory = (result: Result) => result.provider === 'history' || result.provider === 'tabs';
 
-export interface openLink {
-  (url: string, type?: string): void
-}
-
 export const Snippet = (
   {
     type,
@@ -129,6 +130,7 @@ export const Snippet = (
     openLink,
     t,
     styles: extendedStyles,
+    isActive,
   }:
   {
     type: string,
@@ -138,7 +140,7 @@ export const Snippet = (
     openLink: openLink,
     t: t,
     styles?: Partial<SnippetStyles>
-  }
+  } & SelectableResultProps
 ) => {
   const styles = useMemo(() => merge(baseStyles, extendedStyles), [extendedStyles]);
   const { title, friendlyUrl, description, provider, url } = result;
@@ -149,7 +151,7 @@ export const Snippet = (
   }
   return (
     <Link onPress={() => openLink(url, type)}>
-      <View style={styles.container}>
+      <View style={[styles.container, isActive ? styles.containerSelected : null]}>
         <SnippetIcon type={type} LogoComponent={LogoComponent} url={url} />
         <View style={styles.rightContainer}>
         {isSwitchToTab(result) && (
@@ -196,3 +198,5 @@ export const Snippet = (
     </Link>
   );
 };
+
+export const SelecteableSnippet = withSelectableResult(Snippet);

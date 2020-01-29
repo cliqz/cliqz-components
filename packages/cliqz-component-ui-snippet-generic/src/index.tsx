@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react';
 import { View } from 'react-native';
 import { merge, UniversalViewStyle } from '@cliqz/component-styles';
-import { Snippet, openLink, SnippetStyles, styles as baseSnippetStyles } from './snippet';
-import { LogoComponent } from './snippet-icon';
+import { SelecteableSnippet, Snippet, SnippetStyles, styles as baseSnippetStyles } from './snippet';
 import { SnippetList } from './snippet-list';
-import { Result, t, ImageRendererComponent, NewsComponent } from './types';
-export { Result } from './types';
+import { LogoComponent, Result, t, ImageRendererComponent, NewsComponent, openLink } from './types';
+export * from './types';
 
 export interface GenericSnippetStyle {
   container: UniversalViewStyle,
@@ -39,6 +38,7 @@ export const GenericSnippet = ({
   openLink,
   styles: extendedStyles,
   NewsComponent,
+  isUrlsSelecable = true,
 }: {
   result: Result,
   LogoComponent: LogoComponent,
@@ -47,6 +47,7 @@ export const GenericSnippet = ({
   openLink: openLink,
   styles?: Partial<GenericSnippetStyle>;
   NewsComponent?: NewsComponent,
+  isUrlsSelecable?: boolean
 }) => {
   const styles = useMemo(() => ({
     ...merge(baseStyles, extendedStyles),
@@ -61,10 +62,12 @@ export const GenericSnippet = ({
     );
   }, [result.data.deepResults]);
 
+  const SnippetComponent = useMemo(() => isUrlsSelecable ? SelecteableSnippet : Snippet, [isUrlsSelecable])
+
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
-        <Snippet
+        <SelecteableSnippet
           result={result}
           type="main"
           LogoComponent={LogoComponent}
@@ -80,7 +83,7 @@ export const GenericSnippet = ({
             ImageRendererComponent={ImageRendererComponent}
             t={t}
             list={(result.urls || []).map(snippet => (
-              <Snippet
+              <SnippetComponent
                 key={snippet.url}
                 result={snippet}
                 LogoComponent={LogoComponent}
