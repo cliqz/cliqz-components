@@ -1,0 +1,28 @@
+{
+  "name": "@cliqz/component-ui-result-generic",
+  "version": "0.5.4",
+  "description": "",
+  "author": "Krzysztof Jan Modras <chrmod@chrmod.net>",
+  "homepage": "https://github.com/cliqz/cliqz-components#readme",
+  "license": "MPL-2.0",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": "^16.8.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cliqz/cliqz-components.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/cliqz/cliqz-components/issues"
+  }
+}
