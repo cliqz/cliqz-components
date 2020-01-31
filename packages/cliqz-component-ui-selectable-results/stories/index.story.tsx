@@ -1,16 +1,12 @@
 import { storiesOf } from '@storybook/react';
-import React, { useRef, RefObject, useEffect } from 'react';
+import React, { useRef, RefObject, useEffect, useCallback } from 'react';
 import getLogo from 'cliqz-logo-database';
 import { View, Text } from 'react-native';
 import { button } from "@storybook/addon-knobs";
-import { ResultList, ResultListControls } from '../src/index';
+import { ResultList, ResultListControls, useResults } from '../src/index';
 import { Logo } from '@cliqz/component-ui-logo';
-import { Result, GenericResult, ImageRendererComponent, LogoComponent, openLink, t } from '@cliqz/component-ui-result-generic';
+import { GenericResult, ImageRendererComponent, LogoComponent, openLink, t } from '@cliqz/component-ui-result-generic';
 import { GENERIC_RESULT_WITH_HISTORY } from '../../cliqz-component-ui-result-generic/stories/fixtures';
-
-let AllResults: Result[] = [
-  GENERIC_RESULT_WITH_HISTORY,
-];
 
 const ImageRendererComponent: ImageRendererComponent = ({ }) => {
   return (
@@ -35,50 +31,44 @@ const openLink: openLink = (url) => alert(url);
 const ResultListStorybook = () => {
   let ref: RefObject<ResultListControls> = useRef(null);
 
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.updateResults(AllResults);
+  let [results, updateResults] = useResults(ref, [GENERIC_RESULT_WITH_HISTORY]);
+
+  const addResult = useCallback(() => {
+    if (results.length === 0) {
+      updateResults([GENERIC_RESULT_WITH_HISTORY])
+    } else {
+      updateResults([
+        ...results,
+        GENERIC_RESULT_WITH_HISTORY,
+      ])
     }
+  }, [results]);
+  const clearResults = useCallback(() => {
+    updateResults([]);
   }, []);
 
-  button('Keyboard: up', () => {
-    if (ref.current) {
-      ref.current.previous();
-    }
-  });
+  useEffect(() => {
+    button('Keyboard: up', () => {
+      if (ref.current) {
+        ref.current.previous();
+      }
+    });
 
-  button('Keyboard: down', () => {
-    if (ref.current) {
-      ref.current.next();
-    }
-  });
-
-  button('clear', () => {
-    AllResults = []
-    if (ref.current) {
-      ref.current.clear();
-    }
-  });
-
-  button('addResult', () => {
-    if (AllResults.length === 0) {
-      AllResults = [GENERIC_RESULT_WITH_HISTORY]
-    } else {
-      AllResults = [
-        AllResults[0],
-        GENERIC_RESULT_WITH_HISTORY,
-        ...AllResults.slice(1)
-      ];
-    }
-    if (ref.current) {
-      ref.current.updateResults(AllResults);
-    }
-  });
+    button('Keyboard: down', () => {
+      if (ref.current) {
+        ref.current.next();
+      }
+    });
+  }, [results, ref.current]);
 
   return (
     <View>
+      <View>
+        <button onClick={addResult} style={{ width: 100, margin: 5}}>Add result</button>
+        <button onClick={clearResults} style={{ width: 100, margin: 5 }}>clear</button>
+      </View>
       <ResultList ref={ref}>
-        {({ selectedResultIndex, results }) => <>
+        {({ selectedResultIndex }) => <>
           <Text>Currently selected result index: {selectedResultIndex}</Text>
           {results.map((result: any) =>
             <GenericResult
@@ -104,4 +94,6 @@ const ResultListStorybook = () => {
   );
 }
 
-storiesOf('Selectable Results', module).add('with Generic Snippet', () => <ResultListStorybook />);
+storiesOf('Selectable Results', module).add('with Generic Snippet', () => {
+  return <ResultListStorybook />;
+});

@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, ComponentType, useMemo, useImperativeHandle, Ref, forwardRef } from 'react';
+import React, { useContext, useReducer, ComponentType, useMemo, useImperativeHandle, Ref, forwardRef, useState, useCallback, RefObject } from 'react';
 
 type Dispatch = (action: Action) => void
 
@@ -167,3 +167,15 @@ export const withSelectableResult = <T extends SelectableResultProps = Selectabl
     <WrappedComponent isActive={index === indexOfId} index={indexOfId} {...props as T} />
   )
 };
+
+export const useResults = (ref: RefObject<ResultListControls>, defaultResults: any[]): [any[], any] => {
+  let [results, setResults] = useState(defaultResults);
+  const updateResults = useCallback((newResults: any[]) => {
+    setResults(newResults);
+    if (ref.current) {
+      ref.current.updateResults(newResults);
+    }
+  }, [setResults, ref.current]);
+
+  return [results, updateResults];
+}
