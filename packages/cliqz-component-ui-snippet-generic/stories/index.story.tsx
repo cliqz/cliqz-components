@@ -41,7 +41,7 @@ const styles: Partial<SnippetStyles> = {
 
 storiesOf('Generic Snippet', module).add('default', () => {
   return (
-    <ResultList results={[]}>
+    <ResultList>
       {({ results }) =>
         <GenericSnippet
           result={result}

@@ -68,7 +68,7 @@ const styles: Partial<GenericResultStyle> = {
 
 storiesOf('Generic Result', module).add('with news', () => {
   return (
-    <ResultList results={[]}>
+    <ResultList>
       {({ results }) =>
         <GenericResult
           result={result}

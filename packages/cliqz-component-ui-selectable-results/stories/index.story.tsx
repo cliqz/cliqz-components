@@ -1,9 +1,9 @@
 import { storiesOf } from '@storybook/react';
-import React from 'react';
+import React, { useRef, RefObject, useEffect } from 'react';
 import getLogo from 'cliqz-logo-database';
 import { View, Text } from 'react-native';
 import { button } from "@storybook/addon-knobs";
-import { ResultList } from '../src/index';
+import { ResultList, ResultListControls } from '../src/index';
 import { Logo } from '@cliqz/component-ui-logo';
 import { Result, GenericResult, ImageRendererComponent, LogoComponent, openLink, t } from '@cliqz/component-ui-result-generic';
 import { GENERIC_RESULT_WITH_HISTORY } from '../../cliqz-component-ui-result-generic/stories/fixtures';
@@ -33,29 +33,34 @@ const t: t = (key: string) => key;
 const openLink: openLink = (url) => alert(url);
 
 const ResultListStorybook = () => {
-  let nextAction: CallableFunction | undefined
-  let previousAction: CallableFunction | undefined;
-  let clearAction: CallableFunction | undefined;
-  let updateResultsAction: CallableFunction | undefined;
+  let ref: RefObject<ResultListControls> = useRef(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.updateResults(AllResults);
+    }
+  }, []);
 
   button('Keyboard: up', () => {
-    if (!previousAction) { return }
-    previousAction();
+    if (ref.current) {
+      ref.current.previous();
+    }
   });
 
   button('Keyboard: down', () => {
-    if (!nextAction) { return }
-    nextAction();
+    if (ref.current) {
+      ref.current.next();
+    }
   });
 
   button('clear', () => {
-    if (!clearAction) { return }
     AllResults = []
-    clearAction();
+    if (ref.current) {
+      ref.current.clear();
+    }
   });
 
   button('addResult', () => {
-    if (!updateResultsAction) { return }
     if (AllResults.length === 0) {
       AllResults = [GENERIC_RESULT_WITH_HISTORY]
     } else {
@@ -65,41 +70,35 @@ const ResultListStorybook = () => {
         ...AllResults.slice(1)
       ];
     }
-    updateResultsAction(AllResults);
+    if (ref.current) {
+      ref.current.updateResults(AllResults);
+    }
   });
 
   return (
     <View>
-      <ResultList results={AllResults}>
-        {({ next, previous, clear, selectedResultIndex, results, updateResults }) => {
-          nextAction = next;
-          previousAction = previous;
-          clearAction = clear;
-          updateResultsAction = updateResults;
-          return (
-            <>
-              <Text>Currently selected result index: {selectedResultIndex}</Text>
-              {results.map((result: any) =>
-                <GenericResult
-                  result={result}
-                  key={result.title}
-                  ImageRendererComponent={ImageRendererComponent}
-                  LogoComponent={LogoComponent}
-                  openLink={openLink}
-                  isUrlsSelecable={false}
-                  styles={{
-                    mainSnippetStyle: {
-                      containerSelected: {
-                        backgroundColor: 'red'
-                      }
-                    }
-                  }}
-                  t={t}
-                />
-              )}
-            </>
-          );
-        }}
+      <ResultList ref={ref}>
+        {({ selectedResultIndex, results }) => <>
+          <Text>Currently selected result index: {selectedResultIndex}</Text>
+          {results.map((result: any) =>
+            <GenericResult
+              result={result}
+              key={result.title}
+              ImageRendererComponent={ImageRendererComponent}
+              LogoComponent={LogoComponent}
+              openLink={openLink}
+              isUrlsSelecable={false}
+              styles={{
+                mainSnippetStyle: {
+                  containerSelected: {
+                    backgroundColor: 'red'
+                  }
+                }
+              }}
+              t={t}
+            />
+          )}
+        </>}
       </ResultList>
     </View>
   );

@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, ComponentType, useMemo } from 'react';
+import React, { useContext, useReducer, ComponentType, useMemo, useImperativeHandle, Ref, forwardRef } from 'react';
 
 type Dispatch = (action: Action) => void
 
@@ -95,23 +95,43 @@ function selectableResultReducer(state: State, action: Action): State {
   }
 }
 
-type ResultListControls = {
-  selectedResultIndex: number
-  results: any
+export type ResultListValues = {
+  selectedResultIndex: number,
+  results: any[],
+}
+
+export type ResultListControls = {
   next(): void
   previous(): void
   clear(): void
   updateResults(results: any): void
 }
 
-export const ResultList = (
-  { children, results }:
-  { children(arg0: ResultListControls): any, results: any[] }
+export const ResultList = forwardRef((
+  { children }:
+  { children(arg0: ResultListValues): any },
+  ref: Ref<ResultListControls>
 ) => {
-  const [state, dispatch] = useReducer(selectableResultReducer, {
-    ...defaultState,
-    results,
-  });
+  const [state, dispatch] = useReducer(selectableResultReducer, defaultState);
+
+  const api: ResultListControls = {
+    next() {
+      dispatch({ type: ActionType.next });
+    },
+    previous() {
+      dispatch({ type: ActionType.previous });
+    },
+    clear() {
+      dispatch({ type: ActionType.clear });
+    },
+    updateResults(results: any) {
+      dispatch({ type: ActionType.updateResults, results })
+    },
+  };
+
+  if (ref) {
+    useImperativeHandle(ref, () => api);
+  }
 
   return (
     <SelectableResultStateContext.Provider value={state}>
@@ -119,52 +139,18 @@ export const ResultList = (
         {children({
           selectedResultIndex: state.index,
           results: state.results,
-          next() {
-            dispatch({ type: ActionType.next });
-          },
-          previous() {
-            dispatch({ type: ActionType.previous });
-          },
-          clear() {
-            dispatch({ type: ActionType.clear });
-          },
-          updateResults(results: any) {
-            dispatch({ type: ActionType.updateResults, results })
-          },
         })}
       </SelectableResultDispatchContext.Provider>
     </SelectableResultStateContext.Provider>
   );
-}
+});
 
 export type SelectableResultProps = {
   isActive?: boolean,
   index?: number,
 }
 
-export const SelectableResult = (
-  { children, result }:
-  { children(arg0: SelectableResultProps): any, result: any }
-) => {
-  const { index, selectableResults } = useContext(SelectableResultStateContext);
-  const dispatch = useContext(SelectableResultDispatchContext)
-  if (!dispatch) {
-    throw new Error('SelectableResult has to be nested in ResultList');
-  }
-
-  let indexOfId = selectableResults.indexOf(result);
-
-  if (indexOfId === -1) {
-    dispatch({ type: ActionType.register, result });
-  }
-
-  return children({
-    isActive: index === indexOfId,
-    index: indexOfId,
-  });
-}
-
-export const withSelectableResult = <P extends object>(Component: ComponentType<P>) => (props: P) => {
+export const withSelectableResult = <T extends SelectableResultProps = SelectableResultProps>(WrappedComponent: ComponentType<T>) => (props: T) => {
   const { index, selectableResults } = useContext(SelectableResultStateContext);
   const dispatch = useContext(SelectableResultDispatchContext)
   if (!dispatch) {
@@ -178,6 +164,6 @@ export const withSelectableResult = <P extends object>(Component: ComponentType<
     dispatch({ type: ActionType.register, result });
   }
   return (
-    <Component isActive={index === indexOfId} {...props as P} />
+    <WrappedComponent isActive={index === indexOfId} index={indexOfId} {...props as T} />
   )
 };
