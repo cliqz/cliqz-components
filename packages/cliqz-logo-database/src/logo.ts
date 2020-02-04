@@ -52,7 +52,9 @@ export default function(
     }
 
     // if no rule matched, take the last logoDetails
-    return logoDetails;
+    if (logoDetails) {
+      return logoDetails;
+    }
   }
 
   // default icon with text
