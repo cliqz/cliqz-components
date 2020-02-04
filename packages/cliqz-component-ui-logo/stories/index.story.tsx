@@ -15,7 +15,7 @@ stories.add('in database', () => (
     />
     <Logo logo={getLogo('https://google.com')} size={50} />
     <Logo logo={getLogo('https://abcnews.go.com')} size={50} />
-    <Logo logo={getLogo('https://duckduckgo.com')} size={50} />
+    <Logo logo={getLogo('https://duckduckgo.com')} size={50} borderRadius={10} />
     <Logo logo={getLogo('https://notebookcheck.net')} size={50} />
   </div>
 ));
