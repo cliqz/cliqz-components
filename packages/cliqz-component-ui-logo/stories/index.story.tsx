@@ -3,24 +3,24 @@ import getLogo from 'cliqz-logo-database';
 import React from 'react';
 import { Logo } from '../src/index';
 
-storiesOf('Logo', module).add('Cliqz', () => (
-  <Logo
-    logo={getLogo('https://cliqz.com')}
-    size={20}
-    borderRadius={2}
-    logoSize={20}
-  />
+const stories = storiesOf('UI Logo', module);
+
+stories.add('in database', () => (
+  <div>
+    <Logo
+      logo={getLogo('https://cliqz.com')}
+      size={20}
+      borderRadius={2}
+      logoSize={20}
+    />
+    <Logo logo={getLogo('https://google.com')} size={50} />
+    <Logo logo={getLogo('https://abcnews.go.com')} size={50} />
+    <Logo logo={getLogo('https://duckduckgo.com')} size={50} />
+    <Logo logo={getLogo('https://notebookcheck.net')} size={50} />
+  </div>
 ));
 
-storiesOf('Logo', module).add('Google', () => (
-  <Logo logo={getLogo('https://google.com')} size={50} />
-));
-
-storiesOf('Logo', module).add('ABCNews', () => (
-  <Logo logo={getLogo('https://abcnews.go.com')} size={50} />
-));
-
-storiesOf('Logo', module).add('No Icon round', () => (
+stories.add('not in database', () => (
   <Logo
     logo={getLogo('https://xyz.com')}
     size={50}
