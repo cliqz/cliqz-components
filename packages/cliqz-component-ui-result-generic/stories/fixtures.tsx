@@ -1,4 +1,4 @@
-import { Result } from '../src/index';
+import { Result } from '@cliqz/component-types';
 import { NewsResult } from '../../cliqz-component-ui-snippet-news/stories/news-result';
 
 export const GENERIC_RESULT_WITH_HISTORY: Result = {

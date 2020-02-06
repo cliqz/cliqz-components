@@ -26,6 +26,7 @@
     "url": "https://github.com/cliqz/cliqz-components/issues"
   },
   "dependencies": {
-    "@cliqz/component-styles": "^0.5.0"
+    "@cliqz/component-styles": "^0.5.0",
+    "@cliqz/component-types": "^0.5.5"
   }
 }

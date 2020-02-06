@@ -55,7 +55,7 @@ storiesOf('Generic Result', module).add('with history', () => {
           LogoComponent={LogoComponent}
           ImageRendererComponent={ImageRendererComponent}
           t={t}
-          openLink={openLink}
+          onPress={openLink}
           styles={styles}
         />
       }

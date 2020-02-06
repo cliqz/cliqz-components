@@ -4,7 +4,8 @@ import getLogo from 'cliqz-logo-database';
 import React from 'react';
 import { ResultList } from '@cliqz/component-ui-selectable-results';
 import { NewsSnippet } from '@cliqz/component-ui-snippet-news';
-import { GenericResult, GenericResultStyle, ImageRendererComponent, t, NewsComponent, LogoComponent, openLink} from '../src/index';
+import { ImageRendererComponent, t, NewsComponent, LogoComponent, openLink } from '@cliqz/component-types';
+import { GenericResult, GenericResultStyle } from '../src/index';
 import { GENERIC_RESULT_WITH_NEWS as result } from './fixtures';
 
 const ImageRendererComponent: ImageRendererComponent = ({ }) => {
@@ -76,7 +77,7 @@ storiesOf('Generic Result', module).add('with news', () => {
           ImageRendererComponent={ImageRendererComponent}
           NewsComponent={NewsComponent}
           t={t}
-          openLink={openLink}
+          onPress={openLink}
           styles={styles}
         />
       }

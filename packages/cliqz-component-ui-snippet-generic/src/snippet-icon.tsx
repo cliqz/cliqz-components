@@ -7,10 +7,9 @@
 * file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 
-import { UniversalViewStyle } from '@cliqz/component-styles';
 import React from 'react';
 import { View } from 'react-native';
-import { LogoComponent } from './types';
+import { LogoComponent, UniversalViewStyle } from '@cliqz/component-types';
 
 interface SnipperIconStyles {
   symbolContainer: UniversalViewStyle,

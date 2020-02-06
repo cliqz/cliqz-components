@@ -8,6 +8,25 @@
     "type": "git",
     "url": "https://github.com/cliqz/cliqz-components.git"
   },
+  "scripts": {
+    "build-storybook": "build-storybook",
+    "prebuild": "lerna run 'tsc lint'",
+    "build": "lerna exec 'BABEL_ENV=build babel src --root-mode upward --out-dir dist --source-maps --extensions .ts,.tsx --delete-dir-on-start --no-comments --copy-files'",
+    "postbuild": "yarn build:declarations",
+    "commit": "git-cz",
+    "fix": "run-p -c 'lint:ts-* --fix'",
+    "lint:css": "stylelint 'packages/**/*.ts{,x}'",
+    "lint:ts-prod": "tslint --config tslint.prod.json 'packages/**/*.ts{,x}'",
+    "lint:ts-test": "tslint --config tslint.test.json 'packages/**/*.{test,story}.ts{,x}'",
+    "lint:ts": "run-p -c lint:ts-*",
+    "lint": "run-p -c lint:*",
+    "prerelease": "yarn build",
+    "release": "lerna publish",
+    "storybook": "start-storybook -p 6006",
+    "test": "jest --detectOpenHandles",
+    "tsc": "tsc",
+    "build:declarations": "lerna exec 'tsc --project ./tsconfig.build.json'"
+  },
   "devDependencies": {
     "@babel/cli": "^7.4.3",
     "@babel/core": "^7.4.3",
@@ -56,25 +75,6 @@
     "tslint-react": "^4.0.0",
     "typescript": "^3.4.5",
     "webpack": "^4.30.0"
-  },
-  "scripts": {
-    "build-storybook": "build-storybook",
-    "prebuild": "lerna run 'tsc lint'",
-    "build": "lerna exec 'BABEL_ENV=build babel src --root-mode upward --out-dir dist --source-maps --extensions .ts,.tsx --delete-dir-on-start --no-comments --copy-files'",
-    "postbuild": "yarn build:declarations",
-    "commit": "git-cz",
-    "fix": "run-p -c 'lint:ts-* --fix'",
-    "lint:css": "stylelint 'packages/**/*.ts{,x}'",
-    "lint:ts-prod": "tslint --config tslint.prod.json 'packages/**/*.ts{,x}'",
-    "lint:ts-test": "tslint --config tslint.test.json 'packages/**/*.{test,story}.ts{,x}'",
-    "lint:ts": "run-p -c lint:ts-*",
-    "lint": "run-p -c lint:*",
-    "prerelease": "yarn build",
-    "release": "lerna publish",
-    "storybook": "start-storybook -p 6006",
-    "test": "jest --detectOpenHandles",
-    "tsc": "tsc",
-    "build:declarations": "lerna exec 'tsc --project ./tsconfig.build.json'"
   },
   "config": {
     "commitizen": {

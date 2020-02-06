@@ -5,7 +5,8 @@ import { View, Text } from 'react-native';
 import { button } from "@storybook/addon-knobs";
 import { ResultList, ResultListControls, useResults } from '../src/index';
 import { Logo } from '@cliqz/component-ui-logo';
-import { GenericResult, ImageRendererComponent, LogoComponent, openLink, t } from '@cliqz/component-ui-result-generic';
+import { GenericResult } from '@cliqz/component-ui-result-generic';
+import { ImageRendererComponent, LogoComponent, openLink, t } from '@cliqz/component-types';
 import { GENERIC_RESULT_WITH_HISTORY } from '../../cliqz-component-ui-result-generic/stories/fixtures';
 
 const ImageRendererComponent: ImageRendererComponent = ({ }) => {
@@ -76,7 +77,7 @@ const ResultListStorybook = () => {
               key={result.title}
               ImageRendererComponent={ImageRendererComponent}
               LogoComponent={LogoComponent}
-              openLink={openLink}
+              onPress={openLink}
               isUrlsSelecable={false}
               styles={{
                 mainSnippetStyle: {

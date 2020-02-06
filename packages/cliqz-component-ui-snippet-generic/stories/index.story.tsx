@@ -4,7 +4,7 @@ import getLogo from 'cliqz-logo-database';
 import React from 'react';
 import { ResultList } from '@cliqz/component-ui-selectable-results';
 import { GenericSnippet, SnippetStyles } from '../src/index';
-import { ImageRendererComponent, t, LogoComponent, openLink } from '../src/types';
+import { ImageRendererComponent, t, LogoComponent, openLink } from '@cliqz/component-types';
 import { GENERIC_RESULT as result } from './fixtures';
 
 const ImageRendererComponent: ImageRendererComponent = ({ }) => {
@@ -48,7 +48,7 @@ storiesOf('Generic Snippet', module).add('default', () => {
           LogoComponent={LogoComponent}
           ImageRendererComponent={ImageRendererComponent}
           t={t}
-          openLink={openLink}
+          onPress={openLink}
           styles={styles}
           type="main"
         />

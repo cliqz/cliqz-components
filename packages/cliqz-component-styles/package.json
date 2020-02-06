@@ -23,5 +23,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "85e421ac516dacb5c7c149a45e8da990049f923b"
+  "gitHead": "85e421ac516dacb5c7c149a45e8da990049f923b",
+  "dependencies": {
+    "@cliqz/component-types": "^0.5.5"
+  }
 }

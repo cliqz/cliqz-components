@@ -1,10 +1,9 @@
 import React, { useMemo } from 'react';
 import { View } from 'react-native';
-import { merge, UniversalViewStyle } from '@cliqz/component-styles';
+import { merge } from '@cliqz/component-styles';
+import { UniversalViewStyle, LogoComponent, Result, t, ImageRendererComponent, NewsComponent, openLink } from '@cliqz/component-types';
 import { GenericSnippet, SnippetStyles, styles as baseSnippetStyles } from '@cliqz/component-ui-snippet-generic';
 import { SnippetList } from './snippet-list';
-import { LogoComponent, Result, t, ImageRendererComponent, NewsComponent, openLink } from './types';
-export * from './types';
 
 export interface GenericResultStyle {
   container: UniversalViewStyle,
@@ -35,7 +34,8 @@ export const GenericResult = ({
   LogoComponent,
   ImageRendererComponent,
   t,
-  openLink,
+  onPress,
+  onLongPress,
   styles: extendedStyles,
   NewsComponent,
   isUrlsSelecable = true,
@@ -44,7 +44,8 @@ export const GenericResult = ({
   LogoComponent: LogoComponent,
   ImageRendererComponent: ImageRendererComponent,
   t: t,
-  openLink: openLink,
+  onPress?: openLink,
+  onLongPress?: openLink,
   styles?: Partial<GenericResultStyle>;
   NewsComponent?: NewsComponent,
   isUrlsSelecable?: boolean
@@ -70,7 +71,8 @@ export const GenericResult = ({
           type="main"
           LogoComponent={LogoComponent}
           ImageRendererComponent={ImageRendererComponent}
-          openLink={openLink}
+          onPress={onPress}
+          onLongPress={onLongPress}
           t={t}
           styles={styles.mainSnippetStyle}
         />
@@ -86,10 +88,12 @@ export const GenericResult = ({
                 result={snippet}
                 LogoComponent={LogoComponent}
                 ImageRendererComponent={ImageRendererComponent}
-                openLink={openLink}
+                onPress={onPress}
+                onLongPress={onLongPress}
                 t={t}
                 type="history"
                 styles={styles.urlsSnippetStyle}
+                isSelectable={isUrlsSelecable}
               />
             ))}
           />

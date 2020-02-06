@@ -1,5 +1,5 @@
 {
-  "name": "@cliqz/component-ui-result-generic",
+  "name": "@cliqz/component-types",
   "version": "0.5.5",
   "description": "",
   "author": "Krzysztof Jan Modras <chrmod@chrmod.net>",
@@ -26,8 +26,5 @@
     "url": "https://github.com/cliqz/cliqz-components/issues"
   },
   "dependencies": {
-    "@cliqz/component-styles": "^0.5.0",
-    "@cliqz/component-types": "^0.5.5",
-    "@cliqz/component-ui-snippet-generic": "^0.5.5"
   }
 }

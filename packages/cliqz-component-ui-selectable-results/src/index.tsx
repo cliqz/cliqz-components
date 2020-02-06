@@ -1,9 +1,10 @@
 import React, { useContext, useReducer, ComponentType, useMemo, useImperativeHandle, Ref, forwardRef, useState, useCallback, RefObject } from 'react';
+import { Result } from '@cliqz/component-types';
 
 type Dispatch = (action: Action) => void
 
 type State = {
-  results: any[];
+  results: Result[];
   selectableResults: any[];
   index: number;
 }
@@ -32,7 +33,7 @@ type Action =
   } |
   {
     type: ActionType.updateResults,
-    results: any[],
+    results: Result[],
   };
 
 const defaultState = {
@@ -97,14 +98,14 @@ function selectableResultReducer(state: State, action: Action): State {
 
 export type ResultListValues = {
   selectedResultIndex: number,
-  results: any[],
+  results: Result[],
 }
 
 export type ResultListControls = {
   next(): void
   previous(): void
   clear(): void
-  updateResults(results: any): void
+  updateResults(results: Result[]): void
 }
 
 export const ResultList = forwardRef((
@@ -124,7 +125,7 @@ export const ResultList = forwardRef((
     clear() {
       dispatch({ type: ActionType.clear });
     },
-    updateResults(results: any) {
+    updateResults(results: Result[]) {
       dispatch({ type: ActionType.updateResults, results })
     },
   };
@@ -170,7 +171,7 @@ export const withSelectableResult = <T extends SelectableResultProps = Selectabl
 
 export const useResults = (ref: RefObject<ResultListControls>, defaultResults: any[]): [any[], any] => {
   let [results, setResults] = useState(defaultResults);
-  const updateResults = useCallback((newResults: any[]) => {
+  const updateResults = useCallback((newResults: Result[]) => {
     setResults(newResults);
     if (ref.current) {
       ref.current.updateResults(newResults);

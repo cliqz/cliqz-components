@@ -1,4 +1,4 @@
-import { Result } from '@cliqz/component-ui-result-generic';
+import { Result } from '@cliqz/component-types';
 
 export const GENERIC_RESULT: Result = {
   title: "example",

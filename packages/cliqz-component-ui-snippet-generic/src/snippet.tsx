@@ -7,12 +7,12 @@
 * file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 
-import React, { useMemo } from 'react';
-import { Text, View, TextStyle } from 'react-native';
+import React, { useMemo, ComponentType, useCallback } from 'react';
+import { Text, TextProps, View, TextStyle, TouchableWithoutFeedback } from 'react-native';
 import { merge, UniversalViewStyle } from '@cliqz/component-styles';
 import { withSelectableResult, SelectableResultProps } from '@cliqz/component-ui-selectable-results';
+import { Result, t, ImageRendererComponent, openLink, LogoComponent } from '@cliqz/component-types';
 import { SnippetIcon } from './snippet-icon';
-import { Link } from './link';
 import { isSwitchToTab } from './helpers';
 import {
   resultTitleFontSize,
@@ -23,7 +23,16 @@ import {
   descriptionColor,
   backgroundColor,
 } from './styles';
-import { Result, t, ImageRendererComponent, openLink, LogoComponent } from './types';
+
+
+type WebTextProps = TextProps & {
+  href?: string;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+  accessibilityRole: 'link';
+};
+
+const Anchor = TouchableWithoutFeedback as ComponentType<WebTextProps>;
 
 const httpsLockWidth = 12;
 const httpsLockMarginRight = 2;
@@ -127,7 +136,8 @@ export const Snippet = (
     LogoComponent,
     ImageRendererComponent,
     result,
-    openLink,
+    onPress,
+    onLongPress,
     t,
     styles: extendedStyles,
     isActive,
@@ -137,20 +147,24 @@ export const Snippet = (
     LogoComponent: LogoComponent,
     ImageRendererComponent: ImageRendererComponent,
     result: Result,
-    openLink: openLink,
+    onPress?: openLink,
+    onLongPress?: openLink,
     t: t,
     styles?: Partial<SnippetStyles>
   } & SelectableResultProps
 ) => {
   const styles = useMemo(() => merge(baseStyles, extendedStyles), [extendedStyles]);
-  const { title, friendlyUrl, description, provider, url } = result;
+  const { title, friendlyUrl, description, url } = result;
   const titleLines = type === 'main' ? 2 : 1;
   const titleStyle = type === 'main' ? [styles.mainTitle] : [styles.subTitle];
   if (isHistory(result)) {
     titleStyle.push(styles.visitedTitle);
   }
+  const onPressCallback = useCallback(() => onPress && onPress(url, type), [url, type, onPress]);
+  const onLongPressCallback = useCallback(() => onLongPress && onLongPress(url, type), [url, type, onLongPress]);
+
   return (
-    <Link onPress={() => openLink(url, type)}>
+    <Anchor accessibilityRole='link' href={url} onPress={onPressCallback} onLongPress={onLongPressCallback} >
       <View style={[styles.container, isActive ? styles.containerSelected : null]}>
         <SnippetIcon type={type} LogoComponent={LogoComponent} url={url} />
         <View style={styles.rightContainer}>
@@ -195,7 +209,7 @@ export const Snippet = (
           ) : null}
         </View>
       </View>
-    </Link>
+    </Anchor>
   );
 };
 

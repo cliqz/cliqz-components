@@ -1,10 +1,4 @@
-import { ViewStyle } from 'react-native';
-
-interface WebViewStyles {
-  cursor?: 'pointer' | 'default';
-}
-
-export type UniversalViewStyle = ViewStyle & WebViewStyles;
+export { UniversalViewStyle } from '@cliqz/component-types';
 
 type UpdateSpec<T> = { [P in keyof T]?: T[P] & UpdateSpec<T[P]> };
 
