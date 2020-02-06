@@ -1,6 +1,6 @@
 {
   "name": "@cliqz/component-styles",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "license": "MPL-2.0",
   "peerDependencies": {
     "react": "^16.8.6",
@@ -25,6 +25,6 @@
   },
   "gitHead": "85e421ac516dacb5c7c149a45e8da990049f923b",
   "dependencies": {
-    "@cliqz/component-types": "^0.5.5"
+    "@cliqz/component-types": "^0.6.0"
   }
 }
