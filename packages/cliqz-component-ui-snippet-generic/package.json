@@ -1,6 +1,6 @@
 {
   "name": "@cliqz/component-ui-snippet-generic",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "",
   "author": "Krzysztof Jan Modras <chrmod@chrmod.net>",
   "homepage": "https://github.com/cliqz/cliqz-components#readme",
@@ -26,7 +26,7 @@
     "url": "https://github.com/cliqz/cliqz-components/issues"
   },
   "dependencies": {
-    "@cliqz/component-styles": "^0.6.0",
-    "@cliqz/component-types": "^0.6.0"
+    "@cliqz/component-styles": "^0.7.0",
+    "@cliqz/component-types": "^0.7.0"
   }
 }
