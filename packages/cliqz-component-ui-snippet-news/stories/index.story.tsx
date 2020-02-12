@@ -4,7 +4,7 @@ import { NewsSnippet } from '../src/index';
 import { NewsResult } from './news-result';
 
 const date2text = (date: Date) => date.toString();
-const onPress = (url: string) => alert(url);
+const onPress = ({ url }: { url: string }) => alert(url);
 const ListHeader = () => <div style={{ width: 50 }} />;
 storiesOf('NewsSnippet', module).add('bild.de', () => (
   <div

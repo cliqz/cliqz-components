@@ -1,4 +1,5 @@
 import { UniversalViewStyle } from '@cliqz/component-styles';
+import { openLink } from '@cliqz/component-types';
 import React, { useCallback, useMemo } from 'react';
 import {
   Image,
@@ -25,8 +26,9 @@ interface NewsItemProps {
   styles: NewsItemStyles;
   publishedAt: number;
   date2text: Date2Text;
-  onPress: OnPress;
+  onPress: openLink;
   url: string;
+  type: string;
 }
 
 export const styles: NewsItemStyles = {
@@ -56,12 +58,13 @@ export const NewsItem = ({
   date2text,
   onPress,
   url,
+  type,
 }: NewsItemProps) => {
   const date = useMemo(() => date2text(new Date(publishedAt * 1000)), [
     date2text,
     publishedAt,
   ]);
-  const onPressCall = useCallback(() => onPress(url), [onPress]);
+  const onPressCall = useCallback(() => onPress({ url, title }, { isHistory: false, type: type }), [type, url, onPress]);
   return (
     <TouchableWithoutFeedback onPress={onPressCall}>
       <View style={classes.itemContainer}>

@@ -10,8 +10,8 @@
 import React from 'react';
 import { merge, UniversalViewStyle } from '@cliqz/component-styles';
 import { View, Text, TouchableWithoutFeedback, TextStyle } from 'react-native';
+import { t, ImageRendererComponent } from '@cliqz/component-types';
 import { descriptionColor, separatorColor } from './styles';
-import { t, ImageRendererComponent } from './types';
 
 export interface SnippetListStyles {
   list: UniversalViewStyle

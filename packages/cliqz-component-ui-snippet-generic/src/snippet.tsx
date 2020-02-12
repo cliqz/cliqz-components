@@ -157,11 +157,12 @@ export const Snippet = (
   const { title, friendlyUrl, description, url } = result;
   const titleLines = type === 'main' ? 2 : 1;
   const titleStyle = type === 'main' ? [styles.mainTitle] : [styles.subTitle];
-  if (isHistory(result)) {
+  const isInHistory = isHistory(result);
+  if (isInHistory) {
     titleStyle.push(styles.visitedTitle);
   }
-  const onPressCallback = useCallback(() => onPress && onPress(url, type), [url, type, onPress]);
-  const onLongPressCallback = useCallback(() => onLongPress && onLongPress(url, type), [url, type, onLongPress]);
+  const onPressCallback = useCallback(() => onPress && onPress(result, { isHistory: isInHistory, type: result.type }), [result, onPress]);
+  const onLongPressCallback = useCallback(() => onLongPress && onLongPress(result, { isHistory: isInHistory, type: result.type }), [result, onLongPress]);
 
   return (
     <Anchor accessibilityRole='link' href={url} onPress={onPressCallback} onLongPress={onLongPressCallback} >
