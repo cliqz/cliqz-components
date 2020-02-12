@@ -17,10 +17,18 @@ export interface NewsDeepResult {
   type: 'news' | 'top-news';
 }
 
-export interface Result {
-  title: string
-  description: string
+export interface Link {
   url: string
+  title?: string
+}
+
+export interface LinkMetadata {
+  isHistory: boolean
+  type: string
+}
+
+export interface Result extends Link {
+  description: string
   friendlyUrl: string
   provider: string
   type: string

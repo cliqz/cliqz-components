@@ -3,8 +3,8 @@ import { Logo } from '@cliqz/component-ui-logo';
 import getLogo from 'cliqz-logo-database';
 import React from 'react';
 import { ResultList } from '@cliqz/component-ui-selectable-results';
-import { GenericResult, GenericResultStyle } from '../src/index';
-import { ImageRendererComponent, t, LogoComponent, openLink } from '../src/types';
+import { openLink, t, ImageRendererComponent, LogoComponent } from '@cliqz/component-types';
+import { GenericResult, GenericResultStyle, } from '../src/index';
 import { GENERIC_RESULT_WITH_HISTORY as result } from './fixtures';
 
 const ImageRendererComponent: ImageRendererComponent = ({ }) => {

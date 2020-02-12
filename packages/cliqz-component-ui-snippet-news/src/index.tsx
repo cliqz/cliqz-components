@@ -1,11 +1,11 @@
 import { merge, UniversalViewStyle } from '@cliqz/component-styles';
 import React, { FunctionComponent, useCallback, useMemo } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
+import { openLink } from '@cliqz/component-types';
 import {
   Date2Text,
   NewsItem,
   NewsItemStyles,
-  OnPress,
   styles as newsItemStyles,
 } from './NewsItem';
 
@@ -47,7 +47,7 @@ interface NewsProps {
   data: NewsDeepResult;
   styles?: Partial<NewsSnippetStyle>;
   date2text: Date2Text;
-  onPress: OnPress;
+  onPress: openLink;
   ListSeparator?: FunctionComponent;
   ListHeader?: FunctionComponent;
   ListFooter?: FunctionComponent;
@@ -66,11 +66,13 @@ const renderItem = ({
   styles: itemStyles,
   date2text,
   onPress,
+  type,
 }: {
   item: NewsItem;
   styles: NewsItemStyles;
   date2text: Date2Text;
-  onPress: OnPress;
+  onPress: openLink;
+  type: string;
 }) => {
   return (
     <NewsItem
@@ -81,6 +83,7 @@ const renderItem = ({
       date2text={date2text}
       url={item.url}
       onPress={onPress}
+      type={type}
     />
   );
 };
@@ -99,7 +102,7 @@ export const NewsSnippet = ({
     [merge, stylesOverwrite],
   );
   const renderItemCall = useCallback(
-    ({ item }) => renderItem({ item, styles: classes, date2text, onPress }),
+    ({ item }) => renderItem({ item, styles: classes, date2text, onPress, type: data.type }),
     [renderItem, classes, onPress],
   );
   const separator = useCallback(() => Separator({ style: classes.separator }), [
