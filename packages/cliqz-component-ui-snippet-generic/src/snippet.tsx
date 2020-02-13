@@ -133,7 +133,7 @@ const isHistory = (result: Result) => result.provider === 'history' || result.pr
 export const Snippet = (
   {
     type,
-    index,
+    resultIndex,
     LogoComponent,
     ImageRendererComponent,
     result,
@@ -145,7 +145,7 @@ export const Snippet = (
   }:
   {
     type: string,
-    index?: number,
+    resultIndex?: number,
     LogoComponent: LogoComponent,
     ImageRendererComponent: ImageRendererComponent,
     result: Result,
@@ -163,7 +163,7 @@ export const Snippet = (
   if (isInHistory) {
     titleStyle.push(styles.visitedTitle);
   }
-  const onPressCallback = useCallback(() => onPress && onPress(result, { isHistory: isInHistory, type: type, index }), [result, onPress]);
+  const onPressCallback = useCallback(() => onPress && onPress(result, { isHistory: isInHistory, type, index: resultIndex }), [result, onPress]);
   const onLongPressCallback = useCallback(() => onLongPress && onLongPress(result, { isHistory: isInHistory, type: result.type }), [result, onLongPress]);
 
   return (
