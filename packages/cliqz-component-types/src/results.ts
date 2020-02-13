@@ -23,8 +23,9 @@ export interface Link {
 }
 
 export interface LinkMetadata {
-  isHistory: boolean
+  isHistory?: boolean
   type: string
+  index?: number
 }
 
 export interface Result extends Link {
