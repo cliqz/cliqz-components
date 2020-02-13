@@ -8,6 +8,7 @@ export { baseSnippetStyles as styles };
 
 export const GenericSnippet = ({
   result,
+  resultIndex,
   LogoComponent,
   ImageRendererComponent,
   t,
@@ -18,6 +19,7 @@ export const GenericSnippet = ({
   type,
 }: {
   result: Result,
+  resultIndex?: number,
   LogoComponent: LogoComponent,
   ImageRendererComponent: ImageRendererComponent,
   t: t,
@@ -40,6 +42,7 @@ export const GenericSnippet = ({
       onLongPress={onLongPress}
       t={t}
       styles={styles}
+      resultIndex={resultIndex}
     />
   );
 };
