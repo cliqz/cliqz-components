@@ -132,6 +132,7 @@ interface WeatherStyle {
   dayText: TextStyle;
   daysContainer: UniversalViewStyle;
   dayWrapper: UniversalViewStyle;
+  dayTemperatureWrapper: UniversalViewStyle;
   dayWrapperActive: UniversalViewStyle;
   displayInlineWrapper: UniversalViewStyle;
   divider: UniversalViewStyle;
@@ -194,6 +195,12 @@ const baseStyles: WeatherStyle = {
     backgroundColor: 'transparent',
     justifyContent: 'center',
   },
+  dayTemperatureWrapper: {
+    marginTop: 4,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly',
+  },
   dayText: {
     fontSize: 16,
   },
@@ -204,6 +211,8 @@ const baseStyles: WeatherStyle = {
     paddingRight: 8,
     paddingTop: 16,
     width: '20%',
+    borderWidth: 1,
+    borderColor: 'transparent',
   },
   dayWrapperActive: {
     borderColor: tertiaryGrey,
@@ -437,35 +446,35 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
                 height={styles.dayImage.height}
                 width={styles.dayImage.width}
               />
-              <Text style={styles.h1}>
+              <Text allowFontScaling={false} style={styles.h1}>
                 {(activeDay.temperature as Unit).value}
               </Text>
               <TouchableWithoutFeedback
                 onPress={this.onUnitSelectionButtonPressed}
               >
                 <View>
-                  <Text style={styles.unitSelectionButtonText}>
+                  <Text allowFontScaling={false} style={styles.unitSelectionButtonText}>
                     {this.temperatureUnit}
                   </Text>
                 </View>
               </TouchableWithoutFeedback>
             </View>
-            <Text style={styles.h3}>{this.location}</Text>
+            <Text allowFontScaling={false} style={styles.h3}>{this.location}</Text>
           </View>
           <View style={styles.rightSideInfo}>
-            <Text style={styles.h5}>
+            <Text allowFontScaling={false} style={styles.h5}>
               {precipitation.label}: {precipitation.value}
               {precipitation.unit},
             </Text>
-            <Text style={styles.h5}>
+            <Text allowFontScaling={false} style={styles.h5}>
               {humidity.label}: {humidity.value}
               {humidity.unit},
             </Text>
-            <Text style={styles.h5}>
+            <Text allowFontScaling={false} style={styles.h5}>
               {wind.label}: {wind.value}
               {wind.unit},
             </Text>
-            <Text style={styles.h5}>
+            <Text allowFontScaling={false} style={styles.h5}>
               {uv.label}: {uv.value}
               {uv.unit}
             </Text>
@@ -475,7 +484,7 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
         {/* TIME ARRAY */}
         <View style={[styles.displayInlineWrapper, styles.timelineWrapper]}>
           {this.timeArr.map((item: string) => (
-            <Text key={item} style={styles.timelineText}>
+            <Text allowFontScaling={false} key={item} style={styles.timelineText}>
               {item}
             </Text>
           ))}
@@ -495,7 +504,7 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
           {this.state.showExtraInfo && (
             <View>
               <View style={styles.divider}>
-                <Text style={[styles.gutterBottom, styles.overline]}>
+                <Text allowFontScaling={false} style={[styles.gutterBottom, styles.overline]}>
                   {precipitation.label}
                 </Text>
               </View>
@@ -510,7 +519,7 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
               />
               {/* WIND */}
               <View style={styles.divider}>
-                <Text style={[styles.gutterBottom, styles.overline]}>
+                <Text allowFontScaling={false} style={[styles.gutterBottom, styles.overline]}>
                   {wind.label} ({this.windUnit})
                 </Text>
               </View>
@@ -556,7 +565,7 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
                 ]}
               >
                 {this.timeArr.map((item: string) => (
-                  <Text key={item} style={styles.timelineText}>
+                  <Text allowFontScaling={false} key={item} style={styles.timelineText}>
                     {item}
                   </Text>
                 ))}
@@ -579,7 +588,7 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
         <View style={styles.moreLessButtonWrapper}>
           <TouchableWithoutFeedback onPress={this.onMoreLessButtonPressed}>
             <View style={styles.moreLessButton}>
-              <Text style={styles.moreLessButtonText}>
+              <Text allowFontScaling={false} style={styles.moreLessButtonText}>
                 {this.state.showExtraInfo
                   ? this.props.lessButtonText || 'Less'
                   : this.props.moreButtonText || 'More'}
@@ -601,7 +610,7 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
                     : styles.dayWrapper
                 }
               >
-                <Text style={[styles.selfCenter, styles.dayText]}>
+                <Text allowFontScaling={false} style={[styles.selfCenter, styles.dayText]}>
                   {day.weekday}
                 </Text>
                 <View style={styles.dayImageWrapper}>
@@ -612,17 +621,12 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
                   />
                 </View>
                 <View
-                  style={[
-                    styles.selfCenter,
-                    styles.displayInlineWrapper,
-                    { marginTop: 4 },
-                  ]}
+                  style={styles.dayTemperatureWrapper}
                 >
-                  <Text style={styles.dayText}>
+                  <Text allowFontScaling={false} numberOfLines={1} style={[styles.dayText]}>
                     {(day.temperature as Unit).max}&deg;
                   </Text>
-                  <Text style={[styles.dayText, { opacity: 0.4 }]}>
-                    {' '}
+                  <Text allowFontScaling={false} numberOfLines={1} style={[{ opacity: 0.4 }, styles.dayText]}>
                     {(day.temperature as Unit).min}&deg;
                   </Text>
                 </View>
@@ -659,7 +663,7 @@ export class Weather extends React.PureComponent<WeatherProps, WeatherState> {
         tempIsThreeDigits:
           (day.temperature[this.state.currentUnit] as Unit).value || 0 > 99,
         temperature: day.temperature[this.state.currentUnit],
-        weekday: day.weekday.slice(0, 3),
+        weekday: day.date.split(',')[0],
       }))
       .slice(0, 5); // LIMIT to 5 days
   }

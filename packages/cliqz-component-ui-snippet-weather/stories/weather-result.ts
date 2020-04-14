@@ -25,8 +25,8 @@ export default {
               temperature: {
                 label: 'Temperature',
                 metric: {
-                  max: 18,
-                  min: 7,
+                  max: 24,
+                  min: 21,
                   unit: '°C',
                   value: 11,
                 },
